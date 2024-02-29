@@ -1,8 +1,15 @@
-* {
+/* * {
   user-select: none;
   -webkit-user-drag: none;
 }
 #root {
   margin: 0 auto;
   text-align: center;
+} */
+body {
+  background-image: url("./assets/background/inGame.jpg");
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
