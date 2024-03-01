@@ -34,8 +34,11 @@
 
 // export default App
 
+import React from "react";
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import LoginFrom from "./pages/login.tsx";
+import Singup from "./pages/singup.tsx";
 
 function App() {
   const routes = [
@@ -56,8 +59,17 @@ function App() {
       lazy: () => import("./pages/LeaderBoard.tsx"),
     },
   ];
-  const router = createBrowserRouter(routes);
-  return <RouterProvider router={router} />;
+  // const router = createBrowserRouter(routes);
+  // return <RouterProvider router={router} />;
+
+  return (
+    <>
+      <div>
+        {/* <LoginFrom/> */}
+        <Singup />
+      </div>
+    </>
+  );
 }
 
 export default App;

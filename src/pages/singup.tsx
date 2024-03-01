@@ -2,7 +2,7 @@ import React from "react";
 import "./login.css";
 import { FaUserCircle, FaLock } from "react-icons/fa";
 
-function login() {
+function singup() {
   return (
     <section>
       <div className="upbeat-wrapper">
@@ -20,7 +20,7 @@ function login() {
 
           <div className="wrapper">
             <form action="">
-              <h1>LOGIN</h1>
+              <h1>SIGN UP</h1>
               <h3 className="name">username</h3>
               <div className="input-box">
                 <input type="text" required />
@@ -31,19 +31,17 @@ function login() {
                 <input type="password" required />
                 <FaLock className="icon" />
               </div>
-              <div className="remember-forgot">
-                <label>
-                  <input type="checkbox" />
-                  Remember me
-                </label>
-                <a href="#">Forgot password</a>
+              <h3 className="name">comfrim password</h3>
+              <div className="input-box">
+                <input type="password" required />
+                <FaLock className="icon" />
               </div>
               <div className="container">
                 <button type="submit">Login</button>
                 <button type="submit">Sign up</button>
               </div>
               <div className="guess">
-                <a href="#">play as guess?</a>
+                <a href="#">already have account ?</a>
               </div>
             </form>
           </div>
@@ -53,4 +51,4 @@ function login() {
   );
 }
 
-export default login;
+export default singup;
