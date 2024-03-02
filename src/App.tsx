@@ -1,43 +1,30 @@
-// import React from "react";
-// import { createBrowserRouter, RouterProvider } from "react-router-dom";
+// import "./App.css";
 // import Login from "./components/login";
 // import Game from "./components/Game";
 // import Profile from "./components/Profile";
 // import LeaderBoard from "./components/LeaderBoard";
 // import SignUp from "./components/SignUp";
+// import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // function App() {
 //   const routes = [
 //     {
 //       path: "/",
-//       loader: () => Login,
+//       lazy: () => import("./pages/login.tsx"),
 //     },
 //     {
 //       path: "/game",
-//       loader: () => Game,
+//       lazy: () => import("./pages/Game.tsx"),
 //     },
 //     {
 //       path: "/profile",
-//       loader: () => Profile,
+//       lazy: () => import("./pages/Profile.tsx"),
 //     },
 //     {
 //       path: "/leaderboard",
-//       loader: () => LeaderBoard,
-//     },
-//     {
-//       path: "/signup",
-//       loader: () => SignUp,
+//       lazy: () => import("./pages/LeaderBoard.tsx"),
 //     },
 //   ];
 //   const router = createBrowserRouter(routes);
 //   return <RouterProvider router={router} />;
 // }
-
-// export default App;
-import React from "react";
-import "./App.css";
-type Props = {};
-
-export default function App({}: Props) {
-  return <div>Tayakorn</div>;
-}

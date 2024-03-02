@@ -4,5 +4,5 @@ import "./login.css";
 type Props = {};
 
 export default function App({}: Props) {
-  return <div>login</div>;
+  return <div>{import.meta.env.VITE_TITLE}</div>;
 }
