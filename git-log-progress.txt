@@ -1,0 +1,92 @@
+* commit 6742fdcb8bd4afe5f35728b42207215173b62954
+| Author: Winney <tatakornaow@gmail.com>
+| Date:   Sat Mar 2 12:10:26 2024 +0700
+| 
+|     new pic
+|   
+*   commit 783e5170fe7d9d5696dbb529ed335dafab2188bd
+|\  Merge: c33f117 0e97112
+| | Author: Winney <tatakornaow@gmail.com>
+| | Date:   Sat Mar 2 12:09:44 2024 +0700
+| | 
+| |     Merge from fluke
+| | 
+| * commit 0e97112ad28da74d5819d09eb4484701565cbbc4
+| | Author: __.flxk.__ <nitipong4434@gmail.com>
+| | Date:   Fri Mar 1 14:27:59 2024 +0700
+| | 
+| |     login and signin
+| |   
+| *   commit 5602db1aa39bd867c9ab2258c0caf1472ef1efdc
+| |\  Merge: 97999ba 921078a
+| | | Author: Winney <72338812+Winneyp@users.noreply.github.com>
+| | | Date:   Mon Feb 26 16:50:27 2024 +0700
+| | | 
+| | |     Merge pull request #2 from Winneyp/main
+| | |     
+| | |     requirement
+| | | 
+* | | commit c33f1178876d03a95a87c17cba7b66eaa9dbee09
+| | | Author: P <tatakornaow@gmail.com>
+| | | Date:   Fri Mar 1 06:06:51 2024 +0700
+| | | 
+| | |     Update แบบยุ่งเหยิง
+| | | 
+* | | commit b3c3cab3325c0544d5d03ea6578902c9137c455c
+| | | Author: P <tatakornaow@gmail.com>
+| | | Date:   Fri Mar 1 06:06:33 2024 +0700
+| | | 
+| | |     API test
+| | |   
+* | |   commit d164db8e1aba81cef46ff1a35d68b243c8953005
+|\ \ \  Merge: 69899d3 921078a
+| | |/  Author: P <tatakornaow@gmail.com>
+| |/|   Date:   Mon Feb 26 23:14:33 2024 +0700
+| | |   
+| | |       Merge branch 'main' of https://github.com/Winneyp/Upbeat-Frontend
+| | | 
+| * | commit 921078a9b2b9dd9991d48811a243374025bfc4c4
+| |\| Merge: 76800f4 97999ba
+| | | Author: Winney <72338812+Winneyp@users.noreply.github.com>
+| | | Date:   Mon Feb 26 14:34:52 2024 +0700
+| | | 
+| | |     Merge branch 'CPE261200-Upbeat:main' into main
+| | |   
+| | *   commit 97999baaf4a680281665c626225fb0f26d50a1de
+| | |\  Merge: bd66af7 6d08ef4
+| | | | Author: Kingsglaive <105868841+Rehunt671@users.noreply.github.com>
+| | | | Date:   Mon Feb 26 12:30:33 2024 +0700
+| | | | 
+| | | |     Merge pull request #1 from Winneyp/main
+| | | |     
+| | | |     vite templete
+| | | | 
+* | | | commit 69899d3f76a61050478dc6265a4792c5b2108de3
+|/ / /  Author: P <tatakornaow@gmail.com>
+| | |   Date:   Mon Feb 26 16:45:02 2024 +0700
+| | |   
+| | |       อัพเดตสิ่งที่ต้องมีในโค้ด
+| | | 
+* | | commit 76800f4b9400675c62f0a96e5991e89b5842c7bf
+| |/  Author: P <tatakornaow@gmail.com>
+|/|   Date:   Mon Feb 26 14:33:34 2024 +0700
+| |   
+| |       exPages
+| | 
+* | commit 6d08ef4bebc34ba958db0fe2a41a28cd6f888bd4
+|/  Author: P <tatakornaow@gmail.com>
+|   Date:   Mon Feb 26 12:27:38 2024 +0700
+|   
+|       vite templete
+| 
+* commit bd66af7e95fb913cdc8de5c78097208406b4db8e
+| Author: fdsdsfdsf <NestZ671@gmail.com>
+| Date:   Mon Feb 26 11:18:43 2024 +0700
+| 
+|     init frontend
+| 
+* commit f097151d74b5d1c74177281e0794e65822150d00
+  Author: Kingsglaive <105868841+Rehunt671@users.noreply.github.com>
+  Date:   Fri Jan 26 11:24:06 2024 +0700
+  
+      Initial commit
