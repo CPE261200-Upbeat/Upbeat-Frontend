@@ -1,0 +1,32 @@
+body {
+  background-image: url("../assets/background/space.jpg");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  pointer-events: none;
+}
+
+.hex-container {
+  position: relative;
+}
+
+.hex-image {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+}
+
+/* Disabling zooming in CSS */
+html {
+  touch-action: none; /* Disables pinch zooming on touch devices */
+  overflow: hidden; /* Prevents scroll bars from appearing */
+}
+
+.popUp {
+  margin: 0;
+  padding: 15px;
+  box-sizing: border-box;
+
+  font-family: "Fira Sans", sans-serif;
+}
