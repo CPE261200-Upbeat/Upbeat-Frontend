@@ -1,14 +1,15 @@
-body {
-  background-image: url("../assets/background/space.jpg");
-  height: 100vh;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  pointer-events: none;
+.ta10em {
+  resize: none;
+  height: 600px;
+  width: 300px;
+  margin: 30px;
+  background-color: rgb(233, 182, 246);
 }
 
-.hex-container {
-  position: relative;
+.confirm {
+  position: fixed;
+  left: 300px;
+  bottom: 100px;
 }
 
 .hex-image {
@@ -23,10 +24,30 @@ html {
   overflow: hidden; /* Prevents scroll bars from appearing */
 }
 
-.popUp {
-  margin: 0;
-  padding: 15px;
-  box-sizing: border-box;
+.hex-container {
+  position: relative;
+  pointer-events: none;
+}
 
-  font-family: "Fira Sans", sans-serif;
+.input-container {
+  position: fixed;
+  bottom: 10px; /* Adjust the distance from the bottom as needed */
+  left: 10px; /* Adjust the distance from the left as needed */
+  z-index: 2;
+}
+
+.input-box {
+  position: absolute;
+  width: 100px;
+  bottom: 15px;
+  left: 15px;
+}
+
+body {
+  background-image: url("../../assets/background/space.jpg");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  pointer-events: auto; /* Enable pointer events */
 }
