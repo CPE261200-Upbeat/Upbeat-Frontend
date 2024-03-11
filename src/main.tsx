@@ -7,11 +7,11 @@ import {
   Route,
   Link,
 } from "react-router-dom";
-import Login from "./components/login";
+import Login from "./components/Login.tsx";
 import Game from "./components/Game/Game";
-import SignUp from "./components/singup.tsx";
+import SignUp from "./components/SingUp.tsx";
 import LeaderBoard from "./components/LeaderBoard";
-import NoPage from "./components/noPage.tsx";
+import NoPage from "./components/NoPage.tsx";
 
 const router = createBrowserRouter([
   {
