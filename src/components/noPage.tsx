@@ -1,5 +1,5 @@
 import React from "react";
-import "./noPage.css";
+import "./NoPage.css";
 
 function noPage() {
   return <div className="Biggest-text">404 NOT FOUND</div>;
