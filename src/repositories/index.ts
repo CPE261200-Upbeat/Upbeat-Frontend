@@ -41,7 +41,9 @@ export function setServer(server: string | null): void {
 
 export async function getGameInfo(): Promise<GameInfoResponse> {
   try {
-    const response = await axios.get<GameInfoResponse>("/game");
+    const response = await axios.get<GameInfoResponse>(
+      "http://localhost:8080/game"
+    );
     return response.data;
   } catch (error) {
     throw new Error("Failed to fetch game information");
