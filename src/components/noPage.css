@@ -1,0 +1,7 @@
+.Biggest-text {
+  font-size: 100px; /* Adjust font size as needed */
+  text-align: center;
+  margin-top: 50vh; /* Center vertically */
+  transform: translateY(-50%);
+  color: white;
+}
