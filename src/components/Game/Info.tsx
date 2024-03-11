@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getGameInfo, GameInfoResponse } from "../repositories/index";
+import { GameInfoResponse } from "../../model/Game";
+import { getGameInfo } from "../../query/game";
 
 const GameInfoComponent: React.FC = () => {
   const [gameInfo, setGameInfo] = useState<GameInfoResponse | null>(null);
@@ -18,7 +19,7 @@ const GameInfoComponent: React.FC = () => {
       }
     };
 
-    fetchData();
+    fetchData();  
   }, []);
 
   if (isLoading) {
@@ -41,7 +42,7 @@ const GameInfoComponent: React.FC = () => {
       <h2>Players:</h2>
       <pre>{JSON.stringify(gameInfo.players, null, 2)}</pre>
       <h2>Map:</h2>
-      <pre>{JSON.stringify(gameInfo.map, null, 2)}</pre>
+      <pre>{JSON.stringify(gameInfo.gameMap, null, 2)}</pre>
     </div>
   );
 };

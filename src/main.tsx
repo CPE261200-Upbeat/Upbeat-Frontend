@@ -1,17 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
 import {
   createBrowserRouter,
   RouterProvider,
-  Route,
-  Link,
 } from "react-router-dom";
-import Login from "./components/login";
-import Game from "./components/Game/Game";
-import SignUp from "./components/singup.tsx";
-import LeaderBoard from "./components/LeaderBoard";
-import NoPage from "./components/noPage.tsx";
+import NoPage from "./components/noPage/NoPage.tsx";
+import Login from "./components/login/Login.tsx";
+import Game from "./components/game/Game.tsx";
+import SignUp from "./components/signUp/SignUp.tsx";
+import LeaderBoard from "./components/game/leaderboard/Leaderboard.tsx";
 
 const router = createBrowserRouter([
   {
