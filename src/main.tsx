@@ -6,9 +6,10 @@ import {
 } from "react-router-dom";
 import NoPage from "./components/noPage/NoPage.tsx";
 import Login from "./components/login/Login.tsx";
-import Game from "./components/game/Game.tsx";
 import SignUp from "./components/signUp/SignUp.tsx";
-import LeaderBoard from "./components/game/leaderboard/Leaderboard.tsx";
+import Game from "./components/Game/Game.tsx";
+import LeaderBoard from "./components/Game/leaderboard/Leaderboard.tsx";
+
 
 const router = createBrowserRouter([
   {
