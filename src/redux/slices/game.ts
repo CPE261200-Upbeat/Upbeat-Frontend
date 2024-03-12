@@ -23,12 +23,12 @@ const initialState: GameInfo = {
   gameMap: {
     regions: [],
   },
-  gameState: {
-    isBegin: false,
-    isOver: false,
-    isPaused: false,
-    turnCount: 0,
-  }
+  // gameState: {
+  //   isBegin: false,
+  //   isOver: false,
+  //   isPaused: false,
+  //   turnCount: 0,
+  // }
 };
 
 export const gameSlice = createSlice({
@@ -36,11 +36,13 @@ export const gameSlice = createSlice({
   initialState,
   reducers: {
       setGameInfo: (state , action: PayloadAction<GameInfo>) => {
-          state = action.payload;
+          state.config = action.payload.config;
+          state.players = action.payload.players;
+          state.gameMap = action.payload.gameMap;
       },
   },
 });
 
 export const {setGameInfo} = gameSlice.actions;
-export const selectGame = (state: RootState) => state.game;
+export const selectGame = (state: RootState) => state.game
 export default gameSlice.reducer;

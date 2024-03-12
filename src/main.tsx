@@ -12,6 +12,7 @@ import Info from "./components/Game/Info.tsx";
 import LeaderBoard from "./components/Game/leaderboard/Leaderboard.tsx";
 import { Provider } from "react-redux";
 import { store } from "./redux/store.ts";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const router = createBrowserRouter([
   
   {
@@ -43,14 +44,16 @@ const router = createBrowserRouter([
     element: <NoPage />,
   },
 ]);
-
+const queryClient = new QueryClient()
 const rootElement = document.getElementById("root");
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
     <Provider store ={store}>
-      <React.StrictMode>
-        <RouterProvider router={router} />
-      </React.StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <React.StrictMode>
+          <RouterProvider router={router} />
+        </React.StrictMode>
+      </QueryClientProvider>
     </Provider>
   );
 } else {

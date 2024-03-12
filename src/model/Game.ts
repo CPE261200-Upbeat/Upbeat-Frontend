@@ -14,5 +14,5 @@ export interface GameInfo {
   gameMap: {
     regions: Region[][];
   };
-  gameState: GameState;
+  // gameState: GameState;
 }

@@ -1,5 +1,4 @@
 import Stomp from "stompjs";
-import { getGameInfo } from '../query/game';
 import { Player } from "../model/player";
 import { GameState } from "../model/gameState";
 import { Config } from "../model/config";
@@ -8,6 +7,7 @@ import { Config } from "../model/config";
 import SockJS from "sockjs-client/dist/sockjs";
 import { useAppDispatch, useAppSelector } from "../redux/hook";
 import { selectWebsocket, setIsConnected, setStompClient } from "../redux/slices/websocket";
+import { useQueryGameData } from "../query/game";
 
 
 function useWebSocket(){
@@ -62,7 +62,7 @@ function useWebSocket(){
 
     const onMessageReceived = (payload : Stomp.Message) => {
         const player : Player = JSON.parse(payload.body)
-        getGameInfo()
+        useQueryGameData()
         if(player) {
             //Winner Found handle winner found here
         }

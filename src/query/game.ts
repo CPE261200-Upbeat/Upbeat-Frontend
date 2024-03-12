@@ -1,27 +1,27 @@
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { GameInfo } from "../model/game";
-import { useDispatch } from "react-redux";
+import { useQuery } from "@tanstack/react-query";
+import { axiosCustom } from "./axiosCustom";
+import { useAppDispatch } from "../redux/hook";
 import { setGameInfo } from "../redux/slices/game";
 export type Response<T> = Promise<AxiosResponse<T>>;
 
- const axiosCustom = axios.create({
-	// Configuration
-	baseURL: import.meta.env.VITE_SERVER,
-	timeout: 8000,
-	headers: {},
-});
 
 
-export async function getGameInfo() {
-  const dispatch  = useDispatch()
-  try {
-    const response = await axiosCustom.get<GameInfo>("/game");
-    dispatch(setGameInfo(response.data))
-    
-  } catch (error) {
-    throw new Error("Failed to fetch game information");
-  }
+export const useQueryGameData = () => {
+  const dispatch = useAppDispatch(); 
+  const query = useQuery<GameInfo | undefined>({
+    queryKey: ['gameData'],
+    queryFn: async () => {
+      const response = await axiosCustom.get<GameInfo>("/game");
+      dispatch(setGameInfo(response.data));
+      return response.data; 
+    }
+  });
+  
+  return query;
 }
+
 
 export async function Login(): Promise<String> {
   try {

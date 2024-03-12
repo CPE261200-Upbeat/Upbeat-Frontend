@@ -1,5 +1,5 @@
 
-import { Player } from "./Player";
+import { Player } from "./player";
 import { Position } from "./position";
 
 export interface Region {
