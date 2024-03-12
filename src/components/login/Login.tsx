@@ -1,5 +1,5 @@
 import { SyntheticEvent, useState } from "react";
-import "../login/Login.css";
+import "./Login.css";
 import { FaUserCircle, FaLock } from "react-icons/fa";
 
 function Login() {
