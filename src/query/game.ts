@@ -20,3 +20,22 @@ export async function getGameInfo(): Promise<GameInfoResponse> {
   }
 }
 
+export async function Login(): Promise<String> {
+  try {
+    const response = await axiosCustom.get<String>("/login");
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to fetch game information");
+  }
+}
+
+
+export async function SignUp(): Promise<String> {
+  try {
+    const response = await axiosCustom.get<String>("/signIn");
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to fetch game information");
+  }
+}
+

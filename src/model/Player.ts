@@ -1,8 +1,9 @@
+import { Account } from "./Account";
 import { CityCrew } from "./CityCrew";
 import { Region } from "./Region";
 
 export interface Player {
-    name: string;
+    acct: Account;
     budget: number;
     cityCenter: Region ;
     crew: CityCrew;

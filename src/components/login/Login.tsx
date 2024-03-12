@@ -1,12 +1,21 @@
-import "./Login.css"
+import { SyntheticEvent, useState } from "react";
+import "./Login.css";
 import { FaUserCircle, FaLock } from "react-icons/fa";
 
 function Login() {
+  
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSubmit = (event : SyntheticEvent) => {
+    event.preventDefault();
+    
+  };
+
   return (
     <section>
       <div className="upbeat-wrapper">
         <div className="upbeat">
-          <form action="">
+          <form onSubmit={handleSubmit}>
             <div className="from_upbeat">
               <h1 className="text-Upbeat">UPBEAT</h1>
               <h5 className="text-Hope">Hope you enjoy</h5>
@@ -18,16 +27,26 @@ function Login() {
           </form>
 
           <div className="wrapper">
-            <form action="">
+            <form onSubmit={handleSubmit}>
               <h1>LOGIN</h1>
               <h3 className="name">username</h3>
               <div className="input-box">
-                <input type="text" required />
+                <input
+                  type="text"
+                  required
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
                 <FaUserCircle className="icon" />
               </div>
               <h3 className="name">password</h3>
               <div className="input-box">
-                <input type="password" required />
+                <input
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
                 <FaLock className="icon" />
               </div>
               <div className="remember-forgot">

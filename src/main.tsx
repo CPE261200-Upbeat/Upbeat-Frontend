@@ -10,8 +10,8 @@ import SignUp from "./components/signUp/SignUp.tsx";
 import Game from "./components/Game/Game.tsx";
 import LeaderBoard from "./components/Game/leaderboard/Leaderboard.tsx";
 
-
 const router = createBrowserRouter([
+  
   {
     path: "",
     element: <Login />,
