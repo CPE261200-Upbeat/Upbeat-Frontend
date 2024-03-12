@@ -1,6 +1,8 @@
-import { Account } from "./Account";
-import { CityCrew } from "./CityCrew";
-import { Region } from "./Region";
+import { Region } from "./region";
+import { Account } from "./account";
+import { CityCrew } from "./cityCrew";
+
+
 
 export interface Player {
     acct: Account;

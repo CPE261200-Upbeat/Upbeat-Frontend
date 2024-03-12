@@ -1,34 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { GameInfoResponse } from "../../model/Game";
-import { getGameInfo } from "../../query/game";
+import React from "react";
+import { GameInfo } from "../../model/game";
+import { Player } from "../../model/player";
+import { useAppSelector } from "../../redux/hook";
+import { selectGame } from "../../redux/slices/game";
+import useWebSocket from "../../websocket/useWebsocket";
 
 const GameInfoComponent: React.FC = () => {
-  const [gameInfo, setGameInfo] = useState<GameInfoResponse | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  // const { executeTurn} = useWebSocket()
+  // const player:Player = {
+  //   acct: { username: 'username', password: '' }, 
+  //   budget: 0,
+  //   cityCenter: { 
+  //       isCityCenter: false,
+  //       deposit : 0,
+  //       pos: {
+  //           row: 0 ,
+  //           col: 0 ,
+  //       },
+  //       owner : null,
+  //   },
+  //   crew: {
+  //       pos : {
+  //           row: 0 ,
+  //           col: 0 ,
+  //       },
+  //   },
+  //   timeLeft: 0,
+  //   constructionPlan: 'move up',
+  //   defeat: false
+  // }
+  // executeTurn(player)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getGameInfo();
-        setGameInfo(data);
-        setIsLoading(false);
-      } catch (error) {
-        setError("Failed to fetch game information");
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();  
-  }, []);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  const gameInfo: GameInfo = useAppSelector(selectGame);
 
   if (!gameInfo) {
     return <div>No game information available</div>;

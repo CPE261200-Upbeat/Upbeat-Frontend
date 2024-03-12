@@ -1,9 +1,11 @@
-import { Config } from "./Config";
-import { GameState } from "./GameState";
-import { Player } from "./Player";
-import { Region } from "./Region";
+import { Config } from "./config";
+import { GameState } from "./gameState";
+import { Player } from "./player";
+import { Region } from "./region";
 
-export interface GameInfoResponse {
+
+
+export interface GameInfo {
   config: Config;
   players: {
     list: Player[];

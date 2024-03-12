@@ -3,5 +3,4 @@ export interface GameState {
     isOver: boolean ;
     isPaused: boolean ;
     turnCount : number;
-
 }

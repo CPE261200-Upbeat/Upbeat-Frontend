@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
-import { GameInfoResponse } from "../model/Game";
-
+import { GameInfo } from "../model/game";
+import { useDispatch } from "react-redux";
+import { setGameInfo } from "../redux/slices/game";
 export type Response<T> = Promise<AxiosResponse<T>>;
 
  const axiosCustom = axios.create({
@@ -10,11 +11,13 @@ export type Response<T> = Promise<AxiosResponse<T>>;
 	headers: {},
 });
 
-// We should modified this function to store game info in global store and use effect for each page will do a job?
-export async function getGameInfo(): Promise<GameInfoResponse> {
+
+export async function getGameInfo() {
+  const dispatch  = useDispatch()
   try {
-    const response = await axiosCustom.get<GameInfoResponse>("/game");
-    return response.data;
+    const response = await axiosCustom.get<GameInfo>("/game");
+    dispatch(setGameInfo(response.data))
+    
   } catch (error) {
     throw new Error("Failed to fetch game information");
   }

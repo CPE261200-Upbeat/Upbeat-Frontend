@@ -8,13 +8,15 @@ import NoPage from "./components/noPage/NoPage.tsx";
 import Login from "./components/login/Login.tsx";
 import SignUp from "./components/signUp/SignUp.tsx";
 import Game from "./components/Game/Game.tsx";
+import Info from "./components/Game/Info.tsx";
 import LeaderBoard from "./components/Game/leaderboard/Leaderboard.tsx";
-
+import { Provider } from "react-redux";
+import { store } from "./redux/store.ts";
 const router = createBrowserRouter([
   
   {
     path: "",
-    element: <Login />,
+    element: <Info />,
   },
   {
     path: "login",
@@ -33,6 +35,10 @@ const router = createBrowserRouter([
     element: <LeaderBoard />,
   },
   {
+    path: "info",
+    element: <Info />,
+  },
+  {
     path: "*",
     element: <NoPage />,
   },
@@ -41,9 +47,11 @@ const router = createBrowserRouter([
 const rootElement = document.getElementById("root");
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
-    <React.StrictMode>
-      <RouterProvider router={router} />
-    </React.StrictMode>
+    <Provider store ={store}>
+      <React.StrictMode>
+        <RouterProvider router={router} />
+      </React.StrictMode>
+    </Provider>
   );
 } else {
   console.error("Root element not found");
