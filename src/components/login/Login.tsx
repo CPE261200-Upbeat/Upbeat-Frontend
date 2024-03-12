@@ -1,14 +1,12 @@
 import { SyntheticEvent, useState } from "react";
-import "./Login.css";
+import "../login/Login.css";
 import { FaUserCircle, FaLock } from "react-icons/fa";
 
 function Login() {
-  
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const handleSubmit = (event : SyntheticEvent) => {
+  const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
-    
   };
 
   return (
@@ -19,7 +17,6 @@ function Login() {
             <div className="from_upbeat">
               <h1 className="text-Upbeat">UPBEAT</h1>
               <h5 className="text-Hope">Hope you enjoy</h5>
-              <p> </p>
               <div className="NPF">
                 <button type="submit">presented by NPF</button>
               </div>
