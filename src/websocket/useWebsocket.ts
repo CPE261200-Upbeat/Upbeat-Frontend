@@ -1,5 +1,4 @@
 import Stomp from "stompjs";
-import { Player } from "../model/player";
 import { GameState } from "../model/gameState";
 import { Config } from "../model/config";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -11,7 +10,8 @@ import {
   setIsConnected,
   setStompClient,
 } from "../redux/slices/websocket";
-import { useQueryGameData } from "../query/game";
+import { Credential } from "model/credential";
+import { GameInfo } from "model/game";
 
 function useWebSocket() {
   const dispatch = useAppDispatch();
@@ -35,12 +35,13 @@ function useWebSocket() {
     dispatch(setStompClient(stompClient));
   };
 
-  function handleJoin(player: Player) {
+  function handleJoin(acct : Credential) {
+
     if (webSocket.stompClient && webSocket.stompClient.connected) {
       webSocket.stompClient.send(
         "/app/game.join",
         {},
-        JSON.stringify({ player })
+        JSON.stringify({...acct  })
       );
     }
   }
@@ -50,17 +51,17 @@ function useWebSocket() {
       webSocket.stompClient.send(
         "/app/game.setState",
         {},
-        JSON.stringify({ state })
+        JSON.stringify({ ...state })
       );
     }
   }
 
-  function executeTurn(player: Player) {
+  function executeTurn(contructionPlan : string , timeLeft: number) {
     if (webSocket.stompClient && webSocket.stompClient.connected) {
       webSocket.stompClient.send(
         "/app/game.execute",
         {},
-        JSON.stringify({ player })
+        JSON.stringify({ contructionPlan , timeLeft })
       );
     }
   }
@@ -76,11 +77,8 @@ function useWebSocket() {
   }
 
   const onMessageReceived = (payload: Stomp.Message) => {
-    const player: Player = JSON.parse(payload.body);
-    useQueryGameData();
-    if (player) {
-      //Winner Found handle winner found here
-    }
+    const game: GameInfo = JSON.parse(payload.body);
+    console.log(game)
   };
 
   return { connect, handleJoin, handleSetState, executeTurn, handleSetConfig };
