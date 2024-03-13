@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import { Textarea } from "@mantine/core";
 import "./Game.css";
-import Hex from "./1Hex"; // Import the App component
+import Hex from "./map/1Hex"; // Import the App component
 import hexClear from "../../assets/material/hex/hex-clear.png";
-import hexBlack from "../../assets/material/hex/hex-black.png";
-import hexGreen from "../assets/material/hex/hex-green.png";
 
-function AppWrapper() {
+function Game() {
   const [constructionPlan, setConstructionPlan] = useState(""); // State to store textarea value
   const [confirmedPlan, setConfirmedPlan] = useState("");
 
@@ -72,4 +69,4 @@ function AppWrapper() {
   );
 }
 
-export default AppWrapper;
+export default Game;

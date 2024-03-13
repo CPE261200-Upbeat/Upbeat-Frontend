@@ -1,18 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-  Link,
-} from "react-router-dom";
-import Login from "./components/Login.tsx";
-import Game from "./components/Game/Game";
-import SignUp from "./components/SingUp.tsx";
-import LeaderBoard from "./components/LeaderBoard";
-import NoPage from "./components/NoPage.tsx";
-
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import NoPage from "./components/noPage/NoPage.tsx";
+import Login from "./components/login/Login.tsx";
+import SignUp from "./components/signUp/SignUp.tsx";
+import Game from "./components/Game/Game.tsx";
+import Info from "./components/Game/Info.tsx";
+import LeaderBoard from "./components/Game/leaderboard/Leaderboard.tsx";
+import Lobby from "./components/lobby/Lobby.tsx";
+import Win from "./components/win/Win.tsx";
+import Lose from "./components/lose/Lose.tsx";
+import { Provider } from "react-redux";
+import { store } from "./redux/store.ts";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const router = createBrowserRouter([
   {
     path: "",
@@ -27,6 +27,10 @@ const router = createBrowserRouter([
     element: <SignUp />,
   },
   {
+    path: "lobby",
+    element: <Lobby />,
+  },
+  {
     path: "game",
     element: <Game />,
   },
@@ -35,17 +39,33 @@ const router = createBrowserRouter([
     element: <LeaderBoard />,
   },
   {
+    path: "info",
+    element: <Info />,
+  },
+  {
+    path: "win",
+    element: <Win />,
+  },
+  {
+    path: "lose",
+    element: <Lose />,
+  },
+  {
     path: "*",
     element: <NoPage />,
   },
 ]);
-
+const queryClient = new QueryClient();
 const rootElement = document.getElementById("root");
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
-    <React.StrictMode>
-      <RouterProvider router={router} />
-    </React.StrictMode>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <React.StrictMode>
+          <RouterProvider router={router} />
+        </React.StrictMode>
+      </QueryClientProvider>
+    </Provider>
   );
 } else {
   console.error("Root element not found");

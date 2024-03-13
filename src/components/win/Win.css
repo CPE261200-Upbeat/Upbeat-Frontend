@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap");
+
+img {
+  pointer-events: none;
+}
+
+.game img {
+  width: 500px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.wapper {
+  text-align: center;
+}
+
+.wapper button {
+  margin-top: 45px;
+  width: 250px;
+  height: auto;
+  font-size: 65px;
+  border-radius: 25px;
+  color: rgb(28, 28, 28);
+  text-shadow: 2px 2px 2px #939393;
+  box-shadow: 5px 6px 5px #000000;
+  cursor: pointer;
+}
+
+.container {
+  margin-top: -10px;
+  display: flex;
+  font-size: 145px;
+  font-weight: 800;
+  color: rgb(255, 255, 255);
+  text-shadow: 9px 5px 5px rgb(21, 21, 21);
+}
+
+.container img {
+  width: 140px;
+  height: auto;
+}
+
+.win {
+  margin-left: 25px;
+  margin-right: 40px;
+  margin-bottom: -25px;
+}
+
+.trophy {
+  transform: rotate(-13deg);
+}
+
+.star {
+  transform: rotate(15deg);
+}

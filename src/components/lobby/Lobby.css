@@ -1,0 +1,74 @@
+@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap");
+
+.wappper {
+  justify-content: center;
+  align-items: center;
+}
+
+.wappper h1 {
+  font-size: 240px;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  text-shadow: 8px 8px 5px #000;
+  -webkit-text-stroke-color: #000;
+  -webkit-text-stroke-width: 3px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.player {
+  display: flex;
+}
+
+.player_4 {
+  align-items: center;
+  justify-content: center;
+}
+
+.player_1 img,
+.player_2 img,
+.player_3 img,
+.player_4 img {
+  width: 230px;
+  height: auto;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.player_1 button,
+.player_2 button,
+.player_3 button,
+.player_4 button {
+  width: 170px;
+  height: 43px;
+  background: #d9d9d9;
+  border: none;
+  outline: none;
+  border-radius: 15px;
+  font-size: 35px;
+  font-weight: 600;
+  color: #000000;
+  margin-left: 44px;
+  text-shadow: 2px 2px 1px #939393;
+  box-shadow: 1px 8px 5px #000000;
+}
+
+.button {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.button button {
+  width: 270px;
+  height: 90px;
+  border-radius: 37px;
+  font-size: 70px;
+  font-weight: 600;
+  text-shadow: 2px 5px 3px #939393;
+  box-shadow: 1px 10px 5px #000000;
+  cursor: pointer;
+}
