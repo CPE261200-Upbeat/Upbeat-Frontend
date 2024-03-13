@@ -1,11 +1,10 @@
 import "../lobby/Lobby.css";
-import useWebSocket from "../../websocket/useWebSocket";
+import useWebSocket from "../../websocket/useWebsocket";
 import { useAppSelector } from "../../redux/hook";
 import { selectPlayer } from "../../redux/slices/player";
 import { GameState } from "../../model/gameState";
 import { selectGame } from "../../redux/slices/game";
 import { useEffect } from "react";
-import React from "react";
 function Lobby() {
   const websocket = useWebSocket();
   useEffect(() => {

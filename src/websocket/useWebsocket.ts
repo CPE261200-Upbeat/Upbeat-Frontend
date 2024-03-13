@@ -3,6 +3,7 @@ import { Player } from "../model/player";
 import { GameState } from "../model/gameState";
 import { Config } from "../model/config";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import SockJS from "sockjs-client/dist/sockjs";
 import { useAppDispatch, useAppSelector } from "../redux/hook";
 import {

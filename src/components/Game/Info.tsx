@@ -3,7 +3,7 @@ import { useAppSelector } from "../../redux/hook";
 import { selectGame } from "../../redux/slices/game";
 import { useQueryGameData } from "../../query/game";
 import { Player } from "../../model/player";
-import useWebSocket from "../../websocket/useWebSocket";
+import useWebSocket from "../../websocket/useWebsocket";
 
 const GameInfoComponent: React.FC = () => {
   useQueryGameData();
