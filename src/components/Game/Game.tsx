@@ -1,11 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Game.css";
 import Hex from "./map/1Hex"; // Import the App component
 import hexClear from "../../assets/material/hex/hex-clear.png";
+import { selectPlayer } from "../../redux/slices/player";
+import { selectGame } from "../../redux/slices/game";
+import { useQueryGameData } from "../../query/game";
+import { useAppSelector } from "../../redux/hook";
 
-function Game() {
-  const [constructionPlan, setConstructionPlan] = useState(""); // State to store textarea value
-  const [confirmedPlan, setConfirmedPlan] = useState("");
+const Game: React.FC = () => {
+  const useQueryGame = useQueryGameData();
+  const gameInfo = useAppSelector(selectGame);
+  const player = useAppSelector(selectPlayer);
+  const [constructionPlan, setConstructionPlan] = useState("");
+  const [timeLeft, setTimeLeft] = useState(0);
+
+  useEffect(() => {
+    const turn = gameInfo.players.turn;
+    const currentPlayer = gameInfo?.players?.list[turn];
+    if (currentPlayer) {
+      setConstructionPlan(currentPlayer.constructionPlan);
+      setTimeLeft(currentPlayer.timeLeft);
+    }
+  }, [gameInfo]);
 
   const images = [];
   let xPosition = 350;
@@ -33,20 +49,40 @@ function Game() {
     }
   }
 
+  const playerLose = () => {
+    window.location.href = "/lose";
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (timeLeft === 0) {
+        playerLose();
+      }
+      setTimeLeft(timeLeft - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [timeLeft]);
+
   // Function to handle textarea change and update state
   const handleTextareaChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    console.log("Confirmed:", confirmedPlan, "\n");
-    console.log("Textarea value:", event.target.value);
     setConstructionPlan(event.target.value);
+    console.log("Textarea value:", event.target.value);
   };
 
-  //send data to confimedplan => send to back end
-  const handleConfirmPlan = () => {
-    setConfirmedPlan(constructionPlan);
-    console.log("Confirmed:", confirmedPlan);
-  };
+  // //send data to confimedplan => send to back end
+  // const handleConfirmPlan = () => {
+  //   currentPlayer.constructionPlan = constructionPlan;
+  //   currentPlayer.timeLeft = timeLeft;
+
+  //   webSocket.executeTurn(player);
+  //   // setConfirmedPlan(constructionPlan);
+  //   // console.log("Confirmed:", );
+  // };
+
+  if (useQueryGame.isLoading || !gameInfo) return <div>Loading...</div>;
 
   return (
     <div>
@@ -62,11 +98,13 @@ function Game() {
           placeholder="Construction Plan"
         />
       </div>
-      <button className="confirm" onClick={handleConfirmPlan}>
-        confirm
-      </button>
+      <div className="timeLeft">{timeLeft}</div>
+
+      {/* <button className="confirm" onClick={handleConfirmPlan}> */}
+      {/* confirm
+      </button> */}
     </div>
   );
-}
+};
 
 export default Game;
