@@ -3,30 +3,28 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 interface webSocketState {
-    isConnected: boolean;
-    stompClient: Stomp.Client | undefined;
+  isConnected: boolean;
+  stompClient: Stomp.Client | undefined;
 }
 
 const initialState: webSocketState = {
-    isConnected: false,
-    stompClient: undefined,
+  isConnected: false,
+  stompClient: undefined,
 };
 
-
 export const webSocketSlice = createSlice({
-  name: 'websocket',
+  name: "websocket",
   initialState,
   reducers: {
-      setStompClient: (state, action: PayloadAction<Stomp.Client>) => {
-          state.stompClient = action.payload;
-      },
-      setIsConnected:(state, action: PayloadAction<boolean>) =>{
-          state.isConnected = action.payload
-      }
+    setStompClient: (state, action: PayloadAction<Stomp.Client>) => {
+      state.stompClient = action.payload;
+    },
+    setIsConnected: (state, action: PayloadAction<boolean>) => {
+      state.isConnected = action.payload;
+    },
   },
 });
 
-export const {setStompClient ,setIsConnected } = webSocketSlice.actions;
+export const { setStompClient, setIsConnected } = webSocketSlice.actions;
 export default webSocketSlice.reducer;
-export const selectWebsocket = (state: RootState) => state.webSocket
-
+export const selectWebSocket = (state: RootState) => state.webSocket;

@@ -1,23 +1,24 @@
 import { SyntheticEvent, useState } from "react";
 import "../login/Login.css"; // Assuming Login.css styles the login form
 import { FaUserCircle, FaLock } from "react-icons/fa";
+import { Credential } from "../../model/credential";
+import { useMutationSignUp } from "../../query/game";
+import React from "react";
 
 function SignUp() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  const handleSubmit = (event: SyntheticEvent) => {
+  const mutationSignUp = useMutationSignUp();
+  const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
 
-    console.log("Form submitted successfully!");
-    console.log("Username:", username);
-    console.log("Password:", password);
-    console.log("Confirm Password:", confirmPassword);
-
-    setUsername("");
-    setPassword("");
-    setConfirmPassword("");
+    const credential: Credential = {
+      username,
+      password,
+    };
+    const player = await mutationSignUp.mutateAsync(credential);
+    if (player) window.location.href = "/login";
   };
 
   return (

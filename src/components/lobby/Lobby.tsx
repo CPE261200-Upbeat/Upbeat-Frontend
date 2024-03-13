@@ -1,12 +1,30 @@
-import React from "react";
 import "../lobby/Lobby.css";
-
+import useWebSocket from "../../websocket/useWebSocket";
+import { useAppSelector } from "../../redux/hook";
+import { selectPlayer } from "../../redux/slices/player";
+import { GameState } from "../../model/gameState";
+import { selectGame } from "../../redux/slices/game";
+import { useEffect } from "react";
+import React from "react";
 function Lobby() {
+  const websocket = useWebSocket();
+  useEffect(() => {
+    websocket.connect();
+  }, []);
+  const player = useAppSelector(selectPlayer);
+  const game = useAppSelector(selectGame);
+
   const handleClick = (buttonType: string) => {
     if (buttonType === "join") {
-      console.log("Join button clicked!");
+      websocket.handleJoin(player);
     } else if (buttonType === "start") {
-      console.log("Start button clicked!");
+      const gameState: GameState = {
+        isOver: false,
+        isBegin: true,
+        isPaused: false,
+        turnCount: 1,
+      };
+      websocket.handleSetState(gameState);
     } else {
       console.error("Unexpected button type:", buttonType);
     }
