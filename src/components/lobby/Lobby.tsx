@@ -2,6 +2,16 @@ import React from "react";
 import "../lobby/Lobby.css";
 
 function Lobby() {
+  const handleClick = (buttonType: string) => {
+    if (buttonType === "join") {
+      console.log("Join button clicked!");
+    } else if (buttonType === "start") {
+      console.log("Start button clicked!");
+    } else {
+      console.error("Unexpected button type:", buttonType);
+    }
+  };
+
   return (
     <section>
       <div className="wappper">
@@ -36,8 +46,12 @@ function Lobby() {
           </div>
         </div>
         <div className="button">
-          <button type="submit">START</button>
-          <button type="submit">JOIN</button>
+          <button type="submit" onClick={() => handleClick("start")}>
+            START
+          </button>
+          <button type="submit" onClick={() => handleClick("join")}>
+            JOIN
+          </button>
         </div>
       </div>
     </section>

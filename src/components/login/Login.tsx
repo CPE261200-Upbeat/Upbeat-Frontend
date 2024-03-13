@@ -7,6 +7,12 @@ function Login() {
   const [password, setPassword] = useState("");
   const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
+
+    console.log("Username:", username);
+    console.log("Password:", password);
+
+    setUsername("");
+    setPassword("");
   };
 
   return (
