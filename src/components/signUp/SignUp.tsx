@@ -1,16 +1,36 @@
-import "../login/Login.css"
+import { SyntheticEvent, useState } from "react";
+import "../login/Login.css"; // Assuming Login.css styles the login form
 import { FaUserCircle, FaLock } from "react-icons/fa";
+import { Credential } from "../../model/credential";
+import { useMutationSignUp } from "../../query/game";
+import React from "react";
 
 function SignUp() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const mutationSignUp = useMutationSignUp();
+  const handleSubmit = async (event: SyntheticEvent) => {
+    event.preventDefault();
+
+    const credential: Credential = {
+      username,
+      password,
+    };
+    const player = await mutationSignUp.mutateAsync(credential);
+    if (player) window.location.href = "/login";
+  };
+
   return (
-    <section>
+    <section className="signup-section">
+      {" "}
       <div className="upbeat-wrapper">
         <div className="upbeat">
-          <form action="">
+          <form onSubmit={handleSubmit}>
             <div className="from_upbeat">
               <h1 className="text-Upbeat">UPBEAT</h1>
               <h5 className="text-Hope">Hope you enjoy</h5>
-              <p> </p>
+              <p></p>
               <div className="NPF">
                 <button type="submit">presented by NPF</button>
               </div>
@@ -18,29 +38,43 @@ function SignUp() {
           </form>
 
           <div className="wrapper">
-            <form action="">
+            <form onSubmit={handleSubmit}>
               <h1>SIGN UP</h1>
-              <h3 className="name">username</h3>
+              <h3 className="name">Username</h3>
               <div className="input-box">
-                <input type="text" required />
+                <input
+                  type="text"
+                  required
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
                 <FaUserCircle className="icon" />
               </div>
-              <h3 className="name">password</h3>
+              <h3 className="name">Password</h3>
               <div className="input-box">
-                <input type="password" required />
+                <input
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
                 <FaLock className="icon" />
               </div>
-              <h3 className="name">comfrim password</h3>
+              <h3 className="name">Confirm Password</h3>
               <div className="input-box">
-                <input type="password" required />
+                <input
+                  type="password"
+                  required
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
                 <FaLock className="icon" />
               </div>
               <div className="container">
-                <button type="submit">Login</button>
-                <button type="submit">Sign up</button>
+                <button type="submit">Sign Up</button>{" "}
               </div>
               <div className="guess">
-                <a href="#">already have account ?</a>
+                <a href="#">Already have an account?</a>
               </div>
             </form>
           </div>

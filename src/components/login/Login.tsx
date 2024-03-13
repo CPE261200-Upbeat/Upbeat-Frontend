@@ -1,12 +1,25 @@
 import { SyntheticEvent, useState } from "react";
 import "./Login.css";
 import { FaUserCircle, FaLock } from "react-icons/fa";
+import useWebSocket from "../../websocket/useWebSocket";
+import { useMutationLogin } from "../../query/game";
+import { Credential } from "../../model/credential";
+import React from "react";
 
 function Login() {
+  const websocket = useWebSocket();
+  const mutationLogin = useMutationLogin();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const handleSubmit = (event: SyntheticEvent) => {
+  const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
+    websocket.connect();
+    const credential: Credential = {
+      username,
+      password,
+    };
+    const player = await mutationLogin.mutateAsync(credential);
+    if (player) window.location.href = "/lobby";
   };
 
   return (
