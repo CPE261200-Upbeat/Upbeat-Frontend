@@ -605,6 +605,11 @@
   resolved "https://registry.npmjs.org/@types/semver/-/semver-7.5.8.tgz"
   integrity sha512-I8EUhyrgfLrcTkzV3TSsGyl1tSuPrEDzr0yd5m90UgNxQkyDXULk3b6MlQqTCpZpNtWe1K0hzclnZkTcLBe2UQ==
 
+"@types/sockjs-client@^1.5.4":
+  version "1.5.4"
+  resolved "https://registry.npmjs.org/@types/sockjs-client/-/sockjs-client-1.5.4.tgz"
+  integrity sha512-zk+uFZeWyvJ5ZFkLIwoGA/DfJ+pYzcZ8eH4H/EILCm2OBZyHH6Hkdna1/UWL/CFruh5wj6ES7g75SvUB0VsH5w==
+
 "@types/stompjs@^2.3.9":
   version "2.3.9"
   resolved "https://registry.npmjs.org/@types/stompjs/-/stompjs-2.3.9.tgz"
@@ -1973,10 +1978,17 @@ utf-8-validate@^5.0.2:
   dependencies:
     node-gyp-build "^4.3.0"
 
+<<<<<<< HEAD
+"vite@^4.2.0 || ^5.0.0", vite@^5.1.4:
+  version "5.1.6"
+  resolved "https://registry.npmjs.org/vite/-/vite-5.1.6.tgz"
+  integrity sha512-yYIAZs9nVfRJ/AiOLCA91zzhjsHUgMjB+EigzFb6W2XTLO8JixBCKCjvhKZaye+NKYHCrkv3Oh50dH9EdLU2RA==
+=======
 vite@^5.1.4:
   version "5.1.4"
   resolved "https://registry.npmjs.org/vite/-/vite-5.1.4.tgz"
   integrity sha512-n+MPqzq+d9nMVTKyewqw6kSt+R3CkvF9QAKY8obiQn8g1fwTscKxyfaYnC632HtBXAQGc1Yjomphwn1dtwGAHg==
+>>>>>>> 263d684e6d627909e327d3f4dbe4a1406ec870ac
   dependencies:
     esbuild "^0.19.3"
     postcss "^8.4.35"

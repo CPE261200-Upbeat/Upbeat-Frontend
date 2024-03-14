@@ -2,7 +2,7 @@ import { GameInfo } from "../../model/game";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
-const initialState: GameInfo = {
+export const initialState: GameInfo = {
   config: {
     m: 0,
     n: 0,

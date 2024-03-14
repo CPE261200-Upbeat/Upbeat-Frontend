@@ -1,15 +1,12 @@
 .ta10em {
+  position: fixed;
+  left: 15px;
+  top: 15px;
   resize: none;
   height: 600px;
   width: 300px;
   margin: 30px;
   background-color: rgb(233, 182, 246);
-}
-
-.confirm {
-  position: fixed;
-  left: 300px;
-  bottom: 100px;
 }
 
 .hex-image {
