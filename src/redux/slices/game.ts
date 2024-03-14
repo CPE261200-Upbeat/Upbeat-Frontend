@@ -4,7 +4,7 @@ import { RootState } from "../store";
 
 const initialState: GameInfo = {
   config: {
-    m: 0, 
+    m: 0,
     n: 0,
     initPlanMin: 0,
     initPlanSec: 0,
@@ -23,26 +23,27 @@ const initialState: GameInfo = {
   gameMap: {
     regions: [],
   },
-  // gameState: {
-  //   isBegin: false,
-  //   isOver: false,
-  //   isPaused: false,
-  //   turnCount: 0,
-  // }
+  gameState: {
+    isBegin: 0,
+    isOver: 0,
+    isPaused: 0,
+    turnCount: 0,
+  },
 };
 
 export const gameSlice = createSlice({
-  name: 'game',
+  name: "game",
   initialState,
   reducers: {
-      setGameInfo: (state , action: PayloadAction<GameInfo>) => {
-          state.config = action.payload.config;
-          state.players = action.payload.players;
-          state.gameMap = action.payload.gameMap;
-      },
+    setGameInfo: (state, action: PayloadAction<GameInfo>) => {
+      state.config = action.payload.config;
+      state.players = action.payload.players;
+      state.gameMap = action.payload.gameMap;
+      state.gameState = action.payload.gameState;
+    },
   },
 });
 
-export const {setGameInfo} = gameSlice.actions;
-export const selectGame = (state: RootState) => state.game
+export const { setGameInfo } = gameSlice.actions;
+export const selectGame = (state: RootState) => state.game;
 export default gameSlice.reducer;
