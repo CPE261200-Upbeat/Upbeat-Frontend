@@ -2,15 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./Game.css";
 import Hex from "./map/1Hex"; // Import the App component
 import hexClear from "../../assets/material/hex/hex-clear.png";
-import { selectPlayer } from "../../redux/slices/player";
 import { selectGame } from "../../redux/slices/game";
-import { useQueryGameData } from "../../query/game";
 import { useAppSelector } from "../../redux/hook";
 
 const Game: React.FC = () => {
-  const useQueryGame = useQueryGameData();
   const gameInfo = useAppSelector(selectGame);
-  const player = useAppSelector(selectPlayer);
   const [constructionPlan, setConstructionPlan] = useState("");
   const [timeLeft, setTimeLeft] = useState(0);
 
@@ -56,7 +52,7 @@ const Game: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       if (timeLeft === 0) {
-        playerLose();
+        //playerLose();
       }
       setTimeLeft(timeLeft - 1);
     }, 1000);
@@ -82,7 +78,7 @@ const Game: React.FC = () => {
   //   // console.log("Confirmed:", );
   // };
 
-  if (useQueryGame.isLoading || !gameInfo) return <div>Loading...</div>;
+  if (!gameInfo) return <div>Loading...</div>;
 
   return (
     <div>

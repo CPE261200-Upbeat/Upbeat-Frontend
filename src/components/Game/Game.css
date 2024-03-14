@@ -10,7 +10,7 @@
 }
 
 .hex-image {
-  position: absolute;
+  position: fixed;
   width: 60px;
   height: 60px;
 }
@@ -40,8 +40,15 @@ html {
   left: 15px;
 }
 
+.timeLeft {
+  position: fixed;
+  top: 10%;
+  right: 15%;
+  color: white;
+}
+
 body {
-  background-image: url("../../assets/background/space.jpg");
+  background-image: url("../../assets/background/purple_space.png");
   height: 100vh;
   background-position: center;
   background-repeat: no-repeat;
