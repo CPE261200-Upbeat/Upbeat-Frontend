@@ -20,7 +20,7 @@ function useWebSocket() {
 
   const connect = () => {
     try {
-      const socket: WebSocket = new SockJS(`http://10.121.194.104:8080/ws`);
+      const socket: WebSocket = new SockJS(`${process.env.VITE_SERVER}/ws`);
       const stompClient: Stomp.Client = Stomp.over(socket);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
