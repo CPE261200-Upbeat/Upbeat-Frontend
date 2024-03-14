@@ -1,4 +1,3 @@
-import React from "react";
 import "./map/1Hex.css";
 import UFO from "./map/UFO";
 

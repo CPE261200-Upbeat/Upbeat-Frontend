@@ -3,7 +3,6 @@ import useWebSocket from "../../websocket/useWebsocket";
 import { useAppSelector } from "../../redux/hook";
 import { GameState } from "../../model/gameState";
 import { selectGame } from "../../redux/slices/game";
-import { useEffect } from "react";
 import { Credential } from "model/credential";
 import { GameInfo } from "model/game";
 import { useNavigate } from "react-router-dom";
@@ -11,16 +10,12 @@ import { useNavigate } from "react-router-dom";
 function Lobby() {
   const navigate = useNavigate();
   const websocket = useWebSocket();
-  useEffect(() => {
-    websocket.connect();
-  }, []);
-
   const credential: Credential | null = JSON.parse(
     localStorage.getItem("acct") || "null"
   );
 
   const gameInfo: GameInfo = useAppSelector(selectGame);
-  if (gameInfo.gameState?.isBegin === 1) {
+  if (gameInfo.gameState?.isBegin) {
     navigate("/game");
   }
   const handleClick = (buttonType: string) => {
