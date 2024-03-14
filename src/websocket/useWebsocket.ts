@@ -17,10 +17,11 @@ import { setGameInfo } from "../redux/slices/game";
 function useWebSocket() {
   const dispatch = useAppDispatch();
   const webSocket = useAppSelector(selectWebSocket);
+  const serverUrl = import.meta.env.VITE_SERVER;
 
   const connect = () => {
     try {
-      const socket: WebSocket = new SockJS(`${process.env.VITE_SERVER}/ws`);
+      const socket: WebSocket = new SockJS(`${serverUrl}/ws`);
       const stompClient: Stomp.Client = Stomp.over(socket);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
