@@ -2,9 +2,9 @@ import { GameInfo } from "../../model/game";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
-const initialState: GameInfo = {
+export const initialState: GameInfo = {
   config: {
-    m: 0, 
+    m: 0,
     n: 0,
     initPlanMin: 0,
     initPlanSec: 0,
@@ -23,26 +23,26 @@ const initialState: GameInfo = {
   gameMap: {
     regions: [],
   },
-  // gameState: {
-  //   isBegin: false,
-  //   isOver: false,
-  //   isPaused: false,
-  //   turnCount: 0,
-  // }
+  gameState: {
+    isBegin: false,
+    isOver: false,
+    isPaused: false,
+    turnCount: 0,
+  },
 };
 
 export const gameSlice = createSlice({
-  name: 'game',
+  name: "game",
   initialState,
   reducers: {
-      setGameInfo: (state , action: PayloadAction<GameInfo>) => {
-          state.config = action.payload.config;
-          state.players = action.payload.players;
-          state.gameMap = action.payload.gameMap;
-      },
+    setGameInfo: (state, action: PayloadAction<GameInfo>) => {
+      state.config = action.payload.config;
+      state.players = action.payload.players;
+      state.gameMap = action.payload.gameMap;
+    },
   },
 });
 
-export const {setGameInfo} = gameSlice.actions;
-export const selectGame = (state: RootState) => state.game
+export const { setGameInfo } = gameSlice.actions;
+export const selectGame = (state: RootState) => state.game;
 export default gameSlice.reducer;
