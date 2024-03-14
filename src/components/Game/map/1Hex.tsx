@@ -2,12 +2,11 @@ import React from "react";
 import "./1Hex.css";
 
 interface AppProps {
-  key: string;
   yPos: number;
   xPos: number;
 }
 
-const App: React.FC<AppProps> = ({ yPos, xPos, key }) => {
+const App: React.FC<AppProps> = ({ yPos, xPos }) => {
   return (
     // <div className="hex-container">
     //   <img

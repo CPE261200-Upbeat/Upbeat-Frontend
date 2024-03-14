@@ -48,7 +48,7 @@ const Game: React.FC = () => {
 
     for (let j = 0; j < nColumn; j++) {
       const key = `${i},${j}`;
-      row.push(<Hex yPos={yPosition} xPos={xPosition} key={key} />);
+      row.push(<Hex yPos={yPosition} xPos={xPosition} />);
       yPosition += 62;
     }
     images.push(row);
