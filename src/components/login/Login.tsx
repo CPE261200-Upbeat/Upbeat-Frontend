@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import "./Login.css";
 import { FaUserCircle, FaLock } from "react-icons/fa";
 import { useMutationLogin } from "../../query/game";
@@ -9,18 +9,21 @@ import { useNavigate } from "react-router";
 function Login() {
   const navigate = useNavigate();
   const websocket = useWebSocket();
+  useEffect(() => {
+    websocket.connect();
+  }, []);
   const mutationLogin = useMutationLogin();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
-    websocket.connect();
     const acct: Credential = {
       username,
       password,
     };
     const player = await mutationLogin.mutateAsync(acct);
     if (player) {
+      websocket.getData();
       localStorage.setItem("acct", JSON.stringify(acct));
       navigate("/lobby");
     }
