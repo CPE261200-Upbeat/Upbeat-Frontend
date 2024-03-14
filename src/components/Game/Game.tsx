@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Game.css";
 import Hex from "./map/1Hex"; // Import the App component
-import hexClear from "../../assets/material/hex/hex-clear.png";
 import { selectGame } from "../../redux/slices/game";
 import { useAppSelector } from "../../redux/hook";
 import { Credential } from "model/credential";
@@ -41,6 +40,7 @@ const Game: React.FC = () => {
   const images = [];
   let xPosition = 350;
   let yPosition = 50;
+
   const nRow = 15;
   const nColumn = 10;
   for (let i = 0; i < nRow; i++) {
@@ -48,10 +48,7 @@ const Game: React.FC = () => {
 
     for (let j = 0; j < nColumn; j++) {
       const key = `${i},${j}`;
-      const imageUrl = hexClear; //change for game methods
-      row.push(
-        <Hex yPos={yPosition} xPos={xPosition} key={key} imageUrl={imageUrl} />
-      );
+      row.push(<Hex yPos={yPosition} xPos={xPosition} key={key} />);
       yPosition += 62;
     }
     images.push(row);
@@ -67,6 +64,17 @@ const Game: React.FC = () => {
   const playerLose = () => {
     navigate("/lose");
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (timeLeft === 0) {
+        playerLose;
+      }
+      setTimeLeft(timeLeft - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [timeLeft]);
 
   // Function to handle textarea change and update state
   const handleTextareaChange = (
@@ -105,4 +113,5 @@ const Game: React.FC = () => {
     </div>
   );
 };
+
 export default Game;
