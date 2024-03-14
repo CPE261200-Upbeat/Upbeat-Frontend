@@ -3,8 +3,10 @@ import "../login/Login.css"; // Assuming Login.css styles the login form
 import { FaUserCircle, FaLock } from "react-icons/fa";
 import { useMutationSignUp } from "../../query/game";
 import { Credential } from "model/credential";
+import { useNavigate } from "react-router";
 
 function SignUp() {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -17,7 +19,7 @@ function SignUp() {
       password,
     };
     const player = await mutationSignUp.mutateAsync(acct);
-    if (player) window.location.href = "/login";
+    if (player) navigate("/login");
   };
 
   return (

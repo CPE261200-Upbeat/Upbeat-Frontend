@@ -73,12 +73,24 @@ function useWebSocket() {
     }
   }
 
+  function getData() {
+    if (webSocket.stompClient && webSocket.stompClient.connected) {
+      webSocket.stompClient.send("/app/game.getData", {}, "");
+    }
+  }
   const onMessageReceived = (payload: Stomp.Message) => {
     const game: GameInfo = JSON.parse(payload.body);
     dispatch(setGameInfo(game));
   };
 
-  return { connect, handleJoin, handleSetState, executeTurn, handleSetConfig };
+  return {
+    connect,
+    handleJoin,
+    getData,
+    handleSetState,
+    executeTurn,
+    handleSetConfig,
+  };
 }
 
 export default useWebSocket;

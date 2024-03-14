@@ -2,25 +2,27 @@ import "../lobby/Lobby.css";
 import useWebSocket from "../../websocket/useWebsocket";
 import { useAppSelector } from "../../redux/hook";
 import { GameState } from "../../model/gameState";
-import game, { selectGame } from "../../redux/slices/game";
+import { selectGame } from "../../redux/slices/game";
 import { useEffect } from "react";
 import { Credential } from "model/credential";
 import { GameInfo } from "model/game";
-function Lobby() {
-  const websocket = useWebSocket();
-  const credential: Credential | null = JSON.parse(
-    localStorage.getItem("acct") || "null"
-  );
+import { useNavigate } from "react-router-dom";
 
+function Lobby() {
+  const navigate = useNavigate();
+  const websocket = useWebSocket();
   useEffect(() => {
     websocket.connect();
   }, []);
 
+  const credential: Credential | null = JSON.parse(
+    localStorage.getItem("acct") || "null"
+  );
+
   const gameInfo: GameInfo = useAppSelector(selectGame);
   if (gameInfo.gameState?.isBegin === 1) {
-    window.location.href = "/game";
+    navigate("/game");
   }
-
   const handleClick = (buttonType: string) => {
     if (buttonType === "join") {
       websocket.handleJoin(credential!);
@@ -36,8 +38,6 @@ function Lobby() {
       console.error("Unexpected button type:", buttonType);
     }
   };
-
-  if (!gameInfo) return <div>Loading...</div>;
 
   return (
     <section>

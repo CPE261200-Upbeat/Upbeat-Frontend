@@ -4,8 +4,10 @@ import { FaUserCircle, FaLock } from "react-icons/fa";
 import { useMutationLogin } from "../../query/game";
 import useWebSocket from "../../websocket/useWebsocket";
 import { Credential } from "model/credential";
+import { useNavigate } from "react-router";
 
 function Login() {
+  const navigate = useNavigate();
   const websocket = useWebSocket();
   const mutationLogin = useMutationLogin();
   const [username, setUsername] = useState("");
@@ -20,7 +22,7 @@ function Login() {
     const player = await mutationLogin.mutateAsync(acct);
     if (player) {
       localStorage.setItem("acct", JSON.stringify(acct));
-      window.location.href = "/lobby";
+      navigate("/lobby");
     }
   };
 
