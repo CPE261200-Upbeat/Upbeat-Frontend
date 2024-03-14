@@ -1,10 +1,13 @@
 import React from "react";
 import "./map/1Hex.css";
+import UFO from "./map/UFO";
 
 function TestHexagon() {
   return (
-    <div className="hexagon">
-      <div className="hexagontent"></div>
+    <div>
+      {/* <div className="hexagon"> */}
+      {/* <div className="hexagontent"></div> */}
+      <UFO fillColor={"black"} />
     </div>
   );
 }

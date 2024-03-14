@@ -24,8 +24,8 @@ html {
   /* easy way: height is width * 1.732
   actual formula is 2*(width/(2*Math.tan(Math.PI/6)))
   remove border-radius for sharp corners on hexagons */
-  width: 67px;
-  height: 116px;
+  width: 30px;
+  height: 52px;
   border-radius: 20%/5%;
 }
 .hexagon::before {
@@ -47,9 +47,9 @@ html {
   top: 59px;
 }
 .hexagon:hover {
-  background-color: hsla(60, 75%, 75%, 1);
+  /* background-color: hsla(60, 75%, 75%, 1);
   cursor: pointer;
-  z-index: 105;
+  z-index: 105; */
 }
 .hexagon:active {
   background-color: hsla(60, 75%, 50%, 1);

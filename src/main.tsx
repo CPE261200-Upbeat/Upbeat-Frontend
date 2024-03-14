@@ -13,7 +13,12 @@ import Lose from "./components/lose/Lose.tsx";
 import { Provider } from "react-redux";
 import { store } from "./redux/store.ts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import TestHexagon from "./components/Game/TestHexagon.tsx";
 const router = createBrowserRouter([
+  {
+    path: "testHexagon",
+    element: <TestHexagon />,
+  },
   {
     path: "",
     element: <SignUp />,
@@ -67,7 +72,7 @@ const rootElement = document.getElementById("root");
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
     <Provider store={store}>
-      <QueryClientProvider client={queryClient} >
+      <QueryClientProvider client={queryClient}>
         <React.StrictMode>
           <RouterProvider router={router} />
         </React.StrictMode>
