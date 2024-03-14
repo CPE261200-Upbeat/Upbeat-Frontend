@@ -4,11 +4,13 @@ import { useAppSelector } from "../../redux/hook";
 import { GameState } from "../../model/gameState";
 import { selectGame } from "../../redux/slices/game";
 import { useEffect } from "react";
-import { selectCredential } from "../../redux/slices/credential";
+import { Credential } from "model/credential";
 
 function Lobby() {
   const websocket = useWebSocket();
-  const credential = useAppSelector(selectCredential)
+  const credential: Credential | null = JSON.parse(
+    localStorage.getItem("acct") || "null"
+  );
 
   useEffect(() => {
     websocket.connect();
@@ -16,9 +18,9 @@ function Lobby() {
 
   const gameInfo = useAppSelector(selectGame);
 
-  const handleClick = (buttonType: string) => { 
+  const handleClick = (buttonType: string) => {
     if (buttonType === "join") {
-      websocket.handleJoin(credential);
+      websocket.handleJoin(credential!);
     } else if (buttonType === "start") {
       const gameState: GameState = {
         isOver: false,
@@ -32,7 +34,7 @@ function Lobby() {
     }
   };
 
-  if(!gameInfo) return <div>Loading...</div>
+  if (!gameInfo) return <div>Loading...</div>;
   return (
     <section>
       <div className="wappper">

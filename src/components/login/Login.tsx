@@ -4,12 +4,9 @@ import { FaUserCircle, FaLock } from "react-icons/fa";
 import { useMutationLogin } from "../../query/game";
 import useWebSocket from "../../websocket/useWebsocket";
 import { Credential } from "model/credential";
-import { useDispatch } from "react-redux";
-import { setCredential } from "../../redux/slices/credential";
 
 function Login() {
   const websocket = useWebSocket();
-  const dispatch = useDispatch();
   const mutationLogin = useMutationLogin();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -22,9 +19,9 @@ function Login() {
     };
     const player = await mutationLogin.mutateAsync(acct);
     if (player) {
-      dispatch(setCredential(acct))
-      window.location.href = "/lobby"
-    };
+      localStorage.setItem("acct", JSON.stringify(acct));
+      window.location.href = "/lobby";
+    }
   };
 
   return (

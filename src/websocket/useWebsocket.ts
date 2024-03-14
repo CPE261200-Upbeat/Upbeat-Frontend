@@ -19,7 +19,7 @@ function useWebSocket() {
 
   const connect = () => {
     try {
-      const socket: WebSocket = new SockJS(`http://localhost:8080/ws`);
+      const socket: WebSocket = new SockJS(`http://10.121.194.104:8080/ws`);
       const stompClient: Stomp.Client = Stomp.over(socket);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
@@ -35,13 +35,12 @@ function useWebSocket() {
     dispatch(setStompClient(stompClient));
   };
 
-  function handleJoin(acct : Credential) {
-
+  function handleJoin(acct: Credential) {
     if (webSocket.stompClient && webSocket.stompClient.connected) {
       webSocket.stompClient.send(
         "/app/game.join",
         {},
-        JSON.stringify({...acct  })
+        JSON.stringify({ ...acct })
       );
     }
   }
@@ -56,12 +55,12 @@ function useWebSocket() {
     }
   }
 
-  function executeTurn(contructionPlan : string , timeLeft: number) {
+  function executeTurn(contructionPlan: string, timeLeft: number) {
     if (webSocket.stompClient && webSocket.stompClient.connected) {
       webSocket.stompClient.send(
         "/app/game.execute",
         {},
-        JSON.stringify({ contructionPlan , timeLeft })
+        JSON.stringify({ contructionPlan, timeLeft })
       );
     }
   }
@@ -78,7 +77,7 @@ function useWebSocket() {
 
   const onMessageReceived = (payload: Stomp.Message) => {
     const game: GameInfo = JSON.parse(payload.body);
-    console.log(game)
+    console.log(game);
   };
 
   return { connect, handleJoin, handleSetState, executeTurn, handleSetConfig };
