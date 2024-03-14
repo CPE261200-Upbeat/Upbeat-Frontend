@@ -12,6 +12,7 @@ import {
 } from "../redux/slices/websocket";
 import { Credential } from "model/credential";
 import { GameInfo } from "model/game";
+import { setGameInfo } from "../redux/slices/game";
 
 function useWebSocket() {
   const dispatch = useAppDispatch();
@@ -24,6 +25,7 @@ function useWebSocket() {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       stompClient.connect({}, () => onConnected(stompClient), onError);
+      stompClient.debug = () => {};
     } catch (e) {
       console.log(e);
     }
@@ -37,11 +39,7 @@ function useWebSocket() {
 
   function handleJoin(acct: Credential) {
     if (webSocket.stompClient && webSocket.stompClient.connected) {
-      webSocket.stompClient.send(
-        "/app/game.join",
-        {},
-        JSON.stringify({ ...acct })
-      );
+      webSocket.stompClient.send("/app/game.join", {}, JSON.stringify(acct));
     }
   }
 
@@ -50,7 +48,7 @@ function useWebSocket() {
       webSocket.stompClient.send(
         "/app/game.setState",
         {},
-        JSON.stringify({ ...state })
+        JSON.stringify(state)
       );
     }
   }
@@ -77,7 +75,7 @@ function useWebSocket() {
 
   const onMessageReceived = (payload: Stomp.Message) => {
     const game: GameInfo = JSON.parse(payload.body);
-    console.log(game);
+    dispatch(setGameInfo(game));
   };
 
   return { connect, handleJoin, handleSetState, executeTurn, handleSetConfig };

@@ -2,10 +2,10 @@ import "../lobby/Lobby.css";
 import useWebSocket from "../../websocket/useWebsocket";
 import { useAppSelector } from "../../redux/hook";
 import { GameState } from "../../model/gameState";
-import { selectGame } from "../../redux/slices/game";
+import game, { selectGame } from "../../redux/slices/game";
 import { useEffect } from "react";
 import { Credential } from "model/credential";
-
+import { GameInfo } from "model/game";
 function Lobby() {
   const websocket = useWebSocket();
   const credential: Credential | null = JSON.parse(
@@ -16,16 +16,19 @@ function Lobby() {
     websocket.connect();
   }, []);
 
-  const gameInfo = useAppSelector(selectGame);
+  const gameInfo: GameInfo = useAppSelector(selectGame);
+  if (gameInfo.gameState?.isBegin === 1) {
+    window.location.href = "/game";
+  }
 
   const handleClick = (buttonType: string) => {
     if (buttonType === "join") {
       websocket.handleJoin(credential!);
     } else if (buttonType === "start") {
       const gameState: GameState = {
-        isOver: false,
-        isBegin: true,
-        isPaused: false,
+        isOver: 0,
+        isBegin: 1,
+        isPaused: 0,
         turnCount: 1,
       };
       websocket.handleSetState(gameState);
@@ -35,6 +38,7 @@ function Lobby() {
   };
 
   if (!gameInfo) return <div>Loading...</div>;
+
   return (
     <section>
       <div className="wappper">

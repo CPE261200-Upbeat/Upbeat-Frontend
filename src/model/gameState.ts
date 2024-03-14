@@ -1,6 +1,6 @@
 export interface GameState {
-    isBegin: boolean ;
-    isOver: boolean ;
-    isPaused: boolean ;
-    turnCount : number;
+  isBegin: number;
+  isOver: number;
+  isPaused: number;
+  turnCount: number;
 }

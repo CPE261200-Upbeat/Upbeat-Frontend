@@ -24,9 +24,9 @@ export const initialState: GameInfo = {
     regions: [],
   },
   gameState: {
-    isBegin: false,
-    isOver: false,
-    isPaused: false,
+    isBegin: 0,
+    isOver: 0,
+    isPaused: 0,
     turnCount: 0,
   },
 };
@@ -39,6 +39,7 @@ export const gameSlice = createSlice({
       state.config = action.payload.config;
       state.players = action.payload.players;
       state.gameMap = action.payload.gameMap;
+      state.gameState = action.payload.gameState;
     },
   },
 });
