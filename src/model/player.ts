@@ -1,17 +1,18 @@
 import { Region } from "./region";
-import { Account } from "./account";
 import { CityCrew } from "./cityCrew";
+import { AccountPair } from "./account";
 
 
 
 export interface Player {
-    acct: Account;
+    acct: AccountPair<string,string>;
     budget: number;
-    cityCenter: Region ;
-    crew: CityCrew;
+    cityCenter: Region | null;
+    crew: CityCrew | null;
     timeLeft: number;
     constructionPlan: string;
     defeat : boolean;
+    winCount: number;
   }
   
   

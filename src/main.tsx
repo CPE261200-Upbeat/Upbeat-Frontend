@@ -16,7 +16,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const router = createBrowserRouter([
   {
     path: "",
-    element: <Login />,
+    element: <SignUp />,
   },
   {
     path: "login",
@@ -55,12 +55,19 @@ const router = createBrowserRouter([
     element: <NoPage />,
   },
 ]);
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 const rootElement = document.getElementById("root");
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
     <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient} >
         <React.StrictMode>
           <RouterProvider router={router} />
         </React.StrictMode>
