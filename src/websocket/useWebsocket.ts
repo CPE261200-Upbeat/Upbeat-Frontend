@@ -44,6 +44,12 @@ function useWebSocket() {
     }
   }
 
+  function handleDisconnect(acct: Credential) {
+    if (webSocket.stompClient && webSocket.stompClient.connected) {
+      webSocket.stompClient.send("/app/game.disconnect", {}, JSON.stringify(acct));
+    }
+  }
+
   function handleSetState(state: GameState) {
     if (webSocket.stompClient && webSocket.stompClient.connected) {
       webSocket.stompClient.send(

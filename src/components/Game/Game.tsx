@@ -6,25 +6,41 @@ import { useAppSelector } from "../../redux/hook";
 import { Credential } from "model/credential";
 import { useNavigate } from "react-router-dom";
 import useWebSocket from "../../websocket/useWebsocket";
+import { GameInfo } from "model/game";
+import { Player } from "model/player";
 
 const Game: React.FC = () => {
+  //Common
   const navigate = useNavigate();
   const webSocket = useWebSocket();
-
-  const gameInfo = useAppSelector(selectGame);
+  //Client
   const acct: Credential = JSON.parse(localStorage.getItem("acct")!);
-  const turn = gameInfo.players.turn;
-  const players = gameInfo.players.list;
-  const me = players.find(
+  //GameInfo
+  const gameInfo :GameInfo = useAppSelector(selectGame);
+  const isOver : number = gameInfo.gameState.isOver
+  const turn :number = gameInfo.players.turn;
+  const players : Player[] = gameInfo.players.list;
+  const me : Player = players.find(
     (p) => JSON.stringify(p.acct) === JSON.stringify(acct)
-  );
-  const player = players[turn];
-
+  )!;
+  const player : Player = players[turn];
+  const isMyTurn : boolean = JSON.stringify(me) === JSON.stringify(player)
+  //State
   const [timeLeft, setTimeLeft] = useState(player.timeLeft);
   const [constructionPlan, setConstructionPlan] = useState(
     player.constructionPlan
   );
 
+  if(isOver){
+    if(isMyTurn){
+      navigate("/win")
+    }
+    else{
+      navigate("/lose")
+    }
+  }
+
+  //useEffect 
   useEffect(()=>{
     setTimeLeft(player.timeLeft)
   },[gameInfo])
@@ -32,7 +48,7 @@ const Game: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       if (timeLeft === 0) {
-        playerLose();
+        handlePlayerLose();
       }
       setTimeLeft(timeLeft - 1); // Using functional update to ensure state is updated correctly
     }, 1000);
@@ -64,35 +80,20 @@ const Game: React.FC = () => {
     }
   }
 
-  const playerLose = () => {
-    navigate("/lose");
+  const handlePlayerLose = () => {
+    webSocket.executeTurn(constructionPlan,timeLeft);
   };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (timeLeft === 0) {
-        playerLose;
-      }
-      setTimeLeft(timeLeft - 1);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [timeLeft]);
-
-  // Function to handle textarea change and update state
-  const handleTextareaChange = (
+  const handlePlan = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setConstructionPlan(event.target.value);
-    console.log("Textarea value:", event.target.value);
+    console.log("Plan value:", event.target.value);
   };
 
-  // //send data to confimedplan => send to back end
   const handleConfirmPlan = () => {
     webSocket.executeTurn(constructionPlan, timeLeft);
   };
-
-  if (!gameInfo) return <div>Loading...</div>;
 
   return (
     <div>
@@ -104,7 +105,7 @@ const Game: React.FC = () => {
           <textarea
             className="ta10em"
             value={player.constructionPlan}
-            onChange={handleTextareaChange}
+            onChange={handlePlan}
             placeholder="Construction Plan"
           />
           <button className="confirm" onClick={handleConfirmPlan}>
