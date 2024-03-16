@@ -13,7 +13,6 @@ const Game: React.FC = () => {
 
   const gameInfo = useAppSelector(selectGame);
   const acct: Credential = JSON.parse(localStorage.getItem("acct")!);
-  // const username = acct.username;
   const turn = gameInfo.players.turn;
   const players = gameInfo.players.list;
   const me = players.find(
@@ -26,16 +25,20 @@ const Game: React.FC = () => {
     player.constructionPlan
   );
 
+  useEffect(()=>{
+    setTimeLeft(player.timeLeft)
+  },[gameInfo])
+
   useEffect(() => {
     const interval = setInterval(() => {
       if (timeLeft === 0) {
         playerLose();
       }
-      setTimeLeft(timeLeft - 1);
+      setTimeLeft(timeLeft - 1); // Using functional update to ensure state is updated correctly
     }, 1000);
-
+  
     return () => clearInterval(interval);
-  }, [timeLeft]);
+  }, [timeLeft]); 
 
   const images = [];
   let xPosition = 350;
