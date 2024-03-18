@@ -18,6 +18,7 @@ const Game: React.FC = () => {
   //GameInfo
   const gameInfo :GameInfo = useAppSelector(selectGame);
   const isOver : number = gameInfo.gameState.isOver
+  const isError : number = gameInfo.gameState.isError
   const turn :number = gameInfo.players.turn;
   const players : Player[] = gameInfo.players.list;
   const me : Player = players.find(
@@ -80,6 +81,7 @@ const Game: React.FC = () => {
     }
   }
 
+
   const handlePlayerLose = () => {
     webSocket.executeTurn(constructionPlan,timeLeft);
   };
@@ -108,9 +110,10 @@ const Game: React.FC = () => {
             onChange={handlePlan}
             placeholder="Construction Plan"
           />
-          <button className="confirm" onClick={handleConfirmPlan}>
+          <button className="confirm" onClick={handleConfirmPlan} >
             Confirm
           </button>
+          {isError && <div> Error Confirm Plan Please Try again!!! </div>}
         </div>
       )}
       <div className="timeLeft">{timeLeft}</div>

@@ -26,6 +26,7 @@ function Lobby() {
         isOver: 0,
         isBegin: 1,
         isPaused: 0,
+        isError : 0,
         turnCount: 1,
       };
       websocket.handleSetState(gameState);
