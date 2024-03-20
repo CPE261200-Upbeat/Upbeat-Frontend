@@ -1,6 +1,20 @@
 import "./Win.css";
+import { GameState } from "@/model/gameState";
+import useWebSocket from "@/websocket/useWebsocket";
+
 
 function Win() {
+
+  const websocket = useWebSocket();
+  const gameState: GameState = {
+    isOver: 0,
+    isBegin: 0,
+    isPaused: 0,
+    isError : 0,
+    turnCount: 1,
+  };
+  
+  websocket.handleSetState(gameState);
   return (
     <section>
       <div className="wapper">

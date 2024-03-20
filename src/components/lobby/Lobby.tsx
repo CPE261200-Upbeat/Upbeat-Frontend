@@ -1,11 +1,12 @@
 import "../lobby/Lobby.css";
-import useWebSocket from "../../websocket/useWebsocket";
-import { useAppSelector } from "../../redux/hook";
-import { GameState } from "../../model/gameState";
-import { selectGame } from "../../redux/slices/game";
 import { Credential } from "model/credential";
-import { GameInfo } from "model/game";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import useWebSocket from "@/websocket/useWebsocket";
+import { GameInfo } from "@/model/game";
+import { selectGame } from "@/redux/slices/game";
+import { useAppSelector } from "@/redux/hook";
+import { GameState } from "@/model/gameState";
 
 function Lobby() {
   const navigate = useNavigate();
@@ -15,9 +16,13 @@ function Lobby() {
   );
 
   const gameInfo: GameInfo = useAppSelector(selectGame);
-  if (gameInfo.gameState?.isBegin) {
-    navigate("/game");
-  }
+  
+  useEffect(() => {
+    if (gameInfo.gameState?.isBegin) {
+      navigate("/game");
+    }
+  }, [gameInfo]);
+
   const handleClick = (buttonType: string) => {
     if (buttonType === "join") {
       websocket.handleJoin(credential!);

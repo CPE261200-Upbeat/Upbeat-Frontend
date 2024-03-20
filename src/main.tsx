@@ -11,9 +11,9 @@ import Lobby from "./components/lobby/Lobby.tsx";
 import Win from "./components/win/Win.tsx";
 import Lose from "./components/lose/Lose.tsx";
 import { Provider } from "react-redux";
-import { store } from "./redux/store.ts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import TestHexagon from "./components/Game/TestHexagon.tsx";
+import { store } from "./redux/store.ts";
 const router = createBrowserRouter([
   {
     path: "testHexagon",

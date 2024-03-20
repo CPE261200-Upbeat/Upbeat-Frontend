@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./Game.css";
 import Hex from "./map/1Hex"; // Import the App component
-import { selectGame } from "../../redux/slices/game";
-import { useAppSelector } from "../../redux/hook";
-import { Credential } from "model/credential";
+import { selectGame } from "@/redux/slices/game";
+import { useAppSelector } from "@/redux/hook";
 import { useNavigate } from "react-router-dom";
-import useWebSocket from "../../websocket/useWebsocket";
-import { GameInfo } from "model/game";
-import { Player } from "model/player";
+import useWebSocket from "@/websocket/useWebsocket";
+import { GameInfo } from "@/model/game";
+import { Player } from "@/model/player";
 
 const Game: React.FC = () => {
   //Common
@@ -27,7 +26,7 @@ const Game: React.FC = () => {
   const player : Player = players[turn];
   const isMyTurn : boolean = JSON.stringify(me) === JSON.stringify(player)
   //State
-  const [timeLeft, setTimeLeft] = useState(player.timeLeft);
+  const [timeLeft, setTimeLeft] = useState(player?.timeLeft);
   const [constructionPlan, setConstructionPlan] = useState(
     player.constructionPlan
   );
@@ -43,7 +42,7 @@ const Game: React.FC = () => {
 
   //useEffect 
   useEffect(()=>{
-    setTimeLeft(player.timeLeft)
+    setTimeLeft(player?.timeLeft)
   },[gameInfo])
 
   useEffect(() => {

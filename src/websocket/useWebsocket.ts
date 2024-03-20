@@ -4,15 +4,12 @@ import { Config } from "../model/config";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import SockJS from "sockjs-client/dist/sockjs";
-import { useAppDispatch, useAppSelector } from "../redux/hook";
-import {
-  selectWebSocket,
-  setIsConnected,
-  setStompClient,
-} from "../redux/slices/websocket";
+
 import { Credential } from "model/credential";
 import { GameInfo } from "model/game";
-import { setGameInfo } from "../redux/slices/game";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { selectWebSocket, setIsConnected, setStompClient } from "@/redux/slices/websocket";
+import { setGameInfo } from "@/redux/slices/game";
 
 function useWebSocket() {
   const dispatch = useAppDispatch();

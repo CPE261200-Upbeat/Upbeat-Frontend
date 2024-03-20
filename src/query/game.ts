@@ -1,8 +1,8 @@
 import { AxiosResponse } from "axios";
 import { useMutation } from "@tanstack/react-query";
-import { axiosCustom } from "./axiosCustom";
-import { Player } from "../model/player";
-import { Credential } from "../model/credential";
+import { Player } from "model/player";
+import axiosCustom from "./axiosCustom";
+import { Credential } from "model/credential";
 export type Response<T> = Promise<AxiosResponse<T>>;
 
 

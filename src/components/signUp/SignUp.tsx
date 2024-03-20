@@ -1,9 +1,9 @@
 import { SyntheticEvent, useState } from "react";
 import "../login/Login.css"; // Assuming Login.css styles the login form
 import { FaUserCircle, FaLock } from "react-icons/fa";
-import { useMutationSignUp } from "../../query/game";
-import { Credential } from "model/credential";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
+import { useMutationSignUp } from "@/query/game";
+import { Credential } from "@/model/credential";
 
 function SignUp() {
   const navigate = useNavigate();
