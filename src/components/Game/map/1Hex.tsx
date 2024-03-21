@@ -1,26 +1,16 @@
-import React from "react";
-import "./1Hex.css";
+import React from 'react';
 
-interface AppProps {
+interface HexProps {
   yPos: number;
   xPos: number;
 }
 
-const App: React.FC<AppProps> = ({ yPos, xPos }) => {
+const Hex: React.FC<HexProps> = ({ xPos, yPos }) => {
   return (
-    // <div className="hex-container">
-    //   <img
-    //     src={imageUrl}
-    //     alt="Hexagonal"
-    //     className={`hex-image`}
-    //     style={{ top: yPos, left: xPos }}
-    //   />
-    // </div>
-
     <div className="hexagon" style={{ top: yPos, left: xPos }}>
       <div className="hexagontent"></div>
     </div>
   );
 };
 
-export default App;
+export default React.memo(Hex);
