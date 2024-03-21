@@ -63,29 +63,30 @@ const Game: React.FC = () => {
   }, [timeLeft]); 
 
   const images = [];
-
-  let xPos = 600;
-  let yPosEven = 80;
-  let yPosOdd = 50;
-
+  const initialXPos = 600;  // X Pos เริ่มต้น
+  const initialYPos = 80;   // Y Pos เริ่มต้น
+  const yPosIncrement = 62; // Y Pos ของแต่ละ Row
+  const yPosOffset = 30;    // Y Gap ของแต่ละ Col (Even Col , Odd Col)
+  const xPosIncrement = 50; // X Gap ของแต่ละ Col
+  
+  let xPos = initialXPos;
+  let yPos = initialYPos;
+  
   for (let i = 0; i < row; i++) {
     const row = [];
+    
     for (let j = 0; j < col; j++) {
-      if(j % 2 === 0) {
-        row.push(<Hex xPos={xPos} yPos={yPosEven}/>)
-
-      }else{
-        row.push(<Hex xPos={xPos} yPos={yPosOdd}/>)
-      }
-      xPos += 50;
+      const yPosRef = j % 2 === 0 ? yPos : yPos - yPosOffset;
+      row.push(<Hex xPos={xPos} yPos={yPosRef}/>);
+      xPos += xPosIncrement;
     }
-
+  
     images.push(row);
-    xPos = 600;
-    yPosEven += 62;
-    yPosOdd += 62 ;
+    xPos = initialXPos;
+    yPos += yPosIncrement;
   }
-
+  
+                                
   const handlePlayerLose = () => {
     webSocket.executeTurn(constructionPlan,timeLeft);
   };
