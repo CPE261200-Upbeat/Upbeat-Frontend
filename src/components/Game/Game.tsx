@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import useWebSocket from "@/websocket/useWebsocket";
 import { GameInfo } from "@/model/game";
 import { Player } from "@/model/player";
+import { Config } from "@/model/config";
 
 const Game: React.FC = () => {
   //Common
@@ -16,9 +17,14 @@ const Game: React.FC = () => {
   const acct: Credential = JSON.parse(localStorage.getItem("acct")!);
   //GameInfo
   const gameInfo :GameInfo = useAppSelector(selectGame);
+  const config : Config  = gameInfo.config
+  const row : number = config.m;
+  const col : number = config.n;
+  //GameState
   const isOver : number = gameInfo.gameState.isOver
   const isError : number = gameInfo.gameState.isError
   const turn :number = gameInfo.players.turn;
+  //Players
   const players : Player[] = gameInfo.players.list;
   const me : Player = players.find(
     (p) => JSON.stringify(p.acct) === JSON.stringify(acct)
@@ -28,7 +34,7 @@ const Game: React.FC = () => {
   //State
   const [timeLeft, setTimeLeft] = useState(player?.timeLeft);
   const [constructionPlan, setConstructionPlan] = useState(
-    player.constructionPlan
+    player?.constructionPlan
   );
 
   if(isOver){
@@ -57,29 +63,25 @@ const Game: React.FC = () => {
   }, [timeLeft]); 
 
   const images = [];
-  let xPosition = 350;
-  let yPosition = 50;
-
-  const nRow = 15;
-  const nColumn = 10;
-  for (let i = 0; i < nRow; i++) {
+  const even = 450;
+  const odd = 490
+  
+  let xPos = even;
+  let yPos = 50;
+  
+  for (let i = 0; i < row; i++) {
     const row = [];
+    xPos = i % 2 === 0 ? even : odd;
+    for (let j = 0; j < col; j++) {
 
-    for (let j = 0; j < nColumn; j++) {
-      const key = `${i},${j}`;
-      row.push(<Hex yPos={yPosition} xPos={xPosition} />);
-      yPosition += 62;
+      row.push(<Hex  xPos={xPos} yPos={yPos}/>);
+      xPos += 80;
+
     }
+
     images.push(row);
-    if (i % 2 === 0) {
-      yPosition = 81;
-      xPosition += 48;
-    } else {
-      yPosition = 50;
-      xPosition += 48;
-    }
+    yPos += 50; 
   }
-
 
   const handlePlayerLose = () => {
     webSocket.executeTurn(constructionPlan,timeLeft);
