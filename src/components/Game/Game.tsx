@@ -63,24 +63,27 @@ const Game: React.FC = () => {
   }, [timeLeft]); 
 
   const images = [];
-  const even = 450;
-  const odd = 490
-  
-  let xPos = even;
-  let yPos = 50;
-  
-  for (let i = 0; i < row; i++) {
-    const row = [];
-    xPos = i % 2 === 0 ? even : odd;
-    for (let j = 0; j < col; j++) {
+  let xPosition = 600;
+  let yPosition = 81;
 
-      row.push(<Hex  xPos={xPos} yPos={yPos}/>);
-      xPos += 80;
+
+  for (let i = 0; i < col; i++) {
+    const rows = [];
+
+    for (let j = 0; j < row; j++) {
+      const key = `${i},${j}`;
+      rows.push(<Hex xPos={xPosition} yPos={yPosition}/>);
+      yPosition += 62;
 
     }
-
-    images.push(row);
-    yPos += 50; 
+    images.push(rows);
+    xPosition += 48;
+    if (i % 2 === 0) {
+      yPosition = 50;
+     
+    } else {
+      yPosition = 81;
+    }
   }
 
   const handlePlayerLose = () => {
