@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./Game.css";
 import Hex from "./map/1Hex"; 
 import { selectGame } from "@/redux/slices/game";
@@ -9,6 +9,7 @@ import { GameInfo } from "@/model/game";
 import { Player } from "@/model/player";
 import { Config } from "@/model/config";
 import Map from "./map/Map";
+import Timer from "./map/Timer";
 
 const Game: React.FC = () => {
   //Common
@@ -36,7 +37,7 @@ const Game: React.FC = () => {
   const [gameMap, setGameMap] = useState<JSX.Element[][]>([]);
   const [timeLeft, setTimeLeft] = useState<number>(player?.timeLeft);
   const [constructionPlan, setConstructionPlan] = useState<string>(
-    player?.constructionPlan || ''
+    player?.constructionPlan
   );
 
   if(isOver){
@@ -51,7 +52,8 @@ const Game: React.FC = () => {
   //useEffect 
   useEffect(()=>{
     setTimeLeft(player?.timeLeft)
-
+    setConstructionPlan(player?.constructionPlan)
+    
     const images: JSX.Element[][] = [];
     const initialXPos = 600;  // X Pos เริ่มต้น
     const initialYPos = 80;   // Y Pos เริ่มต้น
@@ -113,7 +115,7 @@ const Game: React.FC = () => {
         <div>
           <textarea
             className="ta10em"
-            value={player?.constructionPlan || ''}
+            value={constructionPlan}
             onChange={handlePlan}
             placeholder="Construction Plan"
           />
@@ -123,7 +125,7 @@ const Game: React.FC = () => {
           {isError === 1 && <div> Error Confirm Plan Please Try again!!! </div>}
         </div>
       )}
-      <div className="timeLeft" key = {timeLeft}> {timeLeft} </div>
+      <Timer timeLeft = {timeLeft}/>
     </div>
   );
   

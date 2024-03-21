@@ -1,12 +1,14 @@
+import { memo } from "react";
+
 interface MapProps {
     gameMap: JSX.Element[][];
   }
   
   export function Map({gameMap} : MapProps) {
     return (
-      <div>{gameMap.map((row,idx)=> <div key = {idx}>{row}</div>)}</div>
+      <div>{gameMap.map((row,idx)=> <div key = {idx}> {row} </div>)}</div>
     )
   }
   
-  export default Map;
+  export default memo(Map);
   
