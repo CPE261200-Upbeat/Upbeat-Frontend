@@ -1,5 +1,5 @@
 import { SyntheticEvent, useState } from "react";
-import "../login/Login.css"; // Assuming Login.css styles the login form
+import "../login/Login.css";
 import { FaUserCircle, FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useMutationSignUp } from "@/query/game";
@@ -10,16 +10,49 @@ function SignUp() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const mutationSignUp = useMutationSignUp();
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
+
+    if (!/^[a-zA-Z0-9]{1,6}$/.test(username)) {
+      setUsernameError("Username must be 1-6 alphanumeric characters only");
+      return;
+    } else {
+      setUsernameError("");
+    }
+
+    if (password.length < 8) {
+      setPasswordError("Password must be at least 8 characters long");
+      return;
+    } else {
+      setPasswordError("");
+    }
+
+    if (password !== confirmPassword) {
+      setConfirmPasswordError("Passwords do not match");
+      return;
+    } else {
+      setConfirmPasswordError("");
+    }
 
     const acct: Credential = {
       username,
       password,
     };
     const player = await mutationSignUp.mutateAsync(acct);
-    if (player) navigate("/login");
+    if (player) {
+      alert("Sign up successfully");
+      navigate("/login");
+    } else {
+      alert("Username is already taken");
+    }
+  };
+
+  const handleGoToLogin = () => {
+    navigate("/login");
   };
 
   return (
@@ -38,7 +71,7 @@ function SignUp() {
             </div>
           </form>
 
-          <div className="wrapper">
+          <div className="wrapper_Login">
             <form onSubmit={handleSubmit}>
               <h1>SIGN UP</h1>
               <h3 className="name">Username</h3>
@@ -50,6 +83,9 @@ function SignUp() {
                   onChange={(e) => setUsername(e.target.value)}
                 />
                 <FaUserCircle className="icon" />
+                {usernameError && (
+                  <p className="error-message">{usernameError}</p>
+                )}
               </div>
               <h3 className="name">Password</h3>
               <div className="input-box">
@@ -60,6 +96,9 @@ function SignUp() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <FaLock className="icon" />
+                {passwordError && (
+                  <p className="error-message">{passwordError}</p>
+                )}
               </div>
               <h3 className="name">Confirm Password</h3>
               <div className="input-box">
@@ -70,12 +109,17 @@ function SignUp() {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
                 <FaLock className="icon" />
+                {confirmPasswordError && (
+                  <p className="error-message">{confirmPasswordError}</p>
+                )}
               </div>
               <div className="container">
                 <button type="submit">Sign Up</button>{" "}
               </div>
               <div className="guess">
-                <a href="#">Already have an account?</a>
+                <a href="#" onClick={handleGoToLogin}>
+                  Already have an account?
+                </a>
               </div>
             </form>
           </div>

@@ -19,7 +19,7 @@ body {
   background-position: center;
 }
 
-.wrapper {
+.wrapper_Login {
   width: 550px;
   background-color: transparent;
   border: 2px solid rgba(255, 255, 255, 0.2);
@@ -28,16 +28,16 @@ body {
   padding: 30px 40px;
 }
 
-.wrapper h1 {
-  font-size: 50px;
+.wrapper_Login h1 {
+  font-size: 60px;
   font-weight: 400;
   text-align: center;
   -webkit-text-stroke: 1.5px #000;
 }
 
-.wrapper .input-box {
+.wrapper_Login .input-box {
   position: relative;
-  width: 100%;
+  width: 97%;
   height: 50px;
   margin-top: 10px;
   margin-bottom: 25px;
@@ -46,7 +46,7 @@ body {
 .input-box input {
   width: 101%;
   height: 100%;
-  background: #d9d9d9;
+  background: #f3f3f3;
   border: 2px solid rgba(255, 255, 255, 0.2);
   outline: none;
   border-radius: 40px;
@@ -71,41 +71,31 @@ body {
   margin-top: 10px;
 }
 
-.wrapper .remember-forgot {
-  display: flex;
-  justify-content: space-between;
-  font-size: 16px;
-  margin: -5px 0 20px;
-}
-
-.remember-forgot label input {
-  accent-color: #fff;
-  margin-right: 8px;
-}
-
-.remember-forgot a {
-  color: #fff;
-  text-decoration: none;
-}
-
-.remember-forgot a:hover {
-  text-decoration: underline;
-}
-
-.wrapper button {
+.wrapper_Login button {
   width: 100%;
   margin: 10px;
-  height: 45px;
-  background: #d9d9d9;
+  height: 50px;
+  background: #f3f3f3;
   border: none;
   outline: none;
   border-radius: 40px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  font-size: 25px;
+  font-size: 30px;
   color: #333;
   font-family: "Share Tech Mono", monospace;
-  font-weight: 400;
+  font-weight: 500;
+  box-shadow: 0 5px #999;
+}
+
+.wrapper_Login button:hover {
+  background: #d6d6d6;
+}
+
+.wrapper_Login button:active {
+  background: #666;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
 }
 
 .container {
@@ -139,7 +129,7 @@ body {
 .from_upbeat button {
   width: 400px;
   height: 40px;
-  background: #e8e8e8;
+  background: #f3f3f3;
   border: none;
   outline: none;
   border-radius: 40px;
@@ -189,8 +179,15 @@ body {
 
 .name {
   font-weight: 400;
-  font-size: 34px;
+  font-size: 29px;
   margin-top: 10px;
   margin-left: 10px;
   -webkit-text-stroke: 1px #000;
+}
+
+.error-message {
+  margin-top: 5px;
+  color: #fe1515;
+  font-size: 17px;
+  font-weight: 800;
 }
