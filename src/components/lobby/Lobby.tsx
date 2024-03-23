@@ -16,11 +16,11 @@ function Lobby() {
   const [isJoined, setIsJoined] = useState(false);
 
   const gameInfo: GameInfo = useAppSelector(selectGame);
-  console.log(gameInfo);
   const players: Player[] = gameInfo.players.list;
   const player: Player = useAppSelector(selectPlayer);
   const isFirstPlayer =
     JSON.stringify(player?.acct) === JSON.stringify(players[0]?.acct);
+
   const handleLogout = () => {
     websocket.handleDisconnect(player);
     navigate("/login");

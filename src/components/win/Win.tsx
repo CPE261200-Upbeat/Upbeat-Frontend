@@ -1,11 +1,14 @@
 import "./Win.css";
 import { GameState } from "@/model/gameState";
+import { useAppSelector } from "@/redux/hook";
+import { selectGame } from "@/redux/slices/game";
 import useWebSocket from "@/websocket/useWebsocket";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Win() {
   const websocket = useWebSocket();
-
+  const gameInfo = useAppSelector(selectGame);
   const navigate = useNavigate();
 
   const handleGoToLobby = () => {
@@ -16,9 +19,14 @@ function Win() {
       isError: 0,
       turnCount: 1,
     };
-    // websocket.handleSetState(gameState);
-    navigate("/lobby");
+    websocket.handleSetState(gameState);
   };
+
+  useEffect(() => {
+    if (!gameInfo.gameState?.isBegin) {
+      navigate("/lobby");
+    }
+  }, [gameInfo]);
 
   return (
     <section>
