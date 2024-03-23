@@ -15,6 +15,14 @@ import { selectPlayer } from "@/redux/slices/player";
 import { Account } from "@/model/account";
 import { CityCrew } from "@/model/cityCrew";
 import { Position } from "@/model/position";
+import {
+  INIT_X_POS,
+  INIT_Y_POS,
+  RESET_STATE,
+  X_POS_INCREMENT,
+  Y_POS_INCREMENT,
+  Y_POS_OFFSET,
+} from "./config/constant";
 
 const Game: React.FC = () => {
   //Common
@@ -31,6 +39,7 @@ const Game: React.FC = () => {
   const row: number = config.m;
   const col: number = config.n;
   //GameState
+  const isBegin: number = gameInfo.gameState.isBegin;
   const isOver: number = gameInfo.gameState.isOver;
   const isError: number = gameInfo.gameState.isError;
   const turn: number = gameInfo.players.turn;
@@ -39,6 +48,9 @@ const Game: React.FC = () => {
   const player: Player = players[turn];
   const isMyTurn: boolean =
     JSON.stringify(player.acct) === JSON.stringify(acct);
+  const isJoined: boolean = players.some(
+    (player) => JSON.stringify(player.acct) === JSON.stringify(acct)
+  );
   //State
   const [gameMap, setGameMap] = useState<JSX.Element[][]>([]);
   const [timeLeft, setTimeLeft] = useState<number>(player?.timeLeft);
@@ -48,28 +60,30 @@ const Game: React.FC = () => {
   //constant
   const defaultColor: string = "hsl(0,0%,50%)";
 
-  if (isOver) {
-    if (isMyTurn) {
-      navigate("/win");
-    } else {
-      navigate("/lose");
-    }
-  }
-
   //useEffect
   useEffect(() => {
+    if (isOver) {
+      webSocket.handleSetState(RESET_STATE);
+    }
+  }, [isOver]);
+
+  useEffect(() => {
+    if (!isBegin) {
+      if (isMyTurn) {
+        navigate("/win");
+      } else if (isJoined) {
+        navigate("/lose");
+      } else {
+        navigate("/lobby");
+      }
+    }
+
     setTimeLeft(player?.timeLeft);
     setConstructionPlan(player?.constructionPlan);
 
     const images: JSX.Element[][] = [];
-    const initialXPos = 600; // X Pos เริ่มต้น
-    const initialYPos = 80; // Y Pos เริ่มต้น
-    const xPosIncrement = 50; // X Gap ของแต่ละ Col
-    const yPosIncrement = 62; // Y Gap ของแต่ละ Row
-    const yPosOffset = 30; // Y Gap ของแต่ละ Col (Even Col , Odd Col)
-
-    let xPos = initialXPos;
-    let yPos = initialYPos;
+    let xPos = INIT_X_POS;
+    let yPos = INIT_Y_POS;
 
     for (let i = 0; i < row; i++) {
       const row = [];
@@ -90,7 +104,7 @@ const Game: React.FC = () => {
         if (owner) {
           hslColor = `hsl(${owner.color}, 100%, 80%)`;
         }
-        const yPosRef = j % 2 === 0 ? yPos : yPos - yPosOffset;
+        const yPosRef = j % 2 === 0 ? yPos : yPos - Y_POS_OFFSET;
         row.push(
           <Hex
             key={key}
@@ -101,12 +115,12 @@ const Game: React.FC = () => {
             crewColor={crewColor}
           />
         );
-        xPos += xPosIncrement;
+        xPos += X_POS_INCREMENT;
       }
 
       images.push(row);
-      xPos = initialXPos;
-      yPos += yPosIncrement;
+      xPos = INIT_X_POS;
+      yPos += Y_POS_INCREMENT;
     }
 
     setGameMap(images);
@@ -134,7 +148,6 @@ const Game: React.FC = () => {
 
   const handleConfirmPlan = () => {
     webSocket.executeTurn(constructionPlan, timeLeft);
-    if (isError) setConstructionPlan(player?.constructionPlan);
   };
 
   return (

@@ -5,10 +5,10 @@ import useWebSocket from "@/websocket/useWebsocket";
 import { GameInfo } from "@/model/game";
 import { selectGame } from "@/redux/slices/game";
 import { useAppSelector } from "@/redux/hook";
-import { GameState } from "@/model/gameState";
 import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 import { selectPlayer } from "@/redux/slices/player";
 import { Player } from "@/model/player";
+import { BEGIN_STATE } from "../Game/config/constant";
 
 function Lobby() {
   const navigate = useNavigate();
@@ -40,14 +40,7 @@ function Lobby() {
       websocket.handleDisconnect(player);
       setIsJoined(false);
     } else if (buttonType === "start") {
-      const gameState: GameState = {
-        isOver: 0,
-        isBegin: 1,
-        isPaused: 0,
-        isError: 0,
-        turnCount: 1,
-      };
-      websocket.handleSetState(gameState);
+      websocket.handleSetState(BEGIN_STATE);
     } else {
       console.error("Unexpected button type:", buttonType);
     }

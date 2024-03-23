@@ -4,9 +4,10 @@ import { useNavigate } from "react-router-dom";
 function Lose() {
   const navigate = useNavigate();
 
-  const handleGoToLobby = () => {
+  const handleGoToLobby = async() => {
     navigate("/lobby");
   };
+
   return (
     <section>
       <div className="wapper_Lose">

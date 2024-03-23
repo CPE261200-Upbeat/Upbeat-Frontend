@@ -1,6 +1,7 @@
 import "./map/1Hex.css";
 import Alien from "./map/Alien";
 import UFO from "./map/UFO";
+import Hex from "./map/1Hex";
 
 function TestHexagon() {
   return (

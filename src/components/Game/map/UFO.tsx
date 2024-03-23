@@ -1,4 +1,5 @@
 import React from "react";
+import Hex from "./1Hex";
 
 interface UFOProps {
   fillColor: string;
