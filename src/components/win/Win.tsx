@@ -1,32 +1,12 @@
 import "./Win.css";
-import { GameState } from "@/model/gameState";
-import { useAppSelector } from "@/redux/hook";
-import { selectGame } from "@/redux/slices/game";
-import useWebSocket from "@/websocket/useWebsocket";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Win() {
-  const websocket = useWebSocket();
-  const gameInfo = useAppSelector(selectGame);
   const navigate = useNavigate();
 
-  const handleGoToLobby = () => {
-    const gameState: GameState = {
-      isOver: 0,
-      isBegin: 0,
-      isPaused: 0,
-      isError: 0,
-      turnCount: 1,
-    };
-    websocket.handleSetState(gameState);
+  const handleGoToLobby = async() => {
+    navigate("/lobby");
   };
-
-  useEffect(() => {
-    if (!gameInfo.gameState?.isBegin) {
-      navigate("/lobby");
-    }
-  }, [gameInfo]);
 
   return (
     <section>
