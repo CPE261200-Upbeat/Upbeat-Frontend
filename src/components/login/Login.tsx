@@ -4,7 +4,9 @@ import { FaUserCircle, FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import useWebSocket from "@/websocket/useWebsocket";
 import { useMutationLogin } from "@/query/game";
-import { Credential } from "@/model/credential";
+import { Account } from "@/model/account";
+import { useAppDispatch } from "@/redux/hook";
+import { setPlayer } from "@/redux/slices/player";
 
 function Login() {
   const navigate = useNavigate();
@@ -13,24 +15,22 @@ function Login() {
     websocket.connect();
   }, []);
   const mutationLogin = useMutationLogin();
+  const dispatch = useAppDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
 
-    //websocket.connect();
-
-    const acct: Credential = {
+    const acct: Account = {
       username,
       password,
     };
 
     const player = await mutationLogin.mutateAsync(acct);
-    console.log(player);
 
     if (player) {
       websocket.getData();
-      localStorage.setItem("acct", JSON.stringify(acct));
+      dispatch(setPlayer(player));
       navigate("/lobby");
     } else if (!player) {
       alert("Invalid username or password. Please try again.");

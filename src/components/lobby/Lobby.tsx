@@ -1,5 +1,4 @@
 import "../lobby/Lobby.css";
-import { Credential } from "model/credential";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import useWebSocket from "@/websocket/useWebsocket";
@@ -9,16 +8,14 @@ import { useAppSelector } from "@/redux/hook";
 import { GameState } from "@/model/gameState";
 import { FaUserCircle } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
+import { selectPlayer } from "@/redux/slices/player";
+import { Player } from "@/model/player";
 
 function Lobby() {
   const navigate = useNavigate();
   const websocket = useWebSocket();
-  const credential: Credential | null = JSON.parse(
-    localStorage.getItem("acct") || "null"
-  );
-
   const gameInfo: GameInfo = useAppSelector(selectGame);
-
+  const player: Player = useAppSelector(selectPlayer);
   const handleLogout = () => {
     navigate("/login");
   };
@@ -31,7 +28,7 @@ function Lobby() {
 
   const handleClick = (buttonType: string) => {
     if (buttonType === "join") {
-      websocket.handleJoin(credential!);
+      websocket.handleJoin(player);
     } else if (buttonType === "start") {
       const gameState: GameState = {
         isOver: 0,

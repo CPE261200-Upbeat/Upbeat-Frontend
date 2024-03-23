@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Game.css";
-import Hex from "./map/1Hex"; 
+import Hex from "./map/1Hex";
 import { selectGame } from "@/redux/slices/game";
 import { useAppSelector } from "@/redux/hook";
 import { useNavigate } from "react-router-dom";
@@ -10,29 +10,32 @@ import { Player } from "@/model/player";
 import { Config } from "@/model/config";
 import Map from "./map/Map";
 import Timer from "./map/Timer";
+import { selectPlayer } from "@/redux/slices/player";
+import { Account } from "@/model/account";
 
 const Game: React.FC = () => {
   //Common
   const navigate = useNavigate();
   const webSocket = useWebSocket();
   //Client
-  const acct: Credential = JSON.parse(localStorage.getItem("acct")!);
+  const client: Player = useAppSelector(selectPlayer);
+  const acct: Account = client.acct;
   //GameInfo
-  const gameInfo :GameInfo = useAppSelector(selectGame);
-  const config : Config  = gameInfo.config
-  const row : number = config.m;
-  const col : number = config.n;
+  const gameInfo: GameInfo = useAppSelector(selectGame);
+  const config: Config = gameInfo.config;
+  const row: number = config.m;
+  const col: number = config.n;
   //GameState
-  const isOver : number = gameInfo.gameState.isOver
-  const isError : number = gameInfo.gameState.isError
-  const turn :number = gameInfo.players.turn;
+  const isOver: number = gameInfo.gameState.isOver;
+  const isError: number = gameInfo.gameState.isError;
+  const turn: number = gameInfo.players.turn;
   //Players
-  const players : Player[] = gameInfo.players.list;
-  const me : Player = players.find(
+  const players: Player[] = gameInfo.players.list;
+  const me: Player = players.find(
     (p) => JSON.stringify(p.acct) === JSON.stringify(acct)
   )!;
-  const player : Player = players[turn];
-  const isMyTurn : boolean = JSON.stringify(me) === JSON.stringify(player)
+  const player: Player = players[turn];
+  const isMyTurn: boolean = JSON.stringify(me) === JSON.stringify(player);
   //State
   const [gameMap, setGameMap] = useState<JSX.Element[][]>([]);
   const [timeLeft, setTimeLeft] = useState<number>(player?.timeLeft);
@@ -40,47 +43,45 @@ const Game: React.FC = () => {
     player?.constructionPlan
   );
 
-  if(isOver){
-    if(isMyTurn){
-      navigate("/win")
-    }
-    else{
-      navigate("/lose")
+  if (isOver) {
+    if (isMyTurn) {
+      navigate("/win");
+    } else {
+      navigate("/lose");
     }
   }
 
-  //useEffect 
-  useEffect(()=>{
-    setTimeLeft(player?.timeLeft)
-    setConstructionPlan(player?.constructionPlan)
-    
+  //useEffect
+  useEffect(() => {
+    setTimeLeft(player?.timeLeft);
+    setConstructionPlan(player?.constructionPlan);
+
     const images: JSX.Element[][] = [];
-    const initialXPos = 600;  // X Pos เริ่มต้น
-    const initialYPos = 80;   // Y Pos เริ่มต้น
+    const initialXPos = 600; // X Pos เริ่มต้น
+    const initialYPos = 80; // Y Pos เริ่มต้น
     const xPosIncrement = 50; // X Gap ของแต่ละ Col
     const yPosIncrement = 62; // Y Gap ของแต่ละ Row
-    const yPosOffset = 30;    // Y Gap ของแต่ละ Col (Even Col , Odd Col)
-    
+    const yPosOffset = 30; // Y Gap ของแต่ละ Col (Even Col , Odd Col)
+
     let xPos = initialXPos;
     let yPos = initialYPos;
-    
+
     for (let i = 0; i < row; i++) {
       const row = [];
       for (let j = 0; j < col; j++) {
-        const key = `${i},${j}`
+        const key = `${i},${j}`;
         const yPosRef = j % 2 === 0 ? yPos : yPos - yPosOffset;
-        row.push(<Hex key = {key} xPos={xPos} yPos={yPosRef}/>);
+        row.push(<Hex key={key} xPos={xPos} yPos={yPosRef} />);
         xPos += xPosIncrement;
-  
       }
-    
+
       images.push(row);
       xPos = initialXPos;
       yPos += yPosIncrement;
     }
 
-    setGameMap(images)
-  },[gameInfo])
+    setGameMap(images);
+  }, [gameInfo]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -89,17 +90,15 @@ const Game: React.FC = () => {
       }
       setTimeLeft(timeLeft - 1);
     }, 1000);
-  
+
     return () => clearInterval(interval);
-  }, [timeLeft]); 
+  }, [timeLeft]);
 
   const handlePlayerLose = () => {
-    webSocket.executeTurn(constructionPlan,timeLeft);
+    webSocket.executeTurn(constructionPlan, timeLeft);
   };
 
-  const handlePlan = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
+  const handlePlan = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setConstructionPlan(event.target.value);
     console.log("Plan value:", event.target.value);
   };
@@ -110,7 +109,7 @@ const Game: React.FC = () => {
 
   return (
     <div>
-      <Map gameMap={gameMap}/> 
+      <Map gameMap={gameMap} />
       {me === player && (
         <div>
           <textarea
@@ -119,17 +118,15 @@ const Game: React.FC = () => {
             onChange={handlePlan}
             placeholder="Construction Plan"
           />
-          <button className="confirm" onClick={handleConfirmPlan} >
+          <button className="confirm" onClick={handleConfirmPlan}>
             Confirm
           </button>
           {isError === 1 && <div> Error Confirm Plan Please Try again!!! </div>}
         </div>
       )}
-      <Timer timeLeft = {timeLeft}/>
+      <Timer timeLeft={timeLeft} />
     </div>
   );
-  
-
 };
 
 export default Game;

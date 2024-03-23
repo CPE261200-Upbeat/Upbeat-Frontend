@@ -5,7 +5,6 @@ import { Config } from "../model/config";
 // @ts-expect-error
 import SockJS from "sockjs-client/dist/sockjs";
 
-import { Credential } from "model/credential";
 import { GameInfo } from "model/game";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import {
@@ -14,6 +13,7 @@ import {
   setStompClient,
 } from "@/redux/slices/websocket";
 import { setGameInfo } from "@/redux/slices/game";
+import { Player } from "@/model/player";
 
 function useWebSocket() {
   const dispatch = useAppDispatch();
@@ -39,18 +39,18 @@ function useWebSocket() {
     dispatch(setStompClient(stompClient));
   };
 
-  function handleJoin(acct: Credential) {
+  function handleJoin(player: Player) {
     if (webSocket.stompClient && webSocket.stompClient.connected) {
-      webSocket.stompClient.send("/app/game.join", {}, JSON.stringify(acct));
+      webSocket.stompClient.send("/app/game.join", {}, JSON.stringify(player));
     }
   }
 
-  function handleDisconnect(acct: Credential) {
+  function handleDisconnect(player: Player) {
     if (webSocket.stompClient && webSocket.stompClient.connected) {
       webSocket.stompClient.send(
         "/app/game.disconnect",
         {},
-        JSON.stringify(acct)
+        JSON.stringify(player)
       );
     }
   }

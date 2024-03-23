@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import webSocketReducer from "./slices/websocket";
 import gameReducer from "./slices/game";
-import credentialReducer from "./slices/credential";
+import playerReducer from "./slices/player";
 
 export const store = configureStore({
   reducer: {
     game: gameReducer,
+    player: playerReducer,
     webSocket: webSocketReducer,
-    credential: credentialReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
