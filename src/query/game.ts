@@ -1,16 +1,12 @@
-import { AxiosResponse } from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { Player } from "model/player";
 import axiosCustom from "./axiosCustom";
-import { Credential } from "model/credential";
-export type Response<T> = Promise<AxiosResponse<T>>;
-
+import { Account } from "@/model/account";
 
 export const useMutationLogin = () => {
-
   const mutation = useMutation({
-    mutationFn: async (credential: Credential) => {
-      const response = await axiosCustom.post<Player>("/login", credential);
+    mutationFn: async (acct: Account) => {
+      const response = await axiosCustom.post<Player>("/login", acct);
       return response.data;
     },
   });
@@ -19,10 +15,10 @@ export const useMutationLogin = () => {
 };
 
 export const useMutationSignUp = () => {
-
   const mutation = useMutation({
-    mutationFn: async (credential: Credential) => {
-      const response = await axiosCustom.post<Player>("/signUp", credential);
+    mutationFn: async (acct: Account) => {
+      console.log(acct);
+      const response = await axiosCustom.post<Player>("/signUp", acct);
       return response.data;
     },
   });

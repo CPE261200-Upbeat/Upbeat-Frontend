@@ -1,14 +1,15 @@
 import { Region } from "./region";
 import { CityCrew } from "./cityCrew";
-import { Credential } from "./credential";
+import { Account } from "./account";
 
 export interface Player {
-  acct: Credential;
+  acct: Account;
   budget: number;
   cityCenter: Region | null;
   crew: CityCrew | null;
   timeLeft: number;
   constructionPlan: string;
-  defeat: boolean;
+  isDefeat: number;
   winCount: number;
+  color: number;
 }

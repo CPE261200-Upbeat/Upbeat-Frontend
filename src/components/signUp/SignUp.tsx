@@ -3,7 +3,7 @@ import "../login/Login.css";
 import { FaUserCircle, FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useMutationSignUp } from "@/query/game";
-import { Credential } from "@/model/credential";
+import { Account } from "@/model/account";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ function SignUp() {
       setConfirmPasswordError("");
     }
 
-    const acct: Credential = {
+    const acct: Account = {
       username,
       password,
     };
