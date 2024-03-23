@@ -10,6 +10,7 @@ import { Player } from "@/model/player";
 import { Config } from "@/model/config";
 import Map from "./map/Map";
 import Timer from "./map/Timer";
+import { selectPlayer } from "@/redux/slices/player";
 import { Account } from "@/model/account";
 
 const Game: React.FC = () => {
@@ -17,7 +18,8 @@ const Game: React.FC = () => {
   const navigate = useNavigate();
   const webSocket = useWebSocket();
   //Client
-  const acct: Account = JSON.parse(localStorage.getItem("acct")!);
+  const client: Player = useAppSelector(selectPlayer);
+  const acct: Account = client.acct;
   //GameInfo
   const gameInfo: GameInfo = useAppSelector(selectGame);
   const config: Config = gameInfo.config;
