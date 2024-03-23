@@ -17,7 +17,6 @@ export const useMutationLogin = () => {
 export const useMutationSignUp = () => {
   const mutation = useMutation({
     mutationFn: async (acct: Account) => {
-      console.log(acct);
       const response = await axiosCustom.post<Player>("/signUp", acct);
       return response.data;
     },

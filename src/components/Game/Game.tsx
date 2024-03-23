@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Game.css";
 import Hex from "./map/1Hex";
-import game, { selectGame } from "@/redux/slices/game";
+import { selectGame } from "@/redux/slices/game";
 import { useAppSelector } from "@/redux/hook";
 import { useNavigate } from "react-router-dom";
 import useWebSocket from "@/websocket/useWebsocket";
@@ -11,6 +11,8 @@ import { Config } from "@/model/config";
 import Map from "./map/Map";
 import Timer from "./map/Timer";
 import { Region } from "@/model/region";
+import { selectPlayer } from "@/redux/slices/player";
+import { Account } from "@/model/account";
 
 const Game: React.FC = () => {
   //Common
@@ -31,11 +33,9 @@ const Game: React.FC = () => {
   const turn: number = gameInfo.players.turn;
   //Players
   const players: Player[] = gameInfo.players.list;
-  const me: Player = players.find(
-    (p) => JSON.stringify(p.acct) === JSON.stringify(acct)
-  )!;
   const player: Player = players[turn];
-  const isMyTurn: boolean = JSON.stringify(me) === JSON.stringify(player);
+  const isMyTurn: boolean =
+    JSON.stringify(player.acct) === JSON.stringify(acct);
   //State
   const [gameMap, setGameMap] = useState<JSX.Element[][]>([]);
   const [timeLeft, setTimeLeft] = useState<number>(player?.timeLeft);
@@ -77,7 +77,7 @@ const Game: React.FC = () => {
         const isCityCenter: number = mapData.isCityCenter; //is this mapData[i][j]
         let hslColor: string = defaultColor;
         if (owner) {
-          hslColor = `hsl(${owner.hsl}, 100%, 50%)`;
+          hslColor = `hsl(${owner.color}, 100%, 50%)`;
         }
         const yPosRef = j % 2 === 0 ? yPos : yPos - yPosOffset;
         row.push(
@@ -122,12 +122,13 @@ const Game: React.FC = () => {
 
   const handleConfirmPlan = () => {
     webSocket.executeTurn(constructionPlan, timeLeft);
+    if (isError) setConstructionPlan(player?.constructionPlan);
   };
 
   return (
     <div>
       <Map gameMap={gameMap} />
-      {me === player && (
+      {isMyTurn && (
         <div>
           <textarea
             className="ta10em"

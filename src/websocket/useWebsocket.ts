@@ -85,6 +85,16 @@ function useWebSocket() {
     }
   }
 
+  function handleSetColor(player: Player, color: number) {
+    if (webSocket.stompClient && webSocket.stompClient.connected) {
+      webSocket.stompClient.send(
+        "/app/game.setColor",
+        {},
+        JSON.stringify({ player, color })
+      );
+    }
+  }
+
   function getData() {
     if (webSocket.stompClient && webSocket.stompClient.connected) {
       webSocket.stompClient.send("/app/game.getData", {}, "");
@@ -93,16 +103,17 @@ function useWebSocket() {
   const onMessageReceived = (payload: Stomp.Message) => {
     const game: GameInfo = JSON.parse(payload.body);
     dispatch(setGameInfo(game));
-    console.log(game);
   };
 
   return {
     connect,
     handleJoin,
-    getData,
+    handleDisconnect,
     handleSetState,
-    executeTurn,
     handleSetConfig,
+    handleSetColor,
+    executeTurn,
+    getData,
   };
 }
 

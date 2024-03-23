@@ -30,6 +30,7 @@ function Login() {
 
     if (player) {
       websocket.getData();
+      console.log(player);
       dispatch(setPlayer(player));
       navigate("/lobby");
     } else if (!player) {

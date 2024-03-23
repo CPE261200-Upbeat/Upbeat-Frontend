@@ -5,20 +5,21 @@ import { useNavigate } from "react-router-dom";
 
 function Win() {
   const websocket = useWebSocket();
-  const gameState: GameState = {
-    isOver: 0,
-    isBegin: 0,
-    isPaused: 0,
-    isError: 0,
-    turnCount: 1,
-  };
+
   const navigate = useNavigate();
 
   const handleGoToLobby = () => {
+    const gameState: GameState = {
+      isOver: 0,
+      isBegin: 0,
+      isPaused: 0,
+      isError: 0,
+      turnCount: 1,
+    };
+    // websocket.handleSetState(gameState);
     navigate("/lobby");
   };
 
-  websocket.handleSetState(gameState);
   return (
     <section>
       <div className="wapper_Win">
@@ -31,7 +32,7 @@ function Win() {
           <img className="star" src="/src/assets/material/star.gif" />
         </div>
         <div className="btn">
-          <button type="button" onClick={handleGoToLobby}>
+          <button type="button" onClick={() => handleGoToLobby()}>
             LOBBY
           </button>
           <button type="button">EXIT</button>

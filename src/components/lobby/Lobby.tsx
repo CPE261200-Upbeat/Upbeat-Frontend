@@ -14,11 +14,15 @@ function Lobby() {
   const navigate = useNavigate();
   const websocket = useWebSocket();
   const [isJoined, setIsJoined] = useState(false);
-  const [isFirstPlayer, setIsFirstPlayer] = useState(false); // Track first player status
 
   const gameInfo: GameInfo = useAppSelector(selectGame);
+  console.log(gameInfo);
+  const players: Player[] = gameInfo.players.list;
   const player: Player = useAppSelector(selectPlayer);
+  const isFirstPlayer =
+    JSON.stringify(player?.acct) === JSON.stringify(players[0]?.acct);
   const handleLogout = () => {
+    websocket.handleDisconnect(player);
     navigate("/login");
   };
 
@@ -26,20 +30,16 @@ function Lobby() {
     if (gameInfo.gameState?.isBegin) {
       navigate("/game");
     }
-    if (isJoined && gameInfo.players.list.length === 1) {
-      setIsFirstPlayer(true);
-    } else {
-      setIsFirstPlayer(false);
-    }
-  }, [gameInfo, isJoined]);
+  }, [gameInfo]);
 
   const handleClick = (buttonType: string) => {
     if (buttonType === "join") {
       websocket.handleJoin(player);
       setIsJoined(true);
     } else if (buttonType === "disconnect") {
+      websocket.handleDisconnect(player);
       setIsJoined(false);
-    } else if (buttonType === "start" && isFirstPlayer) {
+    } else if (buttonType === "start") {
       const gameState: GameState = {
         isOver: 0,
         isBegin: 1,
@@ -78,7 +78,9 @@ function Lobby() {
             </button>
           )}
           {isJoined ? (
-            <button type="submit">DISCONNECT</button>
+            <button type="submit" onClick={() => handleClick("disconnect")}>
+              DISCONNECT
+            </button>
           ) : (
             <button type="submit" onClick={() => handleClick("join")}>
               JOIN
