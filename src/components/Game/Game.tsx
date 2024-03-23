@@ -23,6 +23,7 @@ const Game: React.FC = () => {
   const acct: Account = client.acct;
   //GameInfo
   const gameInfo: GameInfo = useAppSelector(selectGame);
+  console.log(gameInfo)
   const map: Region[][] = gameInfo.gameMap.regions;
   const config: Config = gameInfo.config;
   const row: number = config.m;

@@ -6,4 +6,5 @@ export interface Region {
   deposit: number;
   pos: Position;
   owner: Player | null;
+  standOn: Player | null;
 }
