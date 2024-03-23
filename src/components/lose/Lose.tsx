@@ -1,21 +1,40 @@
 import "./Lose.css";
+import { useNavigate } from "react-router-dom";
 
-function lose() {
+function Lose() {
+  const navigate = useNavigate();
+
+  const handleGoToLobby = () => {
+    navigate("/lobby");
+  };
   return (
     <section>
-      <div className="wapper">
+      <div className="wapper_Lose">
         <div className="game">
-          <img src="/src/assets/material/Game_over.gif" />
+          <img src="/src/assets/material/Game_over.gif" alt="Game over" />
         </div>
         <div className="container">
-          <img className="skull" src="/src/assets/material/skull.gif" />
+          <img
+            className="skull"
+            src="/src/assets/material/skull.gif"
+            alt="Skull"
+          />
           <div className="lose">YOU LOSE</div>
-          <img className="thunder" src="/src/assets/material/thunder.gif" />
+          <img
+            className="thunder"
+            src="/src/assets/material/thunder.gif"
+            alt="Thunder"
+          />
         </div>
-        <button type="submit">EXIT</button>
+        <div className="btn">
+          <button type="button" onClick={handleGoToLobby}>
+            LOBBY
+          </button>
+          <button type="button">EXIT</button>
+        </div>
       </div>
     </section>
   );
 }
 
-export default lose;
+export default Lose;
