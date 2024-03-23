@@ -15,7 +15,6 @@ html {
   display: inline-block;
   /* left/right margin paprox. 25% of .hexagon width + spacing */
   margin: 1px 18px;
-  /* background-color: rgba(90, 90, 90, 1); */
 
   text-align: center;
 }
@@ -48,12 +47,14 @@ html {
   top: 59px;
 }
 .hexagon:hover {
-  /* background-color: hsla(60, 75%, 75%, 1);
-  cursor: pointer;
-  z-index: 105; */
+  background-color: hsla(60, 75%, 75%, 1);
+  /* cursor: pointer; */
+  z-index: 105;
+  transform: scale(1.7);
 }
 .hexagon:active {
   background-color: hsla(60, 75%, 50%, 1);
+  cursor: pointer;
   z-index: 110;
 }
 .hexanone {

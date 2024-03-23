@@ -13,6 +13,8 @@ import Timer from "./map/Timer";
 import { Region } from "@/model/region";
 import { selectPlayer } from "@/redux/slices/player";
 import { Account } from "@/model/account";
+import { CityCrew } from "@/model/cityCrew";
+import { Position } from "@/model/position";
 
 const Game: React.FC = () => {
   //Common
@@ -23,7 +25,7 @@ const Game: React.FC = () => {
   const acct: Account = client.acct;
   //GameInfo
   const gameInfo: GameInfo = useAppSelector(selectGame);
-  console.log(gameInfo)
+  console.log(gameInfo);
   const map: Region[][] = gameInfo.gameMap.regions;
   const config: Config = gameInfo.config;
   const row: number = config.m;
@@ -73,12 +75,20 @@ const Game: React.FC = () => {
       const row = [];
       for (let j = 0; j < col; j++) {
         const key = `${i},${j}`;
-        const mapData: Region = map[i][j];
-        const owner: Player | null = mapData.owner; //mapOwner of mapData[i][j]
-        const isCityCenter: number = mapData.isCityCenter; //is this mapData[i][j]
+        const region: Region = map[i][j];
+        const owner: Player | null = region.owner; //who own this?
+        const isCityCenter: number = region.isCityCenter; //is citycenter?
+
+        //search crew
+        const crew: Player | null = region.standOn;
+        let crewColor = null;
+        if (crew) {
+          crewColor = `hsl(${crew.color},100%,80%)`;
+        }
+
         let hslColor: string = defaultColor;
         if (owner) {
-          hslColor = `hsl(${owner.color}, 100%, 50%)`;
+          hslColor = `hsl(${owner.color}, 100%, 80%)`;
         }
         const yPosRef = j % 2 === 0 ? yPos : yPos - yPosOffset;
         row.push(
@@ -88,6 +98,7 @@ const Game: React.FC = () => {
             yPos={yPosRef}
             hslColor={hslColor}
             isCityCenter={isCityCenter}
+            crewColor={crewColor}
           />
         );
         xPos += xPosIncrement;
