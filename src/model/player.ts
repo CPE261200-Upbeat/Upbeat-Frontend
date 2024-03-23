@@ -11,5 +11,5 @@ export interface Player {
   constructionPlan: string;
   isDefeat: number;
   winCount: number;
-  color: number;
+  hsl: number;
 }

@@ -4,9 +4,11 @@ import UFO from "./map/UFO";
 function TestHexagon() {
   return (
     <div>
-      {/* <div className="hexagon"> */}
-      {/* <div className="hexagontent"></div> */}
-      <UFO fillColor={"black"} />
+      <div className="hexagon">
+        <div className="hexagontent">
+          <UFO fillColor={300} />
+        </div>
+      </div>
     </div>
   );
 }

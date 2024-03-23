@@ -17,26 +17,26 @@ function SignUp() {
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
 
-    if (!/^[a-zA-Z0-9]{1,6}$/.test(username)) {
-      setUsernameError("Username must be 1-6 alphanumeric characters only");
-      return;
-    } else {
-      setUsernameError("");
-    }
+    // if (!/^[a-zA-Z0-9]{1,6}$/.test(username)) {
+    //   setUsernameError("Username must be 1-6 alphanumeric characters only");
+    //   return;
+    // } else {
+    //   setUsernameError("");
+    // }
 
-    if (password.length < 8) {
-      setPasswordError("Password must be at least 8 characters long");
-      return;
-    } else {
-      setPasswordError("");
-    }
+    // if (password.length < 8) {
+    //   setPasswordError("Password must be at least 8 characters long");
+    //   return;
+    // } else {
+    //   setPasswordError("");
+    // }
 
-    if (password !== confirmPassword) {
-      setConfirmPasswordError("Passwords do not match");
-      return;
-    } else {
-      setConfirmPasswordError("");
-    }
+    // if (password !== confirmPassword) {
+    //   setConfirmPasswordError("Passwords do not match");
+    //   return;
+    // } else {
+    //   setConfirmPasswordError("");
+    // }
 
     const acct: Account = {
       username,
@@ -44,7 +44,7 @@ function SignUp() {
     };
     const player = await mutationSignUp.mutateAsync(acct);
     if (player) {
-      alert("Sign up successfully");
+      //alert("Sign up successfully");
       navigate("/login");
     } else {
       alert("Username is already taken");

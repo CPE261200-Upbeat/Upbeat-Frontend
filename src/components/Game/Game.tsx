@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Game.css";
 import Hex from "./map/1Hex";
-import { selectGame } from "@/redux/slices/game";
+import game, { selectGame } from "@/redux/slices/game";
 import { useAppSelector } from "@/redux/hook";
 import { useNavigate } from "react-router-dom";
 import useWebSocket from "@/websocket/useWebsocket";
@@ -10,8 +10,7 @@ import { Player } from "@/model/player";
 import { Config } from "@/model/config";
 import Map from "./map/Map";
 import Timer from "./map/Timer";
-import { selectPlayer } from "@/redux/slices/player";
-import { Account } from "@/model/account";
+import { Region } from "@/model/region";
 
 const Game: React.FC = () => {
   //Common
@@ -22,6 +21,7 @@ const Game: React.FC = () => {
   const acct: Account = client.acct;
   //GameInfo
   const gameInfo: GameInfo = useAppSelector(selectGame);
+  const map: Region[][] = gameInfo.gameMap.regions;
   const config: Config = gameInfo.config;
   const row: number = config.m;
   const col: number = config.n;
@@ -42,6 +42,8 @@ const Game: React.FC = () => {
   const [constructionPlan, setConstructionPlan] = useState<string>(
     player?.constructionPlan
   );
+  //constant
+  const defaultColor: string = "hsl(0,0%,50%)";
 
   if (isOver) {
     if (isMyTurn) {
@@ -70,8 +72,23 @@ const Game: React.FC = () => {
       const row = [];
       for (let j = 0; j < col; j++) {
         const key = `${i},${j}`;
+        const mapData: Region = map[i][j];
+        const owner: Player | null = mapData.owner; //mapOwner of mapData[i][j]
+        const isCityCenter: number = mapData.isCityCenter; //is this mapData[i][j]
+        let hslColor: string = defaultColor;
+        if (owner) {
+          hslColor = `hsl(${owner.hsl}, 100%, 50%)`;
+        }
         const yPosRef = j % 2 === 0 ? yPos : yPos - yPosOffset;
-        row.push(<Hex key={key} xPos={xPos} yPos={yPosRef} />);
+        row.push(
+          <Hex
+            key={key}
+            xPos={xPos}
+            yPos={yPosRef}
+            hslColor={hslColor}
+            isCityCenter={isCityCenter}
+          />
+        );
         xPos += xPosIncrement;
       }
 

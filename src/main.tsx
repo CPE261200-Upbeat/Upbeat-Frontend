@@ -14,10 +14,12 @@ import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import TestHexagon from "./components/Game/TestHexagon.tsx";
 import { store } from "./redux/store.ts";
+import TestSomething from "./components/Game/GameDev.tsx";
 const router = createBrowserRouter([
   {
-    path: "testHexagon",
+    path: "testSomething",
     element: <TestHexagon />,
+    //element: <TestSomething />,
   },
   {
     path: "",

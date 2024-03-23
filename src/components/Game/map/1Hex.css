@@ -15,7 +15,8 @@ html {
   display: inline-block;
   /* left/right margin paprox. 25% of .hexagon width + spacing */
   margin: 1px 18px;
-  background-color: hsl(220, 75%, 75%);
+  /* background-color: rgba(90, 90, 90, 1); */
+
   text-align: center;
 }
 .hexagon,

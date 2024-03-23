@@ -1,18 +1,18 @@
 import React from "react";
 
 interface UFOProps {
-  fillColor: number;
+  fillColor: string;
 }
 
 const UFO: React.FC<UFOProps> = ({ fillColor }: UFOProps) => {
-  const hslColor = `hsl(${fillColor}, 100%,50%)`;
+  const hslColor = fillColor;
   return (
     <svg
       className="ufo"
       xmlns="http://www.w3.org/2000/svg"
       width="40px"
       height="40px"
-      viewBox="0 0 24 24"
+      viewBox="0 0 23 24 "
     >
       <path
         fill={hslColor}
