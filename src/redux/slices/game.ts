@@ -1,6 +1,6 @@
-import { GameInfo } from "../../model/game";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../store";
+import { GameInfo } from "model/game";
+import { RootState } from "redux/store";
 
 export const initialState: GameInfo = {
   config: {
@@ -27,6 +27,7 @@ export const initialState: GameInfo = {
     isBegin: 0,
     isOver: 0,
     isPaused: 0,
+    isError : 0,
     turnCount: 0,
   },
 };

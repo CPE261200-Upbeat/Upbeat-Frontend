@@ -11,20 +11,34 @@ img {
   margin: 0 auto;
 }
 
-.wapper {
+.wapper_Win {
   text-align: center;
 }
 
-.wapper button {
-  margin-top: 45px;
-  width: 250px;
-  height: auto;
+.wapper_Win button {
+  width: 260px;
   font-size: 65px;
+  font-weight: 500;
+  -webkit-text-stroke: 1.5px#0f0c0c;
+  border: 0px;
   border-radius: 25px;
   color: rgb(28, 28, 28);
   text-shadow: 2px 2px 2px #939393;
   box-shadow: 5px 6px 5px #000000;
   cursor: pointer;
+  margin-top: 45px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.wapper_Win button:hover {
+  background: #d6d6d6;
+}
+
+.wapper_Win button:active {
+  background: #959494;
+  box-shadow: 5px 2px 5px #000000;
+  transform: translateY(4px);
 }
 
 .container {

@@ -1,10 +1,10 @@
 import { SyntheticEvent, useEffect, useState } from "react";
 import "./Login.css";
 import { FaUserCircle, FaLock } from "react-icons/fa";
-import { useMutationLogin } from "../../query/game";
-import useWebSocket from "../../websocket/useWebsocket";
-import { Credential } from "model/credential";
 import { useNavigate } from "react-router";
+import useWebSocket from "@/websocket/useWebsocket";
+import { useMutationLogin } from "@/query/game";
+import { Credential } from "@/model/credential";
 
 function Login() {
   const navigate = useNavigate();
@@ -17,16 +17,28 @@ function Login() {
   const [password, setPassword] = useState("");
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
+
+    //websocket.connect();
+
     const acct: Credential = {
       username,
       password,
     };
+
     const player = await mutationLogin.mutateAsync(acct);
+    console.log(player);
+
     if (player) {
       websocket.getData();
       localStorage.setItem("acct", JSON.stringify(acct));
       navigate("/lobby");
+    } else if (!player) {
+      alert("Invalid username or password. Please try again.");
     }
+  };
+
+  const handleGoToSignup = () => {
+    navigate("/signup");
   };
 
   return (
@@ -43,7 +55,7 @@ function Login() {
             </div>
           </form>
 
-          <div className="wrapper">
+          <div className="wrapper_Login">
             <form onSubmit={handleSubmit}>
               <h1>LOGIN</h1>
               <h3 className="name">username</h3>
@@ -66,19 +78,11 @@ function Login() {
                 />
                 <FaLock className="icon" />
               </div>
-              <div className="remember-forgot">
-                <label>
-                  <input type="checkbox" />
-                  Remember me
-                </label>
-                <a href="#">Forgot password</a>
-              </div>
               <div className="container">
                 <button type="submit">Login</button>
-                <button type="submit">Sign up</button>
-              </div>
-              <div className="guess">
-                <a href="#">play as guess?</a>
+                <button type="submit" onClick={handleGoToSignup}>
+                  Sign up
+                </button>
               </div>
             </form>
           </div>

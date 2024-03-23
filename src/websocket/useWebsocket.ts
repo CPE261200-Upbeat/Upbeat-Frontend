@@ -4,15 +4,16 @@ import { Config } from "../model/config";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import SockJS from "sockjs-client/dist/sockjs";
-import { useAppDispatch, useAppSelector } from "../redux/hook";
+
+import { Credential } from "model/credential";
+import { GameInfo } from "model/game";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import {
   selectWebSocket,
   setIsConnected,
   setStompClient,
-} from "../redux/slices/websocket";
-import { Credential } from "model/credential";
-import { GameInfo } from "model/game";
-import { setGameInfo } from "../redux/slices/game";
+} from "@/redux/slices/websocket";
+import { setGameInfo } from "@/redux/slices/game";
 
 function useWebSocket() {
   const dispatch = useAppDispatch();
@@ -46,7 +47,11 @@ function useWebSocket() {
 
   function handleDisconnect(acct: Credential) {
     if (webSocket.stompClient && webSocket.stompClient.connected) {
-      webSocket.stompClient.send("/app/game.disconnect", {}, JSON.stringify(acct));
+      webSocket.stompClient.send(
+        "/app/game.disconnect",
+        {},
+        JSON.stringify(acct)
+      );
     }
   }
 
@@ -88,6 +93,7 @@ function useWebSocket() {
   const onMessageReceived = (payload: Stomp.Message) => {
     const game: GameInfo = JSON.parse(payload.body);
     dispatch(setGameInfo(game));
+    console.log(game);
   };
 
   return {

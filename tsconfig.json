@@ -22,10 +22,10 @@
 
     // ...rest of the template
     "types": ["node"],
-    "baseUrl": "src",
+    "baseUrl": "./src",
     "paths": {
-      "@/*": ["./src/*"]
-      // "@/components/*": ["components/*"]
+      "@/*": ["*"],
+      "@components/*": ["components/*"]
     }
   },
   "include": ["src"],
