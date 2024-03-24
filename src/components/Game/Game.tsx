@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Game.css";
-import Hex from "./map/1Hex";
+import Hex from "./map/genHex";
 import { selectGame } from "@/redux/slices/game";
 import { useAppSelector } from "@/redux/hook";
 import { useNavigate } from "react-router-dom";
@@ -13,8 +13,7 @@ import Timer from "./map/Timer";
 import { Region } from "@/model/region";
 import { selectPlayer } from "@/redux/slices/player";
 import { Account } from "@/model/account";
-import { CityCrew } from "@/model/cityCrew";
-import { Position } from "@/model/position";
+import Profile from "./map/genHex";
 import {
   INIT_X_POS,
   INIT_Y_POS,
@@ -23,6 +22,7 @@ import {
   Y_POS_INCREMENT,
   Y_POS_OFFSET,
 } from "./config/constant";
+import Circle from "./map/CirclePic";
 
 const Game: React.FC = () => {
   //Common
@@ -46,11 +46,11 @@ const Game: React.FC = () => {
   //Players
   const players: Player[] = gameInfo.players.list;
   const player: Player = players[turn];
-  const isMyTurn: boolean =
-    JSON.stringify(player.acct) === JSON.stringify(acct);
-  const isJoined: boolean = players.some(
+  const me: Player | undefined = players.find(
     (player) => JSON.stringify(player.acct) === JSON.stringify(acct)
   );
+  const isMyTurn: boolean =
+    JSON.stringify(player.acct) === JSON.stringify(acct);
   //State
   const [gameMap, setGameMap] = useState<JSX.Element[][]>([]);
   const [timeLeft, setTimeLeft] = useState<number>(player?.timeLeft);
@@ -71,7 +71,7 @@ const Game: React.FC = () => {
     if (!isBegin) {
       if (isMyTurn) {
         navigate("/win");
-      } else if (isJoined) {
+      } else if (me) {
         navigate("/lose");
       } else {
         navigate("/lobby");
@@ -113,6 +113,7 @@ const Game: React.FC = () => {
             hslColor={hslColor}
             isCityCenter={isCityCenter}
             crewColor={crewColor}
+            region={region}
           />
         );
         xPos += X_POS_INCREMENT;
@@ -167,6 +168,7 @@ const Game: React.FC = () => {
           {isError === 1 && <div> Error Confirm Plan Please Try again!!! </div>}
         </div>
       )}
+      {me && <Circle Player={me} />}
       <Timer timeLeft={timeLeft} />
     </div>
   );

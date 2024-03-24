@@ -14,4 +14,4 @@ export function Map({ gameMap }: MapProps) {
   );
 }
 
-export default Map;
+export default memo(Map);
