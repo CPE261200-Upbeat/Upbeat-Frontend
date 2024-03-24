@@ -10,7 +10,6 @@ const UFO: React.FC<UFOProps> = ({ fillColor }: UFOProps) => {
   const ufoColor: string = `hsl(${arrHsl[0]},100%,50%)`;
   return (
     <svg
-      className="ufo"
       xmlns="http://www.w3.org/2000/svg"
       width="40px"
       height="40px"

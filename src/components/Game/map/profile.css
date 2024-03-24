@@ -1,0 +1,20 @@
+.ufo {
+  z-index: 40;
+  position: fixed;
+  top: 50px;
+  left: 55px;
+}
+
+.alien {
+  z-index: 50;
+  position: fixed;
+  top: 100px;
+  left: 100px;
+}
+
+.circle {
+  z-index: 30;
+  position: fixed;
+  top: 30px;
+  left: 30px;
+}
