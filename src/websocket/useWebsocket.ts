@@ -64,6 +64,16 @@ function useWebSocket() {
       );
     }
   }
+  function handleTurnBegin(player: Player) {
+    if (webSocket.stompClient && webSocket.stompClient.connected) {
+      console.log(player);
+      webSocket.stompClient.send(
+        "/app/game.turnBegin",
+        {},
+        JSON.stringify(player)
+      );
+    }
+  }
 
   function executeTurn(constructionPlan: string, timeLeft: number) {
     if (webSocket.stompClient && webSocket.stompClient.connected) {
@@ -107,6 +117,7 @@ function useWebSocket() {
 
   return {
     connect,
+    handleTurnBegin,
     handleJoin,
     handleDisconnect,
     handleSetState,
