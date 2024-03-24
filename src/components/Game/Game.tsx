@@ -13,7 +13,6 @@ import Map from "./map/Map";
 import { Region } from "@/model/region";
 import { selectPlayer } from "@/redux/slices/player";
 import { Account } from "@/model/account";
-// import NextPlayer from "./map/2NextPlayer";
 import {
   INIT_X_POS,
   INIT_Y_POS,
@@ -29,6 +28,7 @@ import Timer from "./map/Timer";
 //
 const Game: React.FC = () => {
   //Common
+  let interval: NodeJS.Timeout;
   const navigate = useNavigate();
   const webSocket = useWebSocket();
   //Client
@@ -36,7 +36,6 @@ const Game: React.FC = () => {
   const acct: Account = client.acct;
   //GameInfo
   const gameInfo: GameInfo = useAppSelector(selectGame);
-  console.log(gameInfo);
   const lobbyInfo: LobbyInfo = useAppSelector(selectLobby);
   const map: Region[][] = gameInfo.gameMap.regions;
   const config: Config = gameInfo.config;
@@ -59,18 +58,23 @@ const Game: React.FC = () => {
     JSON.stringify(currentPlayer.acct) === JSON.stringify(acct);
   //State
   const [gameMap, setGameMap] = useState<JSX.Element[][]>([]);
-  const [planRevMin, setPlanRevMin] = useState<number>(
-    currentPlayer?.planRevMin
-  );
-  const [planRevSec, setPlanRevSec] = useState<number>(config.planRevSec);
+
+  const [planRevSec, setPlanRevSec] = useState(config.initPlanSec);
+  const [planRevMin, setPlanRevMin] = useState(config.initPlanMin);
   const [isPopUpClicked, setIsPopUpClicked] = useState(false);
+
   const [constructionPlan, setConstructionPlan] = useState<string>(
     currentPlayer?.constructionPlan
   );
+
   //constant
   const defaultColor: string = "hsl(0,0%,50%)";
-  console.log("PlandRevMin:" + planRevMin);
-  console.log("PlandRevSec:" + planRevSec);
+
+  const handleExecuteTurn = () => {
+    setIsPopUpClicked(false);
+    webSocket.executeTurn(constructionPlan, planRevMin);
+  };
+
   //useEffect
   useEffect(() => {
     if (isOver) {
@@ -91,8 +95,28 @@ const Game: React.FC = () => {
   }, [isBegin]);
 
   useEffect(() => {
+    if (isPopUpClicked) {
+      interval = setInterval(() => {
+        if (planRevMin === 0) {
+          handleExecuteTurn();
+        }
+        setPlanRevMin(planRevMin - 1);
+      }, 1000);
+    } else {
+      interval = setInterval(() => {
+        if (planRevSec === 0) {
+          handleExecuteTurn();
+        }
+        setPlanRevSec(planRevSec - 1);
+      }, 1000);
+    }
+
+    return () => clearInterval(interval);
+  }, [planRevSec, planRevMin, isPopUpClicked]);
+
+  useEffect(() => {
     setPlanRevMin(currentPlayer?.planRevMin);
-    setPlanRevSec(config.planRevSec);
+    setPlanRevSec(config?.planRevSec);
     setConstructionPlan(currentPlayer?.constructionPlan);
 
     const images: JSX.Element[][] = [];
@@ -108,9 +132,9 @@ const Game: React.FC = () => {
         const isCityCenter: number = region.isCityCenter; //is citycenter?
 
         //search crew
-        const crews: Player[] | null = region.standOn;
+        const crews: Player[] = region.standOn!;
         let crewColor = null;
-        if (crews) {
+        if (crews && crews.length >= 1) {
           crewColor = `hsl(${crews[crews.length - 1].color},100%,80%)`;
         }
 
@@ -141,33 +165,6 @@ const Game: React.FC = () => {
     setGameMap(images);
   }, [gameInfo]);
 
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-
-    if (isPopUpClicked) {
-      interval = setInterval(() => {
-        if (planRevMin === 0) {
-          handleExecuteTurn();
-        }
-        setPlanRevMin(planRevMin - 1);
-      }, 1000);
-    } else {
-      interval = setInterval(() => {
-        if (planRevSec === 0) {
-          handleExecuteTurn();
-        }
-        setPlanRevSec(planRevSec - 1);
-      }, 1000);
-    }
-
-    return () => clearInterval(interval);
-  }, [planRevSec, planRevMin, isPopUpClicked]);
-
-  const handleExecuteTurn = () => {
-    setIsPopUpClicked(false);
-    webSocket.executeTurn(constructionPlan, planRevMin);
-  };
-
   const handlePlan = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setConstructionPlan(event.target.value);
     console.log("Plan value:", event.target.value);
@@ -184,7 +181,7 @@ const Game: React.FC = () => {
   }, [isError]);
 
   const handlePopUp = () => {
-    setIsPopUpClicked(!isPopUpClicked);
+    setIsPopUpClicked(true);
   };
 
   return (

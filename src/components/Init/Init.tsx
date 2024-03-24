@@ -32,6 +32,7 @@ function Init() {
   useEffect(() => {
     if (readyCount === players.length) navigate("/game");
   }, [gameState.readyCount]);
+
   const handleConfirmPlan = async () => {
     const updatedPlayer = { ...player };
     updatedPlayer.constructionPlan = constructionPlan;
