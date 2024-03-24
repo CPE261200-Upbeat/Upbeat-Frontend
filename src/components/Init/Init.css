@@ -1,20 +1,20 @@
-.ta10em {
-  position: absolute;
-  top: 45%;
-  left: 50%;
-  bottom: 45%;
-  right: 50%;
-  transform: translate(-50%, -50%);
-  resize: none;
-  background-color: rgb(233, 182, 246);
-  font-size: 36px;
-}
-
 .confirm {
   position: absolute;
   top: 80%;
   left: 66%;
   right: 25%;
   bottom: 10%;
+  font-size: 36px;
+  margin: auto;
+}
+.ta10em {
+  position: absolute;
+  top: 45%;
+  left: 40%;
+  bottom: 45%;
+  right: 70%;
+  transform: translate(-50%, -50%);
+  resize: none;
+  background-color: rgb(233, 182, 246);
   font-size: 36px;
 }
