@@ -12,6 +12,7 @@ function Init() {
   const webSocket = useWebSocket();
 
   const gameInfo = useAppSelector(selectGame);
+  console.log(gameInfo);
   const gameState = gameInfo.gameState;
   const readyCount = gameState.readyCount;
 
