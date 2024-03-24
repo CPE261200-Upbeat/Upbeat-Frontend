@@ -19,6 +19,7 @@
   padding: 2px 22px;
   border-radius: 35px;
   border: 0px;
+  margin-top: 60px;
   font-size: 70px;
   font-weight: 600;
   text-shadow: 3px 3px 3px #7e7e7e;
@@ -58,5 +59,4 @@
   font-size: 24px;
   font-weight: 600;
   margin-top: 10px;
-  margin-bottom: 40px;
 }
