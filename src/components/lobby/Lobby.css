@@ -149,3 +149,15 @@
 .color-picker-container .Picker {
   z-index: inherit;
 }
+
+.Triangle {
+  position: absolute;
+  width: 50px;
+  height: auto;
+  margin-top: -45px;
+  margin-left: -25px;
+  color: #ff0000;
+  stroke: #000;
+  stroke-width: 1px;
+  filter: drop-shadow(1px 1px 10px #ff0000);
+}

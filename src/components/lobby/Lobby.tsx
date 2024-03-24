@@ -13,6 +13,7 @@ import { ColorResult, SwatchesPicker } from "react-color";
 import { BEGIN_STATE } from "../../config/constant";
 import { LobbyInfo } from "@/model/lobbyInfo";
 import { selectLobby, setJoined } from "@/redux/slices/lobby";
+import { GoTriangleDown } from "react-icons/go";
 function Lobby() {
   const navigate = useNavigate();
   const websocket = useWebSocket();
@@ -81,6 +82,9 @@ function Lobby() {
         <div className="player_wrapper">
           {gameInfo.players.list.map((player) => (
             <div key={player.acct.username} className="player">
+              {currentPlayer.acct.username === player.acct.username && (
+                <GoTriangleDown className="Triangle" />
+              )}
               <div className="user_container">
                 {activeColorPickerUser === player.acct.username &&
                   currentPlayer.acct.username === player.acct.username && (
