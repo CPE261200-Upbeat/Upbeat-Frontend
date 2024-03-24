@@ -79,8 +79,8 @@ const Circle: React.FC<UFOProps> = ({ Player }: UFOProps) => {
             r="8"
             fill={`hsl(${Player.color},100%,80%)`}
             stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
       </div>
