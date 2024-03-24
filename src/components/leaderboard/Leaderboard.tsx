@@ -2,15 +2,30 @@ import "../leaderboard/Leaderboard.css";
 import { useNavigate } from "react-router-dom";
 import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 import { useQueryLeaderboard } from "@/query/game";
+import { useAppSelector } from "@/redux/hook";
+import { selectGame } from "@/redux/slices/game";
+import { useEffect } from "react";
+import { selectLobby } from "@/redux/slices/lobby";
+import { LobbyInfo } from "@/model/lobbyInfo";
 
 function Leaderboard() {
   const navigate = useNavigate();
+  const gameInfo = useAppSelector(selectGame);
+  const lobbyInfo: LobbyInfo = useAppSelector(selectLobby);
   const queryLeaderboard = useQueryLeaderboard();
+
+  const leaderboard = queryLeaderboard.data;
+
+  useEffect(() => {
+    if (lobbyInfo.isJoined) navigate("/game");
+  }, [gameInfo]);
+
   const handleGoToLobby = () => {
     navigate("/lobby");
   };
-  const leaderboard = queryLeaderboard.data;
+
   if (!leaderboard) return;
+
   return (
     <section>
       <FaSignOutAlt className="GotoLobby" onClick={handleGoToLobby} />

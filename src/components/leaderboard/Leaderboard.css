@@ -10,7 +10,7 @@ img {
   padding: 9px 10px;
   border-radius: 27px;
   text-align: center;
-  width: 203px;
+  width: 260px;
   margin: 0 auto;
   margin-bottom: -33px;
   position: relative;
@@ -20,8 +20,8 @@ img {
   text-align: center;
   background-color: aliceblue;
   padding: 7px 10px;
-  width: 185px;
-  font-size: 28px;
+  width: 240px;
+  font-size: 36px;
   font-weight: bold;
   border-radius: 30px;
 }
@@ -29,6 +29,7 @@ img {
 .row {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   background-image: linear-gradient(to right, #8c52ff, #5283ff, #5ce1c6);
   border-radius: 20px;
   padding: 7px 20px;
@@ -39,12 +40,11 @@ img {
   width: 210px;
   font-size: 28px;
   text-align: center;
-  margin-right: 20px;
   color: #fff;
 }
 
 .score {
-  width: 40px;
+  width: 100px;
   font-size: 24px;
   text-align: center;
   margin: 0px 5px;
@@ -52,7 +52,7 @@ img {
 }
 
 .profile {
-  width: 50px;
+  width: 60px;
   height: auto;
   margin: 0px 40px;
   color: #fff;
@@ -67,7 +67,7 @@ img {
 
 .box {
   background-color: rgb(255, 255, 255);
-  width: 600px;
+  width: 800px;
   padding: 25px 50px;
   border-radius: 25px;
   height: 500px;
@@ -88,6 +88,7 @@ img {
     background: rgba(0, 0, 0, 0.2);
     box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
     border-radius: 100px;
+    width: 10px;
   }
 
   &::-webkit-scrollbar-track {
@@ -109,6 +110,6 @@ img {
   cursor: pointer;
   width: 40px;
   height: auto;
-  margin-top: -30px;
-  margin-right: -350px;
+  margin-top: -135px;
+  margin-right: -330px;
 }

@@ -13,7 +13,7 @@ import Timer from "./map/Timer";
 import { Region } from "@/model/region";
 import { selectPlayer } from "@/redux/slices/player";
 import { Account } from "@/model/account";
-import NextPlayer from "./map/2NextPlayer";
+// import NextPlayer from "./map/2NextPlayer";
 import {
   INIT_X_POS,
   INIT_Y_POS,
@@ -45,7 +45,6 @@ const Game: React.FC = () => {
   const turn: number = gameInfo.players.turn;
   //Players
   const players: Player[] = gameInfo.players.list;
-  const size: number = players.length;
   const player: Player = players[turn];
   const me: Player | undefined = players.find(
     (player) => JSON.stringify(player.acct) === JSON.stringify(acct)
