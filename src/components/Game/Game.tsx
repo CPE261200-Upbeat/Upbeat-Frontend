@@ -95,6 +95,17 @@ const Game: React.FC = () => {
   }, [isBegin]);
 
   useEffect(() => {
+    interval = setInterval(() => {
+      if (planRevSec === 0) {
+        handleExecuteTurn();
+      }
+      setPlanRevMin(planRevSec - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [planRevSec]);
+
+  useEffect(() => {
     if (isPopUpClicked) {
       interval = setInterval(() => {
         if (planRevMin === 0) {
@@ -102,17 +113,9 @@ const Game: React.FC = () => {
         }
         setPlanRevMin(planRevMin - 1);
       }, 1000);
-    } else {
-      interval = setInterval(() => {
-        if (planRevSec === 0) {
-          handleExecuteTurn();
-        }
-        setPlanRevSec(planRevSec - 1);
-      }, 1000);
     }
-
     return () => clearInterval(interval);
-  }, [planRevSec, planRevMin, isPopUpClicked]);
+  }, [planRevMin, isPopUpClicked]);
 
   useEffect(() => {
     setPlanRevMin(currentPlayer?.planRevMin);
