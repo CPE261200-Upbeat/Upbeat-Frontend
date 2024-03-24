@@ -7,7 +7,7 @@ import { selectPlayer } from "@/redux/slices/player";
 import useWebSocket from "@/websocket/useWebsocket";
 import { GameInfo } from "@/model/game";
 import { Player } from "@/model/player";
-import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
+import { FaUserCircle, FaSignOutAlt, FaTrophy } from "react-icons/fa";
 import { IoMdColorPalette } from "react-icons/io";
 import { Color, ColorResult, HuePicker } from "react-color";
 import { BEGIN_STATE } from "../Game/config/constant";
@@ -31,6 +31,10 @@ function Lobby() {
 
   const handleLogout = () => {
     navigate("/login");
+  };
+
+  const handleGoToleaderboard = () => {
+    navigate("/leaderboard");
   };
 
   useEffect(() => {
@@ -72,6 +76,7 @@ function Lobby() {
     <section>
       <div className="wappper_Lobby">
         <FaSignOutAlt className="FaSignOutAlt" onClick={handleLogout} />
+        <FaTrophy className="FaTrophy" onClick={handleGoToleaderboard} />
         <h1>UPBEAT</h1>
         <div className="player_wrapper">
           {gameInfo.players.list.map((player) => (

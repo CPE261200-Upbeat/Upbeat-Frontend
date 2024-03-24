@@ -45,7 +45,7 @@ function Login() {
     <section>
       <div className="upbeat-wrapper">
         <div className="upbeat">
-          <form onSubmit={handleSubmit}>
+          <form>
             <div className="from_upbeat">
               <h1 className="text-Upbeat">UPBEAT</h1>
               <h5 className="text-Hope">Hope you enjoy</h5>

@@ -13,7 +13,7 @@ import Timer from "./map/Timer";
 import { Region } from "@/model/region";
 import { selectPlayer } from "@/redux/slices/player";
 import { Account } from "@/model/account";
-import NextPlayer from "./map/2NextPlayer";
+// import NextPlayer from "./map/2NextPlayer";
 import {
   INIT_X_POS,
   INIT_Y_POS,
@@ -170,7 +170,7 @@ const Game: React.FC = () => {
         </div>
       )}
       {me && <Circle Player={me} />}
-      <NextPlayer Players={players} turn={turn} />
+      {/* <NextPlayer Players={players} turn={turn} /> */}
       <Timer timeLeft={timeLeft} />
     </div>
   );
