@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 function Lose() {
   const navigate = useNavigate();
 
-  const handleGoToLobby = async() => {
+  const handleGoToLobby = async () => {
     navigate("/lobby");
   };
 
@@ -31,7 +31,6 @@ function Lose() {
           <button type="button" onClick={handleGoToLobby}>
             LOBBY
           </button>
-          <button type="button">EXIT</button>
         </div>
       </div>
     </section>
