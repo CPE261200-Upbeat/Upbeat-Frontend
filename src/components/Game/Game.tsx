@@ -13,8 +13,7 @@ import Timer from "./map/Timer";
 import { Region } from "@/model/region";
 import { selectPlayer } from "@/redux/slices/player";
 import { Account } from "@/model/account";
-<<<<<<< Updated upstream
-import Profile from "./map/genHex";
+import NextPlayer from "./map/2NextPlayer";
 import {
   INIT_X_POS,
   INIT_Y_POS,
@@ -24,10 +23,6 @@ import {
   Y_POS_OFFSET,
 } from "./config/constant";
 import Circle from "./map/CirclePic";
-=======
-import { CityCrew } from "@/model/cityCrew";
-import { Position } from "@/model/position";
->>>>>>> Stashed changes
 
 const Game: React.FC = () => {
   //Common
@@ -45,12 +40,12 @@ const Game: React.FC = () => {
   const col: number = config.n;
   //GameState
   const isBegin: number = gameInfo.gameState.isBegin;
-  const isTurnBegin: number = gameInfo.gameState.isTurnBegin;
   const isOver: number = gameInfo.gameState.isOver;
   const isError: number = gameInfo.gameState.isError;
   const turn: number = gameInfo.players.turn;
   //Players
   const players: Player[] = gameInfo.players.list;
+  const size: number = players.length;
   const player: Player = players[turn];
   const me: Player | undefined = players.find(
     (player) => JSON.stringify(player.acct) === JSON.stringify(acct)
@@ -83,11 +78,7 @@ const Game: React.FC = () => {
         navigate("/lobby");
       }
     }
-    if (isTurnBegin && player) {
-      console.log(player);
 
-      webSocket.handleTurnBegin(player);
-    }
     setTimeLeft(player?.timeLeft);
     setConstructionPlan(player?.constructionPlan);
 
@@ -100,7 +91,6 @@ const Game: React.FC = () => {
       for (let j = 0; j < col; j++) {
         const key = `${i},${j}`;
         const region: Region = map[i][j];
-<<<<<<< Updated upstream
         const owner: Player | null = region.owner; //who own this?
         const isCityCenter: number = region.isCityCenter; //is citycenter?
 
@@ -111,12 +101,6 @@ const Game: React.FC = () => {
           crewColor = `hsl(${crew.color},100%,80%)`;
         }
 
-=======
-        const owner: Player | null = region.owner; //mapOwner of region[i][j]
-        const isCityCenter: number = region.isCityCenter; //is this region[i][j]
-        const posX: Position | null | undefined = region?.owner?.crew?.pos.col;
-        
->>>>>>> Stashed changes
         let hslColor: string = defaultColor;
         if (owner) {
           hslColor = `hsl(${owner.color}, 100%, 80%)`;
@@ -140,10 +124,7 @@ const Game: React.FC = () => {
       xPos = INIT_X_POS;
       yPos += Y_POS_INCREMENT;
     }
-    for(Player p : players){
-      const pos = p.crew.pos
-      row[pos.row][pos.col] = 
-    }
+
     setGameMap(images);
   }, [gameInfo]);
 
@@ -188,7 +169,8 @@ const Game: React.FC = () => {
           {isError === 1 && <div> Error Confirm Plan Please Try again!!! </div>}
         </div>
       )}
-      {/* {me && <Circle Player={me} />} */}
+      {me && <Circle Player={me} />}
+      <NextPlayer Players={players} turn={turn} />
       <Timer timeLeft={timeLeft} />
     </div>
   );
