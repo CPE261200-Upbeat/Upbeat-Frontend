@@ -6,27 +6,27 @@ import { selectGame } from "@/redux/slices/game";
 import { selectPlayer } from "@/redux/slices/player";
 import useWebSocket from "@/websocket/useWebsocket";
 import { GameInfo } from "@/model/game";
-import { BEGIN_STATE } from "../Game/config/constant";
 import { Player } from "@/model/player";
 import { GameState } from "@/model/gameState";
 import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 import { IoMdColorPalette } from "react-icons/io";
 import { HuePicker } from "react-color";
+import { BEGIN_STATE } from "../Game/config/constant";
 
 function Lobby() {
   const navigate = useNavigate();
   const websocket = useWebSocket();
-  const [isJoined, setIsJoined] = useState(false);
   const gameInfo: GameInfo = useAppSelector(selectGame);
+  const currentPlayer: Player = useAppSelector(selectPlayer);
   const players: Player[] = gameInfo.players.list;
-  const player: Player = useAppSelector(selectPlayer);
   const isFirstPlayer =
-    JSON.stringify(player?.acct) === JSON.stringify(players[0]?.acct);
-  const [selectedColor, setSelectedColor] = useState(null);
+    JSON.stringify(currentPlayer?.acct) === JSON.stringify(players[0]?.acct);
+  const [isJoined, setIsJoined] = useState(false);
+
+  const [selectedColorHSL, setSelectedColorHSL] = useState(null);
   const [isHuePickerOpen, setIsHuePickerOpen] = useState(false);
 
   const handleLogout = () => {
-    websocket.handleDisconnect(player);
     navigate("/login");
   };
 
@@ -38,10 +38,10 @@ function Lobby() {
 
   const handleClick = (buttonType: string) => {
     if (buttonType === "join") {
-      websocket.handleJoin(player);
+      websocket.handleJoin(currentPlayer);
       setIsJoined(true);
     } else if (buttonType === "disconnect") {
-      websocket.handleDisconnect(player);
+      websocket.handleDisconnect(currentPlayer);
       setIsJoined(false);
     } else if (buttonType === "start") {
       websocket.handleSetState(BEGIN_STATE);
@@ -51,10 +51,15 @@ function Lobby() {
   };
 
   const handleColorChange = (color: any) => {
-    setSelectedColor(color.hex);
+    setSelectedColorHSL(color);
   };
 
-  const handleColorPickerTrigger = () => {
+  const [activeColorPickerUser, setActiveColorPickerUser] = useState(null);
+
+  const handleColorPickerTrigger = (username: any) => {
+    setActiveColorPickerUser(
+      username === activeColorPickerUser ? null : username
+    );
     setIsHuePickerOpen(!isHuePickerOpen);
   };
 
@@ -67,11 +72,11 @@ function Lobby() {
           {gameInfo.players.list.map((player) => (
             <div key={player.acct.username} className="player">
               <div className="user_container">
-                {isHuePickerOpen &&
-                  player.acct.username === player.acct.username && (
+                {activeColorPickerUser === player.acct.username &&
+                  currentPlayer.acct.username === player.acct.username && (
                     <div className="color-picker-container">
                       <HuePicker
-                        color={selectedColor || "#ffffff"}
+                        color={selectedColorHSL || "#ffffff"}
                         width="200px"
                         height="15px"
                         onChange={handleColorChange}
@@ -81,15 +86,17 @@ function Lobby() {
                 <FaUserCircle
                   className="user"
                   color={
-                    player.acct.username === player.acct.username
-                      ? selectedColor || `hsl(${player.color}, 100%, 50%)`
+                    currentPlayer.acct.username === player.acct.username
+                      ? selectedColorHSL || `hsl(${player.color}, 100%, 50%)`
                       : `hsl(${player.color}, 100%, 50%)`
                   }
                 />
-                {player.acct.username === player.acct.username && (
+                {currentPlayer.acct.username === player.acct.username && (
                   <IoMdColorPalette
                     className="ColorPalette"
-                    onClick={handleColorPickerTrigger}
+                    onClick={() =>
+                      handleColorPickerTrigger(player.acct.username)
+                    }
                   />
                 )}
               </div>
