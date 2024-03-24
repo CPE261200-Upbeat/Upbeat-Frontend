@@ -11,14 +11,14 @@ const Alien: React.FC<UFOProps> = ({ fillColor }: UFOProps) => {
   console.log("alien color = ", alienColor);
 
   return (
-    <div className="alien">
+    <div>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="47px"
         height="40px"
-        viewBox="0 -8 150 150"
+        viewBox="-7 -20 150 150"
         stroke="black"
-        strokeWidth={1}
+        strokeWidth={0.5}
       >
         <path
           fill={alienColor}

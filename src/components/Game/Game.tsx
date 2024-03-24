@@ -13,6 +13,7 @@ import Timer from "./map/Timer";
 import { Region } from "@/model/region";
 import { selectPlayer } from "@/redux/slices/player";
 import { Account } from "@/model/account";
+<<<<<<< Updated upstream
 import Profile from "./map/genHex";
 import {
   INIT_X_POS,
@@ -23,6 +24,10 @@ import {
   Y_POS_OFFSET,
 } from "./config/constant";
 import Circle from "./map/CirclePic";
+=======
+import { CityCrew } from "@/model/cityCrew";
+import { Position } from "@/model/position";
+>>>>>>> Stashed changes
 
 const Game: React.FC = () => {
   //Common
@@ -95,6 +100,7 @@ const Game: React.FC = () => {
       for (let j = 0; j < col; j++) {
         const key = `${i},${j}`;
         const region: Region = map[i][j];
+<<<<<<< Updated upstream
         const owner: Player | null = region.owner; //who own this?
         const isCityCenter: number = region.isCityCenter; //is citycenter?
 
@@ -105,6 +111,12 @@ const Game: React.FC = () => {
           crewColor = `hsl(${crew.color},100%,80%)`;
         }
 
+=======
+        const owner: Player | null = region.owner; //mapOwner of region[i][j]
+        const isCityCenter: number = region.isCityCenter; //is this region[i][j]
+        const posX: Position | null | undefined = region?.owner?.crew?.pos.col;
+        
+>>>>>>> Stashed changes
         let hslColor: string = defaultColor;
         if (owner) {
           hslColor = `hsl(${owner.color}, 100%, 80%)`;
@@ -128,7 +140,10 @@ const Game: React.FC = () => {
       xPos = INIT_X_POS;
       yPos += Y_POS_INCREMENT;
     }
-
+    for(Player p : players){
+      const pos = p.crew.pos
+      row[pos.row][pos.col] = 
+    }
     setGameMap(images);
   }, [gameInfo]);
 

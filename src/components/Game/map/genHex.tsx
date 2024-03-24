@@ -42,7 +42,8 @@ const Hex: React.FC<HexProps> = ({
     >
       <div className="hexagontent">
         {isTalent()}
-        {JSON.stringify(Math.trunc(region.deposit), null, 2)}
+        {region.deposit !== 0 &&
+          JSON.stringify(Math.trunc(region.deposit), null, 2)}
       </div>
     </div>
   );
