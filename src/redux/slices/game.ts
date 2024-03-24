@@ -25,6 +25,7 @@ export const initialState: GameInfo = {
   },
   gameState: {
     isBegin: 0,
+    isTurnBegin: 0,
     isOver: 0,
     isPaused: 0,
     isError: 0,

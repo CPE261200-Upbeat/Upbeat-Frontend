@@ -9,6 +9,7 @@ export const Y_POS_OFFSET = 30; // Y Gap ของแต่ละ Col (Even Col 
 export const RESET_STATE: GameState = {
   isOver: 0,
   isBegin: 0,
+  isTurnBegin: 1,
   isPaused: 0,
   isError: 0,
   turnCount: 1,
@@ -16,6 +17,7 @@ export const RESET_STATE: GameState = {
 export const BEGIN_STATE: GameState = {
   isOver: 0,
   isBegin: 1,
+  isTurnBegin: 1,
   isPaused: 0,
   isError: 0,
   turnCount: 1,

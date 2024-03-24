@@ -7,7 +7,6 @@ import { selectPlayer } from "@/redux/slices/player";
 import useWebSocket from "@/websocket/useWebsocket";
 import { GameInfo } from "@/model/game";
 import { Player } from "@/model/player";
-import { GameState } from "@/model/gameState";
 import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 import { IoMdColorPalette } from "react-icons/io";
 import { HuePicker } from "react-color";
@@ -19,9 +18,13 @@ function Lobby() {
   const gameInfo: GameInfo = useAppSelector(selectGame);
   const currentPlayer: Player = useAppSelector(selectPlayer);
   const players: Player[] = gameInfo.players.list;
+  const joined: boolean = players.some(
+    (player) =>
+      JSON.stringify(player.acct) === JSON.stringify(currentPlayer.acct)
+  );
   const isFirstPlayer =
     JSON.stringify(currentPlayer?.acct) === JSON.stringify(players[0]?.acct);
-  const [isJoined, setIsJoined] = useState(false);
+  const [isJoined, setIsJoined] = useState(joined);
 
   const [selectedColorHSL, setSelectedColorHSL] = useState(null);
   const [isHuePickerOpen, setIsHuePickerOpen] = useState(false);

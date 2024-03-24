@@ -1,0 +1,114 @@
+@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap");
+
+img {
+  width: 60px;
+  margin: 0px 5px;
+}
+
+.border_head {
+  background-image: linear-gradient(to right, #8c52ff, #5ce1c6);
+  padding: 9px 10px;
+  border-radius: 27px;
+  text-align: center;
+  width: 203px;
+  margin: 0 auto;
+  margin-bottom: -33px;
+  position: relative;
+}
+
+.head {
+  text-align: center;
+  background-color: aliceblue;
+  padding: 7px 10px;
+  width: 185px;
+  font-size: 28px;
+  font-weight: bold;
+  border-radius: 30px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  background-image: linear-gradient(to right, #8c52ff, #5283ff, #5ce1c6);
+  border-radius: 20px;
+  padding: 7px 20px;
+  margin-top: 10px;
+}
+
+.Player {
+  width: 210px;
+  font-size: 28px;
+  text-align: center;
+  margin-right: 20px;
+  color: #fff;
+}
+
+.score {
+  width: 40px;
+  font-size: 24px;
+  text-align: center;
+  margin: 0px 5px;
+  color: #fff;
+}
+
+.profile {
+  width: 50px;
+  height: auto;
+  margin: 0px 40px;
+  color: #fff;
+}
+
+.rating {
+  width: 69.5px;
+  text-align: center;
+  font-size: 24px;
+  color: #fff;
+}
+
+.box {
+  background-color: rgb(255, 255, 255);
+  width: 600px;
+  padding: 25px 50px;
+  border-radius: 25px;
+  height: 500px;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &:hover {
+    scrollbar-width: auto;
+    -ms-overflow-style: auto;
+  }
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
+    border-radius: 100px;
+  }
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #f5f5f5;
+    border-radius: 100px;
+  }
+}
+
+.border_box {
+  background-image: linear-gradient(to right, #004aad, #cd6ce6);
+  padding: 10px;
+  border-radius: 30px;
+}
+
+.GotoLobby {
+  transform: rotate(180deg);
+  float: right;
+  cursor: pointer;
+  width: 40px;
+  height: auto;
+  margin-top: -30px;
+  margin-right: -350px;
+}

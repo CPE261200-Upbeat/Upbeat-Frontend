@@ -40,6 +40,7 @@ const Game: React.FC = () => {
   const col: number = config.n;
   //GameState
   const isBegin: number = gameInfo.gameState.isBegin;
+  const isTurnBegin: number = gameInfo.gameState.isTurnBegin;
   const isOver: number = gameInfo.gameState.isOver;
   const isError: number = gameInfo.gameState.isError;
   const turn: number = gameInfo.players.turn;
@@ -77,7 +78,11 @@ const Game: React.FC = () => {
         navigate("/lobby");
       }
     }
+    if (isTurnBegin && player) {
+      console.log(player);
 
+      webSocket.handleTurnBegin(player);
+    }
     setTimeLeft(player?.timeLeft);
     setConstructionPlan(player?.constructionPlan);
 
@@ -168,7 +173,7 @@ const Game: React.FC = () => {
           {isError === 1 && <div> Error Confirm Plan Please Try again!!! </div>}
         </div>
       )}
-      {me && <Circle Player={me} />}
+      {/* {me && <Circle Player={me} />} */}
       <Timer timeLeft={timeLeft} />
     </div>
   );
