@@ -189,6 +189,12 @@ const Game: React.FC = () => {
 
   return (
     <div>
+      <div className="border_clock">
+        <div className="clock">
+          <Timer timeLeft={planRevSec} />
+        </div>
+      </div>
+
       <Map gameMap={gameMap} />
 
       {isMyTurn && !isPopUpClicked && (
