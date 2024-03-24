@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Player } from "model/player";
 import axiosCustom from "./axiosCustom";
 import { Account } from "@/model/account";
@@ -23,4 +23,16 @@ export const useMutationSignUp = () => {
   });
 
   return mutation;
+};
+
+export const useQueryLeaderboard = () => {
+  const query = useQuery({
+    queryKey: ["leaderboard"],
+    queryFn: async () => {
+      const response = await axiosCustom.get<Player[]>("/leaderboard");
+      return response.data;
+    },
+  });
+
+  return query;
 };
