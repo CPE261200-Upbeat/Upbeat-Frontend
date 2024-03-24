@@ -6,7 +6,7 @@ import Login from "./components/login/Login.tsx";
 import SignUp from "./components/signUp/SignUp.tsx";
 import Game from "./components/Game/Game.tsx";
 import Info from "./components/Game/Info.tsx";
-import LeaderBoard from "./components/Game/leaderboard/Leaderboard.tsx";
+import LeaderBoard from "./components/leaderboard/Leaderboard.tsx";
 import Lobby from "./components/lobby/Lobby.tsx";
 import Win from "./components/win/Win.tsx";
 import Lose from "./components/lose/Lose.tsx";
@@ -14,7 +14,7 @@ import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import TestHexagon from "./components/Game/TestHexagon.tsx";
 import { store } from "./redux/store.ts";
-import TestSomething from "./components/Game/GameDev.tsx";
+// import TestSomething from "./components/Game/GameDev.tsx";
 const router = createBrowserRouter([
   {
     path: "testSomething",
