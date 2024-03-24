@@ -8,6 +8,7 @@ import Game from "./components/Game/Game.tsx";
 import Info from "./components/Game/Info.tsx";
 import LeaderBoard from "./components/leaderboard/Leaderboard.tsx";
 import Lobby from "./components/lobby/Lobby.tsx";
+import Init from "./components/Init/Init.tsx";
 import Win from "./components/win/Win.tsx";
 import Lose from "./components/lose/Lose.tsx";
 import { Provider } from "react-redux";
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
   {
     path: "lobby",
     element: <Lobby />,
+  },
+  {
+    path: "init",
+    element: <Init />,
   },
   {
     path: "game",

@@ -9,7 +9,7 @@ import { GameInfo } from "@/model/game";
 import { Player } from "@/model/player";
 import { FaUserCircle, FaSignOutAlt, FaTrophy } from "react-icons/fa";
 import { IoMdColorPalette } from "react-icons/io";
-import { ColorResult, HuePicker } from "react-color";
+import { ColorResult, SwatchesPicker } from "react-color";
 import { BEGIN_STATE } from "../Game/config/constant";
 import { LobbyInfo } from "@/model/lobbyInfo";
 import { selectLobby, setJoined } from "@/redux/slices/lobby";
@@ -85,10 +85,11 @@ function Lobby() {
                 {activeColorPickerUser === player.acct.username &&
                   currentPlayer.acct.username === player.acct.username && (
                     <div className="color-picker-container">
-                      <HuePicker
+                      <SwatchesPicker
                         color={"#ffffff"}
-                        width="200px"
-                        height="15px"
+                        width={parseInt("200")}
+                        height={parseInt("150")}
+                        className="Picker"
                         onChange={handleColorChange}
                       />
                     </div>
