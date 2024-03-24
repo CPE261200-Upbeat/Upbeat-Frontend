@@ -75,12 +75,12 @@ function useWebSocket() {
     }
   }
 
-  function executeTurn(constructionPlan: string, timeLeft: number) {
+  function executeTurn(constructionPlan: string, planRevMin: number) {
     if (webSocket.stompClient && webSocket.stompClient.connected) {
       webSocket.stompClient.send(
         "/app/game.execute",
         {},
-        JSON.stringify({ constructionPlan, timeLeft })
+        JSON.stringify({ constructionPlan, planRevMin })
       );
     }
   }

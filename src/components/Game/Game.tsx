@@ -62,13 +62,14 @@ const Game: React.FC = () => {
     currentPlayer?.planRevMin
   );
   const [planRevSec, setPlanRevSec] = useState<number>(config.planRevSec);
-  const [popUpClicked, isPopUpClicked] = useState(false);
+  const [isPopUpClicked, setIsPopUpClicked] = useState(false);
   const [constructionPlan, setConstructionPlan] = useState<string>(
     currentPlayer?.constructionPlan
   );
   //constant
   const defaultColor: string = "hsl(0,0%,50%)";
-
+  console.log("PlandRevMin:" + planRevMin);
+  console.log("PlandRevSec:" + planRevSec);
   //useEffect
   useEffect(() => {
     if (isOver) {
@@ -140,32 +141,29 @@ const Game: React.FC = () => {
   }, [gameInfo]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (planRevSec === 0) {
-        isPopUpClicked(false);
-        webSocket.executeTurn(constructionPlan, planRevMin);
-      }
-      setPlanRevSec(planRevSec - 1);
-    }, 1000);
+    let interval: NodeJS.Timeout;
 
-    return () => clearInterval(interval);
-  }, [planRevSec]);
-
-  useEffect(() => {
-    if (popUpClicked) {
-      const interval = setInterval(() => {
+    if (isPopUpClicked) {
+      interval = setInterval(() => {
         if (planRevMin === 0) {
-          handlePlayerLose();
+          handleExecuteTurn();
         }
         setPlanRevMin(planRevMin - 1);
       }, 1000);
-
-      return () => clearInterval(interval);
+    } else {
+      interval = setInterval(() => {
+        if (planRevSec === 0) {
+          handleExecuteTurn();
+        }
+        setPlanRevSec(planRevSec - 1);
+      }, 1000);
     }
-  }, [planRevMin, popUpClicked]);
 
-  const handlePlayerLose = () => {
-    isPopUpClicked(false);
+    return () => clearInterval(interval);
+  }, [planRevSec, planRevMin, isPopUpClicked]);
+
+  const handleExecuteTurn = () => {
+    setIsPopUpClicked(false);
     webSocket.executeTurn(constructionPlan, planRevMin);
   };
 
@@ -175,30 +173,30 @@ const Game: React.FC = () => {
   };
 
   const handleConfirmPlan = () => {
-    isPopUpClicked(false);
-    webSocket.executeTurn(constructionPlan, planRevMin);
+    setIsPopUpClicked(false);
   };
+
   useEffect(() => {
     if (isError === 1) {
-      isPopUpClicked(false);
+      setIsPopUpClicked(false);
     }
   }, [isError]);
 
   const handlePopUp = () => {
-    isPopUpClicked(!popUpClicked);
+    setIsPopUpClicked(!isPopUpClicked);
   };
 
   return (
     <div>
       <Map gameMap={gameMap} />
 
-      {isMyTurn && !popUpClicked && (
+      {isMyTurn && !isPopUpClicked && (
         <button className="popUp" onClick={handlePopUp}>
           ...
         </button>
       )}
 
-      {isMyTurn && popUpClicked && (
+      {isMyTurn && isPopUpClicked && (
         <div>
           <textarea
             className="ta10em"

@@ -11,13 +11,14 @@ import { LobbyInfo } from "@/model/lobbyInfo";
 function Leaderboard() {
   const navigate = useNavigate();
   const gameInfo = useAppSelector(selectGame);
+  const gameState = gameInfo.gameState;
   const lobbyInfo: LobbyInfo = useAppSelector(selectLobby);
   const queryLeaderboard = useQueryLeaderboard();
 
   const leaderboard = queryLeaderboard.data;
 
   useEffect(() => {
-    if (lobbyInfo.isJoined) navigate("/game");
+    if (lobbyInfo.isJoined && gameState.isBegin) navigate("/init");
   }, [gameInfo]);
 
   const handleGoToLobby = () => {
