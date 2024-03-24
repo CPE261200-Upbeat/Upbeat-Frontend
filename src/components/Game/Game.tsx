@@ -8,6 +8,7 @@ import useWebSocket from "@/websocket/useWebsocket";
 import { GameInfo } from "@/model/game";
 import { Player } from "@/model/player";
 import { Config } from "@/model/config";
+import { FaUserCircle } from "react-icons/fa";
 import Map from "./map/Map";
 import { Region } from "@/model/region";
 import { selectPlayer } from "@/redux/slices/player";
@@ -212,7 +213,35 @@ const Game: React.FC = () => {
 
       <div>{me && <Circle Player={me} />}</div>
       {/* <NextPlayer Players={players} turn={turn} /> */}
-      <Timer timeLeft={planRevSec} />
+
+      <div className="display">
+        <div className="map">
+          <Map gameMap={gameMap} />
+        </div>
+        <div className="all">
+          {gameInfo.players.list.map((player) => (
+            <div key={player.acct.username} className="wrapper_userShow">
+              <div className="show_user">
+                <div className="user_player">{player.acct.username}</div>
+                <div className="time_show">
+                  <p>Time = </p>
+                  <Timer timeLeft={planRevMin} />
+                </div>
+                <div className="budget">
+                  <p> Budget =</p>
+                  {player.budget}
+                </div>
+              </div>
+              <div className="bg_icon">
+                <FaUserCircle
+                  className="user_icon"
+                  color={`hsl(${player.color}, 100%, 50%)`}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
