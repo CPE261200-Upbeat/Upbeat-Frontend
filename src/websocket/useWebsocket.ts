@@ -14,7 +14,6 @@ import {
 } from "@/redux/slices/websocket";
 import { setGameInfo } from "@/redux/slices/game";
 import { Player } from "@/model/player";
-import { ColorResult } from "react-color";
 
 function useWebSocket() {
   const dispatch = useAppDispatch();

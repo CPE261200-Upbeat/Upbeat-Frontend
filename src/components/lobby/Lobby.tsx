@@ -39,7 +39,7 @@ function Lobby() {
 
   useEffect(() => {
     if (gameInfo.gameState?.isBegin) {
-      navigate("/game");
+      navigate("/initPlan");
     }
   }, [gameInfo]);
 
