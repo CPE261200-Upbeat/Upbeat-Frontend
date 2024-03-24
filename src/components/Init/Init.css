@@ -1,10 +1,9 @@
 .init_box {
-  width: 400px;
+  width: 600px;
   height: 400px;
   resize: none;
   background-color: rgba(249, 163, 163, 0.796);
   font-size: 24px;
-
   border-radius: 20px;
   border: none;
   padding: 15px;
@@ -51,7 +50,7 @@
   background-color: rgb(251, 251, 251);
   border-radius: 50px;
   padding: 40px;
-  width: 500px;
+  width: 700px;
 }
 
 .Error {
