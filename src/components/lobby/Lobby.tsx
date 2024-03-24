@@ -10,7 +10,7 @@ import { Player } from "@/model/player";
 import { FaUserCircle, FaSignOutAlt, FaTrophy } from "react-icons/fa";
 import { IoMdColorPalette } from "react-icons/io";
 import { ColorResult, SwatchesPicker } from "react-color";
-import { BEGIN_STATE } from "../Game/config/constant";
+import { BEGIN_STATE } from "../../config/constant";
 import { LobbyInfo } from "@/model/lobbyInfo";
 import { selectLobby, setJoined } from "@/redux/slices/lobby";
 function Lobby() {
@@ -39,7 +39,7 @@ function Lobby() {
 
   useEffect(() => {
     if (gameInfo.gameState?.isBegin) {
-      navigate("/initPlan");
+      navigate("/init");
     }
   }, [gameInfo]);
 

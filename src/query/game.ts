@@ -2,7 +2,6 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { Player } from "model/player";
 import axiosCustom from "./axiosCustom";
 import { Account } from "@/model/account";
-import { SetPlan } from "@/dto/setPlan";
 
 export const useMutationLogin = () => {
   const mutation = useMutation({
@@ -28,8 +27,8 @@ export const useMutationSignUp = () => {
 
 export const useMutationSetPlan = () => {
   const mutation = useMutation({
-    mutationFn: async (setPlan: SetPlan) => {
-      const response = await axiosCustom.post<Player>("/setPlan", setPlan);
+    mutationFn: async (player: Player) => {
+      const response = await axiosCustom.post<Player>("/initPlan", player);
       return response.data;
     },
   });

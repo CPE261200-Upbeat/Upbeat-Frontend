@@ -21,7 +21,7 @@ import {
   X_POS_INCREMENT,
   Y_POS_INCREMENT,
   Y_POS_OFFSET,
-} from "./config/constant";
+} from "../../config/constant";
 import Circle from "./map/CirclePic";
 import { LobbyInfo } from "@/model/lobbyInfo";
 import { selectLobby } from "@/redux/slices/lobby";
@@ -46,25 +46,26 @@ const Game: React.FC = () => {
   const isBegin: number = gameInfo.gameState.isBegin;
   const isOver: number = gameInfo.gameState.isOver;
   const isError: number = gameInfo.gameState.isError;
-  const turnCount: number = gameInfo.gameState.turnCount;
   const turn: number = gameInfo.players.turn;
   //Players
   const players: Player[] = gameInfo.players.list;
-  const player: Player = players[turn];
+  const currentPlayer: Player = players[turn];
   const me: Player | undefined = players.find(
     (player) => JSON.stringify(player.acct) === JSON.stringify(acct)
   );
   const isMyTurn: boolean =
-    me !== undefined && JSON.stringify(player.acct) === JSON.stringify(acct);
+    me !== undefined &&
+    JSON.stringify(currentPlayer.acct) === JSON.stringify(acct);
   //State
   const [gameMap, setGameMap] = useState<JSX.Element[][]>([]);
-  const [planRevMin, setPlanRevMin] = useState<number>(player?.planRevMin);
+  const [planRevMin, setPlanRevMin] = useState<number>(
+    currentPlayer?.planRevMin
+  );
   const [planRevSec, setPlanRevSec] = useState<number>(config.planRevSec);
   const [popUpClicked, isPopUpClicked] = useState(false);
   const [constructionPlan, setConstructionPlan] = useState<string>(
-    player?.constructionPlan
+    currentPlayer?.constructionPlan
   );
-  const [isChangedPlan, setIsChangedPlan] = useState<boolean>(false);
   //constant
   const defaultColor: string = "hsl(0,0%,50%)";
 
@@ -88,9 +89,9 @@ const Game: React.FC = () => {
   }, [isBegin]);
 
   useEffect(() => {
-    setPlanRevMin(player?.planRevMin);
+    setPlanRevMin(currentPlayer?.planRevMin);
     setPlanRevSec(config.planRevSec);
-    setConstructionPlan(player?.constructionPlan);
+    setConstructionPlan(currentPlayer?.constructionPlan);
 
     const images: JSX.Element[][] = [];
     let xPos = INIT_X_POS;
@@ -141,6 +142,7 @@ const Game: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       if (planRevSec === 0) {
+        isPopUpClicked(false);
         webSocket.executeTurn(constructionPlan, planRevMin);
       }
       setPlanRevSec(planRevSec - 1);
@@ -150,7 +152,7 @@ const Game: React.FC = () => {
   }, [planRevSec]);
 
   useEffect(() => {
-    if (isChangedPlan) {
+    if (popUpClicked) {
       const interval = setInterval(() => {
         if (planRevMin === 0) {
           handlePlayerLose();
@@ -160,10 +162,10 @@ const Game: React.FC = () => {
 
       return () => clearInterval(interval);
     }
-  }, [planRevMin, isChangedPlan]);
+  }, [planRevMin, popUpClicked]);
 
   const handlePlayerLose = () => {
-    webSocket.handleTurnBegin(player);
+    isPopUpClicked(false);
     webSocket.executeTurn(constructionPlan, planRevMin);
   };
 
@@ -173,8 +175,8 @@ const Game: React.FC = () => {
   };
 
   const handleConfirmPlan = () => {
+    isPopUpClicked(false);
     webSocket.executeTurn(constructionPlan, planRevMin);
-    //isPopUpClicked(!popUpClicked);
   };
   useEffect(() => {
     if (isError === 1) {
@@ -225,7 +227,16 @@ const Game: React.FC = () => {
                 <div className="user_player">{player.acct.username}</div>
                 <div className="time_show">
                   <p>Time = </p>
-                  <Timer timeLeft={planRevMin} />
+                  {
+                    <Timer
+                      timeLeft={
+                        JSON.stringify(player.acct) ===
+                        JSON.stringify(currentPlayer.acct)
+                          ? planRevMin
+                          : player.planRevMin
+                      }
+                    />
+                  }
                 </div>
                 <div className="budget">
                   <p> Budget =</p>
