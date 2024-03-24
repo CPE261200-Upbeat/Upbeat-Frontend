@@ -36,6 +36,7 @@ const Game: React.FC = () => {
   const acct: Account = client.acct;
   //GameInfo
   const gameInfo: GameInfo = useAppSelector(selectGame);
+  console.log(gameInfo);
   const lobbyInfo: LobbyInfo = useAppSelector(selectLobby);
   const map: Region[][] = gameInfo.gameMap.regions;
   const config: Config = gameInfo.config;
@@ -107,10 +108,10 @@ const Game: React.FC = () => {
         const isCityCenter: number = region.isCityCenter; //is citycenter?
 
         //search crew
-        const crew: Player | null = region.standOn;
+        const crews: Player[] | null = region.standOn;
         let crewColor = null;
-        if (crew) {
-          crewColor = `hsl(${crew.color},100%,80%)`;
+        if (crews) {
+          crewColor = `hsl(${crews[crews.length - 1].color},100%,80%)`;
         }
 
         let hslColor: string = defaultColor;
