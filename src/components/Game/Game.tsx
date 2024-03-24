@@ -9,7 +9,6 @@ import { GameInfo } from "@/model/game";
 import { Player } from "@/model/player";
 import { Config } from "@/model/config";
 import Map from "./map/Map";
-import Timer from "./map/Timer";
 import { Region } from "@/model/region";
 import { selectPlayer } from "@/redux/slices/player";
 import { Account } from "@/model/account";
@@ -23,6 +22,9 @@ import {
   Y_POS_OFFSET,
 } from "./config/constant";
 import Circle from "./map/CirclePic";
+import { LobbyInfo } from "@/model/lobbyInfo";
+import { selectLobby } from "@/redux/slices/lobby";
+import Timer from "./map/Timer";
 //
 const Game: React.FC = () => {
   //Common
@@ -33,15 +35,17 @@ const Game: React.FC = () => {
   const acct: Account = client.acct;
   //GameInfo
   const gameInfo: GameInfo = useAppSelector(selectGame);
-  console.log(gameInfo);
+  const lobbyInfo: LobbyInfo = useAppSelector(selectLobby);
   const map: Region[][] = gameInfo.gameMap.regions;
   const config: Config = gameInfo.config;
   const row: number = config.m;
   const col: number = config.n;
   //GameState
+  const isJoined: boolean = lobbyInfo.isJoined;
   const isBegin: number = gameInfo.gameState.isBegin;
   const isOver: number = gameInfo.gameState.isOver;
   const isError: number = gameInfo.gameState.isError;
+  const turnCount: number = gameInfo.gameState.turnCount;
   const turn: number = gameInfo.players.turn;
   //Players
   const players: Player[] = gameInfo.players.list;
@@ -50,13 +54,15 @@ const Game: React.FC = () => {
     (player) => JSON.stringify(player.acct) === JSON.stringify(acct)
   );
   const isMyTurn: boolean =
-    JSON.stringify(player.acct) === JSON.stringify(acct);
+    me !== undefined && JSON.stringify(player.acct) === JSON.stringify(acct);
   //State
   const [gameMap, setGameMap] = useState<JSX.Element[][]>([]);
-  const [timeLeft, setTimeLeft] = useState<number>(player?.timeLeft);
+  const [planRevMin, setPlanRevMin] = useState<number>(player?.planRevMin);
+  const [planRevSec, setPlanRevSec] = useState<number>(config.planRevSec);
   const [constructionPlan, setConstructionPlan] = useState<string>(
     player?.constructionPlan
   );
+  const [isChangedPlan, setIsChangedPlan] = useState<boolean>(false);
   //constant
   const defaultColor: string = "hsl(0,0%,50%)";
 
@@ -71,14 +77,17 @@ const Game: React.FC = () => {
     if (!isBegin) {
       if (isMyTurn) {
         navigate("/win");
-      } else if (me) {
+      } else if (isJoined) {
         navigate("/lose");
       } else {
         navigate("/lobby");
       }
     }
+  }, [isBegin]);
 
-    setTimeLeft(player?.timeLeft);
+  useEffect(() => {
+    setPlanRevMin(player?.planRevMin);
+    setPlanRevSec(config.planRevSec);
     setConstructionPlan(player?.constructionPlan);
 
     const images: JSX.Element[][] = [];
@@ -129,17 +138,31 @@ const Game: React.FC = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (timeLeft === 0) {
-        handlePlayerLose();
+      if (planRevSec === 0) {
+        webSocket.executeTurn(constructionPlan, planRevMin);
       }
-      setTimeLeft(timeLeft - 1);
+      setPlanRevSec(planRevSec - 1);
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [timeLeft]);
+  }, [planRevSec]);
+
+  useEffect(() => {
+    if (isChangedPlan) {
+      const interval = setInterval(() => {
+        if (planRevMin === 0) {
+          handlePlayerLose();
+        }
+        setPlanRevMin(planRevMin - 1);
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [planRevMin, isChangedPlan]);
 
   const handlePlayerLose = () => {
-    webSocket.executeTurn(constructionPlan, timeLeft);
+    webSocket.handleTurnBegin(player);
+    webSocket.executeTurn(constructionPlan, planRevMin);
   };
 
   const handlePlan = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -148,7 +171,7 @@ const Game: React.FC = () => {
   };
 
   const handleConfirmPlan = () => {
-    webSocket.executeTurn(constructionPlan, timeLeft);
+    setIsChangedPlan(false);
   };
 
   return (
@@ -170,7 +193,7 @@ const Game: React.FC = () => {
       )}
       {me && <Circle Player={me} />}
       {/* <NextPlayer Players={players} turn={turn} /> */}
-      <Timer timeLeft={timeLeft} />
+      <Timer timeLeft={planRevSec} />
     </div>
   );
 };
