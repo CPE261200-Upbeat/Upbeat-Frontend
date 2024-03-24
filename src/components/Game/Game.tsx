@@ -45,7 +45,6 @@ const Game: React.FC = () => {
   const turn: number = gameInfo.players.turn;
   //Players
   const players: Player[] = gameInfo.players.list;
-  const size: number = players.length;
   const player: Player = players[turn];
   const me: Player | undefined = players.find(
     (player) => JSON.stringify(player.acct) === JSON.stringify(acct)

@@ -1,7 +1,7 @@
 import "../lobby/Lobby.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "@/redux/hook";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { selectGame } from "@/redux/slices/game";
 import { selectPlayer } from "@/redux/slices/player";
 import useWebSocket from "@/websocket/useWebsocket";
@@ -9,27 +9,27 @@ import { GameInfo } from "@/model/game";
 import { Player } from "@/model/player";
 import { FaUserCircle, FaSignOutAlt, FaTrophy } from "react-icons/fa";
 import { IoMdColorPalette } from "react-icons/io";
-import { Color, ColorResult, HuePicker } from "react-color";
+import { ColorResult, HuePicker } from "react-color";
 import { BEGIN_STATE } from "../Game/config/constant";
-
+import { LobbyInfo } from "@/model/lobbyInfo";
+import { selectLobby, setJoined } from "@/redux/slices/lobby";
 function Lobby() {
   const navigate = useNavigate();
   const websocket = useWebSocket();
+  const dispatch = useAppDispatch();
   const gameInfo: GameInfo = useAppSelector(selectGame);
+  const lobbyInfo: LobbyInfo = useAppSelector(selectLobby);
   const currentPlayer: Player = useAppSelector(selectPlayer);
   const players: Player[] = gameInfo.players.list;
-  const joined: boolean = players.some(
-    (player) =>
-      JSON.stringify(player.acct) === JSON.stringify(currentPlayer.acct)
-  );
   const isFirstPlayer =
     JSON.stringify(currentPlayer?.acct) === JSON.stringify(players[0]?.acct);
-  const [isJoined, setIsJoined] = useState(joined);
 
   const [selectedColor, setSelectedColor] = useState<ColorResult>();
   const [isHuePickerOpen, setIsHuePickerOpen] = useState(false);
 
   const handleLogout = () => {
+    websocket.handleDisconnect(currentPlayer);
+    dispatch(setJoined(false));
     navigate("/login");
   };
 
@@ -46,10 +46,10 @@ function Lobby() {
   const handleClick = (buttonType: string) => {
     if (buttonType === "join") {
       websocket.handleJoin(currentPlayer);
-      setIsJoined(true);
+      dispatch(setJoined(true));
     } else if (buttonType === "disconnect") {
       websocket.handleDisconnect(currentPlayer);
-      setIsJoined(false);
+      dispatch(setJoined(false));
     } else if (buttonType === "start") {
       websocket.handleSetState(BEGIN_STATE);
     } else {
@@ -57,7 +57,7 @@ function Lobby() {
     }
   };
 
-  const handleColorChange = (color: ColorResult) => {
+  const handleColorChange = (color: any) => {
     setSelectedColor(color);
   };
 
@@ -86,7 +86,7 @@ function Lobby() {
                   currentPlayer.acct.username === player.acct.username && (
                     <div className="color-picker-container">
                       <HuePicker
-                        color={selectedColor?.hex || "#ffffff"}
+                        color={"#ffffff"}
                         width="200px"
                         height="15px"
                         onChange={handleColorChange}
@@ -95,11 +95,7 @@ function Lobby() {
                   )}
                 <FaUserCircle
                   className="user"
-                  color={
-                    currentPlayer.acct.username === player.acct.username
-                      ? selectedColor?.hex || `hsl(${player.color}, 100%, 50%)`
-                      : `hsl(${player.color}, 100%, 50%)`
-                  }
+                  color={`hsl(${player.color}, 100%, 50%)`}
                 />
                 {currentPlayer.acct.username === player.acct.username && (
                   <IoMdColorPalette
@@ -120,7 +116,7 @@ function Lobby() {
               START
             </button>
           )}
-          {isJoined ? (
+          {lobbyInfo.isJoined ? (
             <button type="submit" onClick={() => handleClick("disconnect")}>
               DISCONNECT
             </button>
