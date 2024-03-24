@@ -192,7 +192,9 @@ const Game: React.FC = () => {
 
       {isMyTurn && !isPopUpClicked && (
         <button className="popUp" onClick={handlePopUp}>
-          ...
+          <span className="text-yellow-500">
+            <i className="fa fa-book"></i>
+          </span>
         </button>
       )}
 
