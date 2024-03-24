@@ -9,7 +9,7 @@ import { GameInfo } from "@/model/game";
 import { Player } from "@/model/player";
 import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 import { IoMdColorPalette } from "react-icons/io";
-import { HuePicker } from "react-color";
+import { Color, ColorResult, HuePicker } from "react-color";
 import { BEGIN_STATE } from "../Game/config/constant";
 
 function Lobby() {
@@ -26,7 +26,7 @@ function Lobby() {
     JSON.stringify(currentPlayer?.acct) === JSON.stringify(players[0]?.acct);
   const [isJoined, setIsJoined] = useState(joined);
 
-  const [selectedColorHSL, setSelectedColorHSL] = useState(null);
+  const [selectedColor, setSelectedColor] = useState<ColorResult>();
   const [isHuePickerOpen, setIsHuePickerOpen] = useState(false);
 
   const handleLogout = () => {
@@ -53,8 +53,8 @@ function Lobby() {
     }
   };
 
-  const handleColorChange = (color: any) => {
-    setSelectedColorHSL(color);
+  const handleColorChange = (color: ColorResult) => {
+    setSelectedColor(color);
   };
 
   const [activeColorPickerUser, setActiveColorPickerUser] = useState(null);
@@ -64,6 +64,8 @@ function Lobby() {
       username === activeColorPickerUser ? null : username
     );
     setIsHuePickerOpen(!isHuePickerOpen);
+    if (currentPlayer && selectedColor)
+      websocket.handleSetColor(currentPlayer, Math.trunc(selectedColor.hsl.h));
   };
 
   return (
@@ -79,7 +81,7 @@ function Lobby() {
                   currentPlayer.acct.username === player.acct.username && (
                     <div className="color-picker-container">
                       <HuePicker
-                        color={selectedColorHSL || "#ffffff"}
+                        color={selectedColor?.hex || "#ffffff"}
                         width="200px"
                         height="15px"
                         onChange={handleColorChange}
@@ -90,7 +92,7 @@ function Lobby() {
                   className="user"
                   color={
                     currentPlayer.acct.username === player.acct.username
-                      ? selectedColorHSL || `hsl(${player.color}, 100%, 50%)`
+                      ? selectedColor?.hex || `hsl(${player.color}, 100%, 50%)`
                       : `hsl(${player.color}, 100%, 50%)`
                   }
                 />

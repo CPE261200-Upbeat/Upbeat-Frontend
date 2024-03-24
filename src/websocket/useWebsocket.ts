@@ -14,6 +14,7 @@ import {
 } from "@/redux/slices/websocket";
 import { setGameInfo } from "@/redux/slices/game";
 import { Player } from "@/model/player";
+import { ColorResult } from "react-color";
 
 function useWebSocket() {
   const dispatch = useAppDispatch();
@@ -96,6 +97,7 @@ function useWebSocket() {
   }
 
   function handleSetColor(player: Player, color: number) {
+    console.log({ player, color });
     if (webSocket.stompClient && webSocket.stompClient.connected) {
       webSocket.stompClient.send(
         "/app/game.setColor",
