@@ -11,16 +11,20 @@ import { GameState } from "@/model/gameState";
 import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 import { IoMdColorPalette } from "react-icons/io";
 import { HuePicker } from "react-color";
+import { BEGIN_STATE } from "../Game/config/constant";
 
 function Lobby() {
   const navigate = useNavigate();
   const websocket = useWebSocket();
-  const [isJoined, setIsJoined] = useState(false);
-  const [isFirstPlayer, setIsFirstPlayer] = useState(false);
-  const [selectedColorHSL, setSelectedColorHSL] = useState(null);
-  const [isHuePickerOpen, setIsHuePickerOpen] = useState(false);
   const gameInfo: GameInfo = useAppSelector(selectGame);
   const currentPlayer: Player = useAppSelector(selectPlayer);
+  const players: Player[] = gameInfo.players.list;
+  const isFirstPlayer =
+    JSON.stringify(currentPlayer?.acct) === JSON.stringify(players[0]?.acct);
+  const [isJoined, setIsJoined] = useState(false);
+
+  const [selectedColorHSL, setSelectedColorHSL] = useState(null);
+  const [isHuePickerOpen, setIsHuePickerOpen] = useState(false);
 
   const handleLogout = () => {
     navigate("/login");
@@ -30,35 +34,24 @@ function Lobby() {
     if (gameInfo.gameState?.isBegin) {
       navigate("/game");
     }
-    if (isJoined && gameInfo.players.list.length === 1) {
-      setIsFirstPlayer(true);
-    } else {
-      setIsFirstPlayer(false);
-    }
-  }, [gameInfo, isJoined]);
+  }, [gameInfo]);
 
   const handleClick = (buttonType: string) => {
     if (buttonType === "join") {
       websocket.handleJoin(currentPlayer);
       setIsJoined(true);
     } else if (buttonType === "disconnect") {
+      websocket.handleDisconnect(currentPlayer);
       setIsJoined(false);
-    } else if (buttonType === "start" && isFirstPlayer) {
-      const gameState: GameState = {
-        isOver: 0,
-        isBegin: 1,
-        isPaused: 0,
-        isError: 0,
-        turnCount: 1,
-      };
-      websocket.handleSetState(gameState);
+    } else if (buttonType === "start") {
+      websocket.handleSetState(BEGIN_STATE);
     } else {
       console.error("Unexpected button type:", buttonType);
     }
   };
 
   const handleColorChange = (color: any) => {
-    setSelectedColorHSL(color.hsl);
+    setSelectedColorHSL(color);
   };
 
   const [activeColorPickerUser, setActiveColorPickerUser] = useState(null);
@@ -68,8 +61,6 @@ function Lobby() {
       username === activeColorPickerUser ? null : username
     );
     setIsHuePickerOpen(!isHuePickerOpen);
-    console.log(!isHuePickerOpen);
-    console.log(selectedColorHSL);
   };
 
   return (
