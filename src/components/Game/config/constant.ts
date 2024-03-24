@@ -12,6 +12,7 @@ export const RESET_STATE: GameState = {
   isPaused: 0,
   isError: 0,
   turnCount: 1,
+  readyCount: 0,
 };
 export const BEGIN_STATE: GameState = {
   isOver: 0,
@@ -19,4 +20,5 @@ export const BEGIN_STATE: GameState = {
   isPaused: 0,
   isError: 0,
   turnCount: 1,
+  readyCount: 0,
 };
