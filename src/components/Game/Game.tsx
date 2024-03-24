@@ -13,6 +13,7 @@ import Map from "./map/Map";
 import { Region } from "@/model/region";
 import { selectPlayer } from "@/redux/slices/player";
 import { Account } from "@/model/account";
+import { GiHamburgerMenu } from "react-icons/gi";
 import {
   INIT_X_POS,
   INIT_Y_POS,
@@ -198,17 +199,13 @@ const Game: React.FC = () => {
       <Map gameMap={gameMap} />
 
       {isMyTurn && !isPopUpClicked && (
-        <button className="popUp" onClick={handlePopUp}>
-          <span className="text-yellow-500">
-            <i className="fa fa-book"></i>
-          </span>
-        </button>
+        <GiHamburgerMenu className="popUp" onClick={handlePopUp} />
       )}
 
       {isMyTurn && isPopUpClicked && (
-        <div>
+        <div className="box_textarea">
           <textarea
-            className="ta10em"
+            className="textarea"
             value={constructionPlan}
             onChange={handlePlan}
             placeholder="Construction Plan"

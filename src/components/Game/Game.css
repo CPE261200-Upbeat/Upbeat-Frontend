@@ -1,12 +1,25 @@
-.ta10em {
+.textarea {
   position: fixed;
   left: 15px;
-  top: 140px;
+  top: 160px;
   resize: none;
   height: 400px;
-  width: 300px;
+  width: 350px;
+  font-size: 18px;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
   margin: 30px;
   background-color: rgb(233, 182, 246);
+}
+.box_textarea {
+  background-image: linear-gradient(145deg, #004aad, #cd6ce6);
+  position: fixed;
+  height: 420px;
+  width: 370px;
+  left: 35px;
+  top: 180px;
+  border-radius: 15px;
 }
 
 .hex-image {
@@ -42,8 +55,17 @@ html {
 
 .confirm {
   position: fixed;
-  left: 5%;
-  top: 550px;
+  left: 225px;
+  top: 575px;
+  width: 170px;
+  font-size: 30px;
+  -webkit-text-stroke: 1.5px#0f0c0c;
+  border: 0px;
+  border-radius: 10px;
+  color: rgb(28, 28, 28);
+  text-shadow: 2px 2px 2px #939393;
+  box-shadow: 1px 1px 10px #000000;
+  cursor: pointer;
 }
 
 .timeLeft {
@@ -62,10 +84,12 @@ body {
 
 .popUp {
   position: fixed;
-  bottom: 4%;
-  left: 4%;
-  width: 48px;
-  height: 48px;
+  top: 660px;
+  left: 50px;
+  width: 50px;
+  height: 50px;
+  color: #fff;
+  cursor: pointer;
 }
 
 .display {
@@ -101,6 +125,9 @@ body {
   height: 860px;
   width: 375px;
   padding: 0px 20px;
+  position: fixed;
+  left: 1160px;
+  top: 0px;
   overflow-y: scroll;
   float: right;
   scroll-behavior: smooth;
@@ -158,11 +185,11 @@ p {
   width: 125px;
   height: 125px;
   font-size: 45px;
-  position: relative;
+  position: fixed;
   border-radius: 50%;
   line-height: 130px;
   left: 200px;
-  top: 165px;
+  top: 40px;
   z-index: 1;
 }
 
