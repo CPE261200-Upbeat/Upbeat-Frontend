@@ -47,6 +47,7 @@ function Init() {
         value={constructionPlan}
         onChange={handlePlan}
         placeholder="Construction Plan"
+        name="Init your plan"
       />
       <button
         className="confirm"
