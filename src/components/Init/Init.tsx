@@ -43,23 +43,30 @@ function Init() {
   };
 
   return (
-    <div>
-      <textarea
-        className="ta10em"
-        value={constructionPlan}
-        onChange={handlePlan}
-        placeholder="Construction Plan"
-        name="Init your plan"
-      />
-      <button
-        className="confirm"
-        onClick={handleConfirmPlan}
-        disabled={disable}
-      >
-        Ready
-      </button>
-      {isError && <div> Error!!! </div>}
-    </div>
+    <section>
+      <div className="wrapper_init">
+        <div className="bg_container">
+          <div className="init_container">
+            <textarea
+              className="init_box"
+              value={constructionPlan}
+              onChange={handlePlan}
+              placeholder="Construction Plan"
+            ></textarea>
+            {isError && <div className="Error"> Error!!! </div>}
+            <div>
+              <button
+                type="submit"
+                onClick={handleConfirmPlan}
+                disabled={disable}
+              >
+                Ready
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 

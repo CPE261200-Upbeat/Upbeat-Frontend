@@ -1,20 +1,62 @@
-.confirm {
-  position: absolute;
-  top: 80%;
-  left: 66%;
-  right: 25%;
-  bottom: 10%;
-  font-size: 36px;
-  margin: auto;
-}
-.ta10em {
-  position: absolute;
-  top: 45%;
-  left: 40%;
-  bottom: 45%;
-  right: 70%;
-  transform: translate(-50%, -50%);
+.init_box {
+  width: 400px;
+  height: 400px;
   resize: none;
-  background-color: rgb(233, 182, 246);
-  font-size: 36px;
+  background-color: rgba(249, 163, 163, 0.796);
+  font-size: 24px;
+
+  border-radius: 20px;
+  border: none;
+  padding: 15px;
+  filter: drop-shadow(1px 1px 20px #ff8888);
+}
+
+.init_box::placeholder {
+  color: #000000ad;
+}
+
+.init_container button {
+  padding: 2px 22px;
+  border-radius: 35px;
+  border: 0px;
+  font-size: 70px;
+  font-weight: 600;
+  text-shadow: 3px 3px 3px #7e7e7e;
+  box-shadow: 1px 10px 5px #000000;
+  cursor: pointer;
+}
+
+.init_container button:hover {
+  background: #b3b3b3;
+}
+
+.init_container button:active {
+  background: #aaaaaa;
+  box-shadow: 0 5px #000000;
+  transform: translateY(4px);
+}
+
+.wrapper_init {
+  background-image: linear-gradient(145deg, #004aad, #cd6ce6);
+  filter: drop-shadow(1px 1px 40px #000000);
+  padding: 10px;
+  border-radius: 60px;
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.bg_container {
+  background-color: rgb(251, 251, 251);
+  border-radius: 50px;
+  padding: 40px;
+  width: 500px;
+}
+
+.Error {
+  color: #ff0000;
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 10px;
+  margin-bottom: 40px;
 }
