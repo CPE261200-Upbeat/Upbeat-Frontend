@@ -23,7 +23,7 @@ import {
   Y_POS_OFFSET,
 } from "./config/constant";
 import Circle from "./map/CirclePic";
-
+//
 const Game: React.FC = () => {
   //Common
   const navigate = useNavigate();
