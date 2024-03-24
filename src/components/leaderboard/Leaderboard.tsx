@@ -1,20 +1,19 @@
 import "../leaderboard/Leaderboard.css";
 import { useNavigate } from "react-router-dom";
 import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
-import { GameInfo } from "@/model/game";
-import { useAppSelector } from "@/redux/hook";
-import { selectGame } from "@/redux/slices/game";
+import { useQueryLeaderboard } from "@/query/game";
 
 function Leaderboard() {
   const navigate = useNavigate();
-  const gameInfo: GameInfo = useAppSelector(selectGame);
-  const handleLogout = () => {
+  const queryLeaderboard = useQueryLeaderboard();
+  const handleGoToLobby = () => {
     navigate("/lobby");
   };
-
+  const leaderboard = queryLeaderboard.data;
+  if (!leaderboard) return;
   return (
     <section>
-      <FaSignOutAlt className="GotoLobby" onClick={handleLogout} />
+      <FaSignOutAlt className="GotoLobby" onClick={handleGoToLobby} />
       <div className="container_Leaderboard">
         <div className="border_head">
           <div className="head">LEADERBOARD</div>
@@ -23,22 +22,24 @@ function Leaderboard() {
         <div className="border_box">
           <div className="box">
             <div className="row-container">
-              {gameInfo.players.list.map((player, idx) => (
+              {leaderboard.map((player, idx) => (
                 <div className="row" key={player.acct.username}>
-                  <img
-                    src={`/src/assets/material/${
-                      idx === 0
-                        ? "gold.png"
-                        : idx === 1
-                        ? "silver.png"
-                        : idx === 2
-                        ? "bronze.png"
-                        : idx + 1
-                    }`}
-                  />
+                  {idx <= 2 ? (
+                    <img
+                      src={`/src/assets/material/${
+                        idx === 0
+                          ? "gold.png"
+                          : idx === 1
+                          ? "silver.png"
+                          : "bronze.png"
+                      }`}
+                    />
+                  ) : (
+                    idx + 1
+                  )}
                   <FaUserCircle className="profile" />
-                  <div className="Player">player.username</div>
-                  <div className="score">player.score</div>
+                  <div className="Player">{player.acct.username}</div>
+                  <div className="score">{player.winCount}</div>
                 </div>
               ))}
             </div>

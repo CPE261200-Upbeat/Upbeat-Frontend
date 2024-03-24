@@ -29,7 +29,7 @@ export const useQueryLeaderboard = () => {
   const query = useQuery({
     queryKey: ["leaderboard"],
     queryFn: async () => {
-      const response = await axiosCustom.get<Player[]>("/leaderboard");
+      const response = await axiosCustom.post<Player[]>("/leaderboard");
       return response.data;
     },
   });
