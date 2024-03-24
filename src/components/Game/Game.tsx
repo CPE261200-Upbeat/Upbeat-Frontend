@@ -55,6 +55,7 @@ const Game: React.FC = () => {
   //State
   const [gameMap, setGameMap] = useState<JSX.Element[][]>([]);
   const [timeLeft, setTimeLeft] = useState<number>(player?.timeLeft);
+  const [popUpClicked, isPopUpClicked] = useState(false);
   const [constructionPlan, setConstructionPlan] = useState<string>(
     player?.constructionPlan
   );
@@ -150,12 +151,29 @@ const Game: React.FC = () => {
 
   const handleConfirmPlan = () => {
     webSocket.executeTurn(constructionPlan, timeLeft);
+    //isPopUpClicked(!popUpClicked);
+  };
+  useEffect(() => {
+    if (isError === 1) {
+      isPopUpClicked(false);
+    }
+  }, [isError]);
+
+  const handlePopUp = () => {
+    isPopUpClicked(!popUpClicked);
   };
 
   return (
     <div>
       <Map gameMap={gameMap} />
-      {isMyTurn && (
+
+      {isMyTurn && !popUpClicked && (
+        <button className="popUp" onClick={handlePopUp}>
+          ...
+        </button>
+      )}
+
+      {isMyTurn && popUpClicked && (
         <div>
           <textarea
             className="ta10em"
@@ -166,11 +184,12 @@ const Game: React.FC = () => {
           <button className="confirm" onClick={handleConfirmPlan}>
             Confirm
           </button>
-          {isError === 1 && <div> Error Confirm Plan Please Try again!!! </div>}
+          {isError === 1 && <h2> Error Confirm Plan Please Try again!!! </h2>}
         </div>
       )}
-      {me && <Circle Player={me} />}
-      <NextPlayer Players={players} turn={turn} />
+
+      <div>{me && <Circle Player={me} />}</div>
+      {/* <NextPlayer Players={players} turn={turn} /> */}
       <Timer timeLeft={timeLeft} />
     </div>
   );
