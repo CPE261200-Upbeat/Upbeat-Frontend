@@ -36,6 +36,7 @@ const Game: React.FC = () => {
   const acct: Account = client.acct;
   //GameInfo
   const gameInfo: GameInfo = useAppSelector(selectGame);
+  console.log(gameInfo)
   const lobbyInfo: LobbyInfo = useAppSelector(selectLobby);
   const map: Region[][] = gameInfo.gameMap.regions;
   const config: Config = gameInfo.config;
@@ -92,7 +93,7 @@ const Game: React.FC = () => {
         handleForceExecuteTurn();
       }
       if(executeSec > 0) setExecuteSec(executeSec - 1);
-    }, 1000);
+    }, 50);
 
     return () => clearInterval(exePlanInterval);
   }, [executeSec]);

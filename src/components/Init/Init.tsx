@@ -34,8 +34,7 @@ function Init() {
   }, [gameState.readyCount]);
 
   const handleConfirmPlan = async () => {
-    const updatedPlayer = { ...player };
-    updatedPlayer.constructionPlan = constructionPlan;
+    const updatedPlayer = { ...player,constructionPlan : constructionPlan };
     const response = await mutationSetPlan.mutateAsync(updatedPlayer);
     if (response) {
       setDisable(true)
