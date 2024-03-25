@@ -7,8 +7,7 @@ export interface Player {
   budget: number;
   cityCenter: Region | null;
   crew: CityCrew | null;
-  planRevMin: number;
-  planRevSec: number;
+  planRevTime: number;
   constructionPlan: string;
   isDefeat: number;
   winCount: number;

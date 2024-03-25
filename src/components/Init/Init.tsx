@@ -12,7 +12,7 @@ function Init() {
   const webSocket = useWebSocket();
 
   const gameInfo = useAppSelector(selectGame);
-  console.log(gameInfo);
+ 
   const gameState = gameInfo.gameState;
   const readyCount = gameState.readyCount;
 
@@ -37,7 +37,10 @@ function Init() {
     const updatedPlayer = { ...player };
     updatedPlayer.constructionPlan = constructionPlan;
     const response = await mutationSetPlan.mutateAsync(updatedPlayer);
-    if (response) setDisable(true);
+    if (response) {
+      setDisable(true)
+      setIsError(false)
+    }
     else setIsError(true);
     webSocket.getData();
   };

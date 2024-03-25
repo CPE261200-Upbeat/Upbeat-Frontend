@@ -64,23 +64,14 @@ function useWebSocket() {
       );
     }
   }
-  function handleTurnBegin(player: Player) {
-    if (webSocket.stompClient && webSocket.stompClient.connected) {
-      console.log(player);
-      webSocket.stompClient.send(
-        "/app/game.turnBegin",
-        {},
-        JSON.stringify(player)
-      );
-    }
-  }
 
-  function executeTurn(constructionPlan: string, planRevMin: number) {
+
+  function executeTurn(constructionPlan: string) {
     if (webSocket.stompClient && webSocket.stompClient.connected) {
       webSocket.stompClient.send(
         "/app/game.execute",
         {},
-        JSON.stringify({ constructionPlan, planRevMin })
+        JSON.stringify({ constructionPlan })
       );
     }
   }
@@ -95,8 +86,17 @@ function useWebSocket() {
     }
   }
 
+  function handleSetPlan(player: Player , constructionPlan: string) {
+    if (webSocket.stompClient && webSocket.stompClient.connected) {
+      webSocket.stompClient.send(
+        "/app/game.setPlan",
+        {},
+        JSON.stringify({ player , constructionPlan })
+      );
+    }
+  }
+
   function handleSetColor(player: Player, color: number) {
-    console.log({ player, color });
     if (webSocket.stompClient && webSocket.stompClient.connected) {
       webSocket.stompClient.send(
         "/app/game.setColor",
@@ -118,7 +118,7 @@ function useWebSocket() {
 
   return {
     connect,
-    handleTurnBegin,
+    handleSetPlan,
     handleJoin,
     handleDisconnect,
     handleSetState,
