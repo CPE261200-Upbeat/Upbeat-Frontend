@@ -12,8 +12,10 @@ img {
   text-align: center;
   width: 260px;
   margin: 0 auto;
-  margin-bottom: -33px;
+  margin-bottom: -42px;
   position: relative;
+  z-index: 10;
+  filter: drop-shadow(1px 1px 20px #92bcff);
 }
 
 .head {
@@ -23,7 +25,7 @@ img {
   width: 240px;
   font-size: 36px;
   font-weight: bold;
-  border-radius: 30px;
+  border-radius: 20px;
 }
 
 .row {
@@ -32,8 +34,8 @@ img {
   justify-content: space-between;
   background-image: linear-gradient(to right, #8c52ff, #5283ff, #5ce1c6);
   border-radius: 20px;
-  padding: 7px 20px;
-  margin-top: 10px;
+  padding: 10px 20px;
+  margin-top: 15px;
 }
 
 .Player {
@@ -55,7 +57,7 @@ img {
   width: 60px;
   height: auto;
   margin: 0px 40px;
-  color: #fff;
+  color: #ffffff;
 }
 
 .rating {
@@ -102,6 +104,8 @@ img {
   background-image: linear-gradient(to right, #004aad, #cd6ce6);
   padding: 10px;
   border-radius: 30px;
+  position: relative;
+  filter: drop-shadow(1px 1px 20px #92bcff);
 }
 
 .GotoLobby {
