@@ -206,3 +206,17 @@ p {
   left: 7.5px;
   top: 7.5px;
 }
+
+.Cross {
+  width: 25px;
+  height: auto;
+  color: #f80000;
+  stroke: #000000;
+  stroke-width: 1px;
+  position: relative;
+  z-index: 10;
+  left: 350px;
+  top: -5px;
+  z-index: 1px;
+  cursor: pointer;
+}

@@ -13,6 +13,7 @@ import Map from "./map/Map";
 import { Region } from "@/model/region";
 import { selectPlayer } from "@/redux/slices/player";
 import { Account } from "@/model/account";
+import { ImCross } from "react-icons/im";
 import { GiHamburgerMenu } from "react-icons/gi";
 import {
   INIT_X_POS,
@@ -204,6 +205,7 @@ const Game: React.FC = () => {
 
       {isMyTurn && isPopUpClicked && (
         <div className="box_textarea">
+          <ImCross className="Cross" onClick={handleConfirmPlan} />
           <textarea
             className="textarea"
             value={constructionPlan}
