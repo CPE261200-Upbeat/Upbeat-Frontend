@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Game.css";
 import Hex from "./map/genHex";
 import { selectGame } from "@/redux/slices/game";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import {  useAppSelector } from "@/redux/hook";
 import { useNavigate } from "react-router-dom";
 import useWebSocket from "@/websocket/useWebsocket";
 import { GameInfo } from "@/model/game";
@@ -58,7 +58,7 @@ const Game: React.FC = () => {
     JSON.stringify(currentPlayer.acct) === JSON.stringify(acct);
   //State
   const [gameMap, setGameMap] = useState<JSX.Element[][]>([]);
-  const [executeSec, setExecuteSec] = useState(10);
+  const [executeSec, setExecuteSec] = useState(1);
   const [planRevTime, setPlanRevTime] = useState(currentPlayer?.planRevTime);
   const [isPopUpClicked, setIsPopUpClicked] = useState(false);
   const [constructionPlan, setConstructionPlan] = useState<string>(
@@ -91,25 +91,15 @@ const Game: React.FC = () => {
       if (executeSec === 0 && isMyTurn) {
         handleForceExecuteTurn();
       }
-      setExecuteSec(executeSec - 1);
+      if(executeSec > 0) setExecuteSec(executeSec - 1);
     }, 1000);
 
     return () => clearInterval(exePlanInterval);
   }, [executeSec]);
 
-  useEffect(() => {
-    const planRevInterval = setInterval(() => {
-      if (planRevTime === 0 && isMyTurn) {
-        handleForceExecuteTurn();
-      }
-      if (isPopUpClicked) setPlanRevTime(planRevTime - 1);
-    }, 1000);
-
-    return () => clearInterval(planRevInterval);
-  }, [isPopUpClicked, planRevTime]);
 
   useEffect(() => {
-    setExecuteSec(10);
+    setExecuteSec(1);
     setPlanRevTime(currentPlayer?.planRevTime);
     setConstructionPlan((me && me.constructionPlan) || "");
     const images: JSX.Element[][] = [];
