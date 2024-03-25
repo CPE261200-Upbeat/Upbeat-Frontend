@@ -62,12 +62,10 @@ const Game: React.FC = () => {
   const [planRevTime, setPlanRevTime] = useState(currentPlayer?.planRevTime);
   const [isPopUpClicked, setIsPopUpClicked] = useState(false);
   const [constructionPlan, setConstructionPlan] = useState<string>(
-   (me && me.constructionPlan) || ''
+    (me && me.constructionPlan) || ""
   );
   //constant
   const defaultColor: string = "hsl(0,0%,50%)";
-
-
 
   //useEffect
   useEffect(() => {
@@ -90,7 +88,7 @@ const Game: React.FC = () => {
 
   useEffect(() => {
     const exePlanInterval: NodeJS.Timeout = setInterval(() => {
-      if (executeSec === 0  && isMyTurn) {
+      if (executeSec === 0 && isMyTurn) {
         handleForceExecuteTurn();
       }
       setExecuteSec(executeSec - 1);
@@ -99,23 +97,21 @@ const Game: React.FC = () => {
     return () => clearInterval(exePlanInterval);
   }, [executeSec]);
 
-
-  useEffect(()=>{
+  useEffect(() => {
     const planRevInterval = setInterval(() => {
-      if ( planRevTime === 0 && isMyTurn) {
+      if (planRevTime === 0 && isMyTurn) {
         handleForceExecuteTurn();
       }
       if (isPopUpClicked) setPlanRevTime(planRevTime - 1);
     }, 1000);
 
     return () => clearInterval(planRevInterval);
-  }, [ isPopUpClicked , planRevTime])
-
+  }, [isPopUpClicked, planRevTime]);
 
   useEffect(() => {
     setExecuteSec(10);
     setPlanRevTime(currentPlayer?.planRevTime);
-    setConstructionPlan((me && me.constructionPlan) || '');
+    setConstructionPlan((me && me.constructionPlan) || "");
     const images: JSX.Element[][] = [];
     let xPos = INIT_X_POS;
     let yPos = INIT_Y_POS;
@@ -175,14 +171,14 @@ const Game: React.FC = () => {
     setIsPopUpClicked(true);
   };
 
-  const handleConfirmPlan = async() => {
+  const handleConfirmPlan = async () => {
     setIsPopUpClicked(false);
-    webSocket.handleSetPlan(me! , constructionPlan);
+    webSocket.handleSetPlan(me!, constructionPlan);
   };
 
   useEffect(() => {
     if (isError === 1) {
-      setConstructionPlan((me && me.constructionPlan) || '')
+      setConstructionPlan((me && me.constructionPlan) || "");
     }
   }, [isError]);
 
@@ -243,7 +239,7 @@ const Game: React.FC = () => {
                 </div>
                 <div className="budget">
                   <p> Budget =</p>
-                  {player.budget}
+                  {Math.trunc(player.budget)}
                 </div>
               </div>
               <div className="bg_icon">
