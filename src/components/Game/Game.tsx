@@ -4,7 +4,6 @@ import Hex from "./map/genHex";
 import { selectGame } from "@/redux/slices/game";
 import {  useAppSelector } from "@/redux/hook";
 import { useNavigate } from "react-router-dom";
-import useWebSocket from "@/websocket/useWebsocket";
 import { GameInfo } from "@/model/game";
 import { Player } from "@/model/player";
 import { Config } from "@/model/config";
@@ -27,6 +26,8 @@ import Circle from "./map/CirclePic";
 import { LobbyInfo } from "@/model/lobbyInfo";
 import { selectLobby } from "@/redux/slices/lobby";
 import Timer from "./map/Timer";
+import useWebSocket from "@/websocket/useWebsocket";
+import { GameState } from "@/model/gameState";
 const Game: React.FC = () => {
   //Common
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const Game: React.FC = () => {
   const acct: Account = client.acct;
   //GameInfo
   const gameInfo: GameInfo = useAppSelector(selectGame);
-  console.log(gameInfo)
+  const gameState :GameState = gameInfo.gameState
   const lobbyInfo: LobbyInfo = useAppSelector(selectLobby);
   const map: Region[][] = gameInfo.gameMap.regions;
   const config: Config = gameInfo.config;
@@ -44,9 +45,10 @@ const Game: React.FC = () => {
   const col: number = config.n;
   //GameState
   const isJoined: boolean = lobbyInfo.isJoined;
-  const isBegin: number = gameInfo.gameState.isBegin;
-  const isOver: number = gameInfo.gameState.isOver;
-  const isError: number = gameInfo.gameState.isError;
+  const isPaused: number = gameState.isPaused;
+  const isBegin: number = gameState.isBegin;
+  const isOver: number = gameState.isOver;
+  const isError: number = gameState.isError;
   const turn: number = gameInfo.players.turn;
   //Players
   const players: Player[] = gameInfo.players.list;
@@ -59,7 +61,7 @@ const Game: React.FC = () => {
     JSON.stringify(currentPlayer.acct) === JSON.stringify(acct);
   //State
   const [gameMap, setGameMap] = useState<JSX.Element[][]>([]);
-  const [executeSec, setExecuteSec] = useState(1);
+  const [executeSec, setExecuteSec] = useState(2);
   const [planRevTime, setPlanRevTime] = useState(currentPlayer?.planRevTime);
   const [isPopUpClicked, setIsPopUpClicked] = useState(false);
   const [constructionPlan, setConstructionPlan] = useState<string>(
@@ -89,20 +91,34 @@ const Game: React.FC = () => {
 
   useEffect(() => {
     const exePlanInterval: NodeJS.Timeout = setInterval(() => {
-      if (executeSec === 0 && isMyTurn) {
-        handleForceExecuteTurn();
-      }
-      if(executeSec > 0) setExecuteSec(executeSec - 1);
-    }, 50);
 
-    return () => clearInterval(exePlanInterval);
-  }, [executeSec]);
+      if (executeSec === 0 ) {
+        if(isMyTurn) handleForceExecuteTurn();
+        setExecuteSec(2)
+      }
+      if(executeSec > 0 && !isPaused) setExecuteSec(executeSec - 1);
+    }, 1000);
+
+    return () => {clearInterval(exePlanInterval)};
+  }, [executeSec , isPaused]);
 
 
   useEffect(() => {
-    setExecuteSec(1);
+    const planRevTimeInterval: NodeJS.Timeout = setInterval(() => {
+      if (planRevTime === 0 && isMyTurn) {
+        handleForceExecuteTurn();
+      }
+      if(planRevTime > 0 && isPaused) setPlanRevTime(planRevTime - 1);
+    }, 1000);
+
+    return () => clearInterval(planRevTimeInterval);
+  }, [planRevTime , isPaused]);
+  
+  useEffect(()=>{
     setPlanRevTime(currentPlayer?.planRevTime);
-    setConstructionPlan((me && me.constructionPlan) || "");
+  },[currentPlayer])
+
+  useEffect(() => {
     const images: JSX.Element[][] = [];
     let xPos = INIT_X_POS;
     let yPos = INIT_Y_POS;
@@ -147,32 +163,38 @@ const Game: React.FC = () => {
     }
 
     setGameMap(images);
-  }, [gameInfo]);
+  }, [map]);
 
   const handlePlan = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setConstructionPlan(event.target.value);
-    console.log("Plan value:", event.target.value);
   };
 
   const handleForceExecuteTurn = () => {
-    webSocket.executeTurn(constructionPlan);
+    webSocket.executeTurn();
   };
 
   const handlePopUp = () => {
+    const state:GameState = {
+      ...gameState,
+      isPaused : 1,
+    }
     setIsPopUpClicked(true);
+    webSocket.handleSetState(state)
   };
 
   const handleConfirmPlan = async () => {
-    setIsPopUpClicked(false);
-    webSocket.handleSetPlan(me!, constructionPlan);
+    webSocket.handleSetPlan(constructionPlan , planRevTime)
   };
 
   useEffect(() => {
     if (isError === 1) {
+      setIsPopUpClicked(true);
       setConstructionPlan((me && me.constructionPlan) || "");
+    }else{
+      setIsPopUpClicked(false);
     }
   }, [isError]);
-
+  console.log(planRevTime)
   return (
     <div>
       <div className="border_clock">
@@ -183,11 +205,11 @@ const Game: React.FC = () => {
 
       <Map gameMap={gameMap} />
 
-      {isJoined && !isPopUpClicked && (
+      {isMyTurn && !isPopUpClicked && (
         <GiHamburgerMenu className="popUp" onClick={handlePopUp} />
       )}
 
-      {isPopUpClicked && (
+      {isMyTurn && isPopUpClicked && (
         <div className="box_textarea">
           <ImCross className="Cross" onClick={handleConfirmPlan} />
           <textarea
@@ -204,7 +226,6 @@ const Game: React.FC = () => {
       )}
 
       <div>{me && <Circle Player={me} />}</div>
-      {/* <NextPlayer Players={players} turn={turn} /> */}
 
       <div className="display">
         <div className="map">
@@ -220,8 +241,7 @@ const Game: React.FC = () => {
                   {
                     <Timer
                       timeLeft={
-                        JSON.stringify(player.acct) ===
-                        JSON.stringify(currentPlayer.acct)
+                        JSON.stringify(player.acct) === JSON.stringify(currentPlayer.acct)
                           ? planRevTime
                           : player.planRevTime
                       }

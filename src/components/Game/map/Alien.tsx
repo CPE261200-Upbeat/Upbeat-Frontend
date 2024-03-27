@@ -8,7 +8,6 @@ interface UFOProps {
 const Alien: React.FC<UFOProps> = ({ fillColor }: UFOProps) => {
   const arrHsl: string[] = fillColor.match(/\d+/g)!;
   const alienColor: string = `hsl(${arrHsl[0]},100%,50%)`;
-  console.log("alien color = ", alienColor);
 
   return (
     <div>

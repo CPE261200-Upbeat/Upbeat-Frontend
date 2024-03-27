@@ -1,11 +1,8 @@
 import Stomp from "stompjs";
-import { GameState } from "../model/gameState";
 import { Config } from "../model/config";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import SockJS from "sockjs-client/dist/sockjs";
-
-import { GameInfo } from "model/game";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import {
   selectWebSocket,
@@ -14,16 +11,17 @@ import {
 } from "@/redux/slices/websocket";
 import { setGameInfo } from "@/redux/slices/game";
 import { Player } from "@/model/player";
+import { GameState } from "@/model/gameState";
 
-function useWebSocket() {
+const useWebSocket = () => {
   const dispatch = useAppDispatch();
   const webSocket = useAppSelector(selectWebSocket);
   const serverUrl = import.meta.env.VITE_SERVER;
 
   const connect = () => {
     try {
-      const socket: WebSocket = new SockJS(`${serverUrl}/ws`);
-      const stompClient: Stomp.Client = Stomp.over(socket);
+      const socket = new SockJS(`${serverUrl}/ws`);
+      const stompClient = Stomp.over(socket);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       stompClient.connect({}, () => onConnected(stompClient), onError);
@@ -33,19 +31,19 @@ function useWebSocket() {
     }
   };
 
-  const onConnected = (stompClient: Stomp.Client) => {
+  const onConnected = (stompClient : Stomp.Client) => {
     stompClient.subscribe("/topic/public", onMessageReceived);
     dispatch(setIsConnected(true));
     dispatch(setStompClient(stompClient));
   };
 
-  function handleJoin(player: Player) {
+  const handleJoin = (player : Player ) => {
     if (webSocket.stompClient && webSocket.stompClient.connected) {
       webSocket.stompClient.send("/app/game.join", {}, JSON.stringify(player));
     }
-  }
+  };
 
-  function handleDisconnect(player: Player) {
+  const handleDisconnect = (player : Player) => {
     if (webSocket.stompClient && webSocket.stompClient.connected) {
       webSocket.stompClient.send(
         "/app/game.disconnect",
@@ -53,9 +51,9 @@ function useWebSocket() {
         JSON.stringify(player)
       );
     }
-  }
+  };
 
-  function handleSetState(state: GameState) {
+  const handleSetState = (state : GameState) => {
     if (webSocket.stompClient && webSocket.stompClient.connected) {
       webSocket.stompClient.send(
         "/app/game.setState",
@@ -63,20 +61,19 @@ function useWebSocket() {
         JSON.stringify(state)
       );
     }
-  }
+  };
 
-
-  function executeTurn(constructionPlan: string) {
+  const executeTurn = () => {
     if (webSocket.stompClient && webSocket.stompClient.connected) {
       webSocket.stompClient.send(
         "/app/game.execute",
         {},
-        JSON.stringify({ constructionPlan })
+        ""
       );
     }
-  }
+  };
 
-  function handleSetConfig(config: Config) {
+  const handleSetConfig = (config : Config) => {
     if (webSocket.stompClient && webSocket.stompClient.connected) {
       webSocket.stompClient.send(
         "/app/game.config",
@@ -84,19 +81,19 @@ function useWebSocket() {
         JSON.stringify({ config })
       );
     }
-  }
+  };
 
-  function handleSetPlan(player: Player , constructionPlan: string) {
+  const handleSetPlan = (constructionPlan :string, planRevTime : number) => {
     if (webSocket.stompClient && webSocket.stompClient.connected) {
       webSocket.stompClient.send(
         "/app/game.setPlan",
         {},
-        JSON.stringify({ player , constructionPlan })
+        JSON.stringify({ constructionPlan, planRevTime })
       );
     }
-  }
+  };
 
-  function handleSetColor(player: Player, color: number) {
+  const handleSetColor = (player : Player, color : number) => {
     if (webSocket.stompClient && webSocket.stompClient.connected) {
       webSocket.stompClient.send(
         "/app/game.setColor",
@@ -104,33 +101,34 @@ function useWebSocket() {
         JSON.stringify({ player, color })
       );
     }
-  }
+  };
 
-  function getData() {
+  const getData = () => {
     if (webSocket.stompClient && webSocket.stompClient.connected) {
       webSocket.stompClient.send("/app/game.getData", {}, "");
     }
-  }
-  const onMessageReceived = (payload: Stomp.Message) => {
-    const game: GameInfo = JSON.parse(payload.body);
+  };
+
+  const onMessageReceived = (payload : Stomp.Message) => {
+    const game = JSON.parse(payload.body);
     dispatch(setGameInfo(game));
   };
 
   return {
     connect,
-    handleSetPlan,
     handleJoin,
     handleDisconnect,
     handleSetState,
+    handleSetPlan,
     handleSetConfig,
     handleSetColor,
     executeTurn,
     getData,
   };
-}
+};
 
 export default useWebSocket;
 
-const onError = (err: Stomp.Message) => {
+const onError = (err : Stomp.Message) => {
   console.log(err);
 };
