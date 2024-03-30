@@ -170,19 +170,21 @@ const Game: React.FC = () => {
   };
 
   const handleForceExecuteTurn = () => {
+    setIsPopUpClicked(false);
     webSocket.executeTurn();
   };
 
   const handlePopUp = () => {
+    setIsPopUpClicked(true);
     const state:GameState = {
       ...gameState,
       isPaused : 1,
     }
-    setIsPopUpClicked(true);
     webSocket.handleSetState(state)
   };
 
   const handleConfirmPlan = async () => {
+    setIsPopUpClicked(false);
     webSocket.handleSetPlan(constructionPlan , planRevTime)
   };
 
